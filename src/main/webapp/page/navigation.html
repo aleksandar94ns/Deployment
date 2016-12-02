@@ -1,0 +1,45 @@
+<div>
+    <md-content>
+        <md-toolbar class="stay-top">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" ng-click="toggleSidenav()">
+                    <md-icon md-svg-icon="img/ic_menu_white_24px.svg"></md-icon>
+                </md-button>
+                <h2><span>{{page.title}}</span></h2>
+                <span flex></span>
+                <h3 class="toolbar-item"><span>{{user.firstName}} {{user.lastName}}</span></h3>
+                <md-button class="md-icon-button" ng-if="authService.isBuyer()" ng-click="goToShoppingCart()">
+                    <md-icon md-svg-icon="img/ic_shopping_cart_white_24px.svg"></md-icon>
+                </md-button>
+                <md-button class="md-raised md-warn" ng-click="logout()">
+                    Logout
+                </md-button>
+            </div>
+        </md-toolbar>
+    </md-content>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2 stay-top" md-component-id="left">
+        <md-toolbar class="md-theme-indigo">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" ng-click="toggleSidenav()">
+                    <md-icon md-svg-icon="img/ic_arrow_back_white_24px.svg"></md-icon>
+                </md-button>
+                <h2><span>{{page.title}}</span></h2>
+            </div>
+        </md-toolbar>
+        <md-content layout-padding>
+            <md-input-container class="md-block sidenav-item">
+                <md-button ng-click="goToHome()" class="md-primary sidenav-item"  ng-disabled="isActive(0)">
+                    Home
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item">
+                <md-button ng-click="goToProfile()" class="md-primary sidenav-item"  ng-disabled="isActive(1)">
+                    Profile
+                </md-button>
+            </md-input-container>
+        </md-content>
+    </md-sidenav>
+    <section id="container" class="page active">
+        <ui-view></ui-view>
+    </section>
+</div>

@@ -1,0 +1,40 @@
+java.sql.Wrapper
+
+group 'com.ftn'
+version '1.0-SNAPSHOT'
+
+buildscript {
+	ext {
+		springBootVersion = '1.4.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+	baseName = 'restaurant'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile 'org.springframework.boot:spring-boot-starter-web:1.2.5.RELEASE'
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa:1.2.5.RELEASE'
+	compile 'org.springframework.boot:spring-boot-starter-security:1.2.5.RELEASE'
+	compile 'mysql:mysql-connector-java:5.1.36'
+	compile 'org.springframework.boot:spring-boot-starter-mail'
+}

@@ -1,0 +1,27 @@
+<div class="container">
+    <div layout="column">
+        <md-card ng-class="{'md-whiteframe-4dp':hovering}"
+                 ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">{{user.firstName}} {{user.lastName}}</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <form novalidate name="profileForm" layout="column">
+                    <md-dialog-content style="padding-top: 30px">
+                        <md-dialog-content>
+                            <label>Email : {{user.email}}</label>
+                        </md-dialog-content>
+                    </md-dialog-content>
+                    <md-dialog-actions layout="row" layout-align="end center">
+                        <md-button type="submit" class="md-primary md-raised" ng-click="edit()"
+                                  >Edit
+                        </md-button>
+                    </md-dialog-actions>
+                </form>
+            </md-card-content>
+
+        </md-card>
+    </div>
+</div>

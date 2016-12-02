@@ -1,0 +1,50 @@
+<div class="container">
+    <div layout="column">
+        <div layout="row">
+            <h3>Recommended Products</h3>
+        </div>
+        <md-divider></md-divider>
+        <md-card ng-repeat="product in products" ng-class="{'md-whiteframe-4dp':hovering}"
+                 ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">{{product.name}}</span>
+                    <span class="md-headline" ng-if="product.specialSaleProducts.length > 0"> ({{product.specialSaleProducts[0].specialSale.discountPercentage}}% off)</span>
+                </md-card-title-text>
+                <span flex></span>
+                <h6>
+                    <span class="md-headline" ng-if="product.score > 0">{{product.score}}</span>
+                </h6>
+            </md-card-title>
+            <img class="mouse-pointer" ng-click="switchImage(product)" src="{{product.images[product.imageCounter % product.images.length].url}}" style="width: 100%">
+            <md-card-content>
+                <h5>Details</h5>
+                <md-divider></md-divider>
+                <div layout="row">
+                    <div layout="column" flex-xs flex-gt-xs="50">
+                        <pre>Price: {{product.price}}$</pre>
+                        <pre>Manufacturer: {{product.nameOfManufacturer}}</pre>
+                        <pre>Made in: {{product.countryOfProduction}}</pre>
+                        <pre>Category: {{product.category.name}}</pre>
+                        <pre>{{product.quantityInStorage}} left</pre>
+                    </div>
+                    <div layout="column" flex-xs flex-gt-xs="50">
+                        <pre>Length: {{product.length}}m</pre>
+                        <pre>Width: {{product.width}}m</pre>
+                        <pre>Height: {{product.height}}m</pre>
+                        <pre>Weight: {{product.weight}}kg</pre>
+                        <pre>Color: {{product.color}}</pre>
+                    </div>
+                </div>
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button class="md-fab md-mini md-primary" aria-label="Add to shopping cart" ng-show="authService.isBuyer()" ng-click="addToShoppingCart(product)">
+                    <md-icon md-svg-src="img/ic_add_shopping_cart_white_24px.svg"></md-icon>
+                </md-button>
+                <md-button class="md-raised md-primary" ng-if="product.reviews.length > 0" ng-click="viewReviews(product.id)">View Reviews ({{product.reviews.length}})</md-button>
+                <md-button class="md-raised md-primary" ng-if="authService.isBuyer() && !authService.didReviewProduct(product)" ng-click="postReview(product)">Write review</md-button>
+                <md-button class="md-raised md-primary" ng-if="authService.isBuyer() && authService.didReviewProduct(product)" ng-click="editReview(product)">Edit review</md-button>
+            </md-card-actions>
+        </md-card>
+    </div>
+</div>
