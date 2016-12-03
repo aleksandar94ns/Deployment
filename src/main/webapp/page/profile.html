@@ -1,5 +1,9 @@
 <div class="container">
     <div layout="column">
+        <div layout="row">
+            <h3>Profile</h3>
+        </div>
+        <md-divider/>
         <md-card ng-class="{'md-whiteframe-4dp':hovering}"
                  ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
             <md-card-title>
@@ -11,17 +15,37 @@
                 <form novalidate name="profileForm" layout="column">
                     <md-dialog-content style="padding-top: 30px">
                         <md-dialog-content>
-                            <label>Email : {{user.email}}</label>
+                            <pre>Email : {{user.email}}</pre>
                         </md-dialog-content>
                     </md-dialog-content>
                     <md-dialog-actions layout="row" layout-align="end center">
-                        <md-button type="submit" class="md-primary md-raised" ng-click="edit()"
-                                  >Edit
+                        <md-button type="submit" class="md-primary md-raised" ng-click="edit()">
+                            Edit
                         </md-button>
                     </md-dialog-actions>
                 </form>
             </md-card-content>
-
         </md-card>
+        <md-card ng-class="{'md-whiteframe-4dp':hovering}"
+                 ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Friends</span>
+                </md-card-title-text>
+                <md-button class="md-fab md-mini md-primary"
+                           aria-label="Add Store" ng-click="addFriend()">
+                    <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
+                </md-button>
+            </md-card-title>
+            <md-list flex>
+                <md-list-item class="md-3-line" ng-repeat="friend in friends" ng-click="null">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ friend.firstName }} {{friend.lastName}}</h3>
+                    </div>
+                </md-list-item>
+            </md-list>
+            </md-card-content>
+        </md-card>
+
     </div>
 </div>

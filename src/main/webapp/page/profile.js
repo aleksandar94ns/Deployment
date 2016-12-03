@@ -1,14 +1,26 @@
-app.controller('ProfileController', function ($scope, $state, $http, $mdDialog, authenticationService) {
+app.controller('ProfileController', function ($scope, $state, $http, $mdDialog, friendsService) {
 
     $scope.page.current = 1;
+
+    $scope.friends = [];
+
+    friendsService.list(function (response) {
+        $scope.friends = response.data;
+    });
 
     $scope.edit = function() {
         $mdDialog.show({
             parent: angular.element(document.body),
-            templateUrl: 'dialog/editccount.html',
+            templateUrl: 'dialog/editAccount.html',
             controller: 'EditAccountController'
-        }).finally(function() {
         });
     };
 
+    $scope.addFriend = function() {
+        $mdDialog.show({
+            parent: angular.element(document.body),
+            templateUrl: 'dialog/createFriendship.html',
+            controller: 'CreateFriendshipController'
+        });
+    }
 });

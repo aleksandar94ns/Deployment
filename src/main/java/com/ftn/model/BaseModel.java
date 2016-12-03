@@ -13,7 +13,7 @@ public abstract class BaseModel {
 
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private Date created;
@@ -31,7 +31,7 @@ public abstract class BaseModel {
         updated = new Date();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

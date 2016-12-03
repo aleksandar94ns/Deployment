@@ -19,4 +19,18 @@ public class Guest extends User {
         this.setRole(Role.GUEST);
     }
 
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    @Override
+    public String toString() {
+        return "Guest{" +
+                "reservations=" + reservations +
+                '}';
+    }
 }
