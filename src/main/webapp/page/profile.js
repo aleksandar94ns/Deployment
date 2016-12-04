@@ -2,11 +2,21 @@ app.controller('ProfileController', function ($scope, $state, $http, $mdDialog, 
 
     $scope.page.current = 1;
 
-    $scope.friends = [];
+    $scope.pendingFriendships = [];
+    $scope.acceptedFriendships = [];
 
-    friendsService.list(function (response) {
-        $scope.friends = response.data;
-    });
+    $scope.loadData = function() {
+        friendsService.list(function (response) {
+            $scope.pendingFriendships = response.data.filter(function(friendship) {
+                return friendship.status === 'PENDING';
+            });
+            $scope.acceptedFriendships = response.data.filter(function(friendship) {
+                return friendship.status === 'ACCEPTED';
+            });
+        });
+    };
+
+    $scope.loadData();
 
     $scope.edit = function() {
         $mdDialog.show({
@@ -21,6 +31,43 @@ app.controller('ProfileController', function ($scope, $state, $http, $mdDialog, 
             parent: angular.element(document.body),
             templateUrl: 'dialog/createFriendship.html',
             controller: 'CreateFriendshipController'
+        }).finally(function () {
+            $scope.loadData();
         });
-    }
+    };
+
+    $scope.respond = function(friendship) {
+
+    };
+    
+    $scope.cancel = function (friendship) {
+        friendsService.delete(friendship.id, function() {
+            $scope.loadData();
+        });
+    };
+
+    // Respond menu
+
+    var originatorEv;
+
+    $scope.openMenu = function($mdOpenMenu, ev) {
+        originatorEv = ev;
+        $mdOpenMenu(ev);
+    };
+
+    $scope.accept = function(friendship, ev) {
+        friendship.status = 'ACCEPTED';
+        friendsService.patch(friendship, function () {
+            $scope.loadData();
+        });
+        originatorEv = null;
+    };
+
+    $scope.decline = function(friendship, ev) {
+        friendship.status = 'DECLINED';
+        friendsService.patch(friendship, function () {
+            $scope.loadData();
+        });
+        originatorEv = null;
+    };
 });

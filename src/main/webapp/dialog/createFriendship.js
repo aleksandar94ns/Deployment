@@ -7,8 +7,10 @@ app.controller('CreateFriendshipController', function ($scope, $stateParams, $ht
     $scope.queryUsers = function (searchText) {
         var queryResults = [];
         for (var i = 0; i < $scope.users.length; i++) {
-            if ($scope.users[i].firstName.match(searchText) || $scope.users[i].lastName.match(searchText)
-                || searchText.match($scope.users[i].firstName) || searchText.match($scope.users[i].lastName)) {
+            if ($scope.users[i].firstName.toLowerCase().match(searchText.toLowerCase()) ||
+                $scope.users[i].lastName.toLowerCase().match(searchText.toLowerCase()) ||
+                searchText.toLowerCase().match($scope.users[i].firstName.toLowerCase()) ||
+                searchText.toLowerCase().match($scope.users[i].lastName.toLowerCase())) {
                 queryResults.push($scope.users[i]);
             }
         }

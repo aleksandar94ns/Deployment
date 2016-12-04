@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Friendship extends BaseModel {
 
     public enum FriendshipStatus {
-        WAITING,
+        PENDING,
         ACCEPTED,
         DECLINED
     }
@@ -29,7 +29,7 @@ public class Friendship extends BaseModel {
     }
 
     public Friendship(Guest originator, Guest recipient) {
-        this.status = FriendshipStatus.WAITING;
+        this.status = FriendshipStatus.PENDING;
         this.originator = originator;
         this.recipient = recipient;
     }

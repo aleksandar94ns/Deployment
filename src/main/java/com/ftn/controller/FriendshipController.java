@@ -34,10 +34,10 @@ public class FriendshipController {
     public ResponseEntity read() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final User user = userDao.findByEmail(authentication.getName());
-        final List<Friendship> friendships = friendshipDao.findFriendshipByStatusAndOriginatorIdOrRecipientId(Friendship.FriendshipStatus.ACCEPTED, user.getId(), user.getId());
-        final List<Guest> friends = friendships.stream().filter(friendship -> friendship.getOriginator().getId() == user.getId()).map(Friendship::getRecipient).collect(Collectors.toList());
-        friends.addAll(friendships.stream().filter(friendship -> friendship.getRecipient().getId() == user.getId()).map(Friendship::getOriginator).collect(Collectors.toList()));
-        return new ResponseEntity<>(friends, HttpStatus.OK);
+        final List<Friendship> friendships = friendshipDao.findByOriginatorIdOrRecipientId(user.getId(), user.getId()).stream().filter(friendship ->
+                friendship.getStatus().equals(Friendship.FriendshipStatus.PENDING) || friendship.getStatus().equals(Friendship.FriendshipStatus.ACCEPTED))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(friendships, HttpStatus.OK);
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -49,7 +49,7 @@ public class FriendshipController {
         guests.removeIf(guest -> guest.getId() == user.getId());
         final List<Friendship> friendships = friendshipDao.findByOriginatorIdOrRecipientId(user.getId(), user.getId());
         friendships.forEach(friendship -> {
-            if (friendship.getStatus() != Friendship.FriendshipStatus.DECLINED || friendship.getRecipient().getId() == user.getId()) {
+            if (friendship.getStatus() == Friendship.FriendshipStatus.DECLINED || friendship.getRecipient().getId() == user.getId()) {
                 if (friendship.getOriginator().getId() == user.getId()) {
                     guests.removeIf(guest -> guest.getId() == friendship.getRecipient().getId());
                 } else {
@@ -72,5 +72,35 @@ public class FriendshipController {
         final Friendship friendship = new Friendship(originator, recipient);
         friendshipDao.save(friendship);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(method = RequestMethod.PATCH)
+    public ResponseEntity edit(@RequestBody Friendship updatedFriendship) {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Guest guest = userDao.findByEmail(authentication.getName());
+        final Friendship friendship = friendshipDao.findById(updatedFriendship.getId());
+        if (friendship == null || friendship.getRecipient().getId() != guest.getId()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (updatedFriendship.getStatus() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        friendship.setStatus(updatedFriendship.getStatus());
+        friendshipDao.save(friendship);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public ResponseEntity delete(@PathVariable long id) {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Guest originator = userDao.findByEmail(authentication.getName());
+        final Friendship friendship = friendshipDao.findById(id);
+        if (originator.getId() != friendship.getOriginator().getId()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        friendshipDao.delete(friendship);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

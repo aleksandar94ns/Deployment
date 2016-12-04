@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface FriendshipDao extends JpaRepository<Friendship, Long> {
 
-    List<Friendship> findFriendshipByStatusAndOriginatorIdOrRecipientId(Friendship.FriendshipStatus friendshipStatus, long originatorId, long recipientId);
+    Friendship findById(long id);
 
     List<Friendship> findByOriginatorIdOrRecipientId(long originatorId, long recipientId);
 }
