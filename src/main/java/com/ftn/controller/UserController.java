@@ -1,9 +1,11 @@
 package com.ftn.controller;
 
+import com.ftn.dto.ChangePasswordDTO;
 import com.ftn.model.Guest;
 import com.ftn.model.User;
 import com.ftn.repository.UserDao;
 import com.ftn.service.MailService;
+import com.google.common.base.Strings;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,5 +63,21 @@ public class UserController {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final User user = userDao.findByEmail(authentication.getName());
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(method = RequestMethod.PATCH, value = "/me/changePassword")
+    public ResponseEntity changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final User user = userDao.findByEmail(authentication.getName());
+        if (Strings.isNullOrEmpty(changePasswordDTO.getOldPassword()) || Strings.isNullOrEmpty(changePasswordDTO.getPassword())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (!encoder.matches(changePasswordDTO.getOldPassword(), user.getPassword())) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        user.setPassword(encoder.encode(changePasswordDTO.getPassword()));
+        userDao.save(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

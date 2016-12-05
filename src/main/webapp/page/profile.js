@@ -18,6 +18,14 @@ app.controller('ProfileController', function ($scope, $state, $http, $mdDialog, 
 
     $scope.loadData();
 
+    $scope.changePassword = function() {
+        $mdDialog.show({
+            parent: angular.element(document.body),
+            templateUrl: 'dialog/changePassword.html',
+            controller: 'ChangePasswordController'
+        });
+    };
+
     $scope.edit = function() {
         $mdDialog.show({
             parent: angular.element(document.body),

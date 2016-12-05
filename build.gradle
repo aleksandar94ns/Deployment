@@ -37,4 +37,5 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-security:1.2.5.RELEASE'
 	compile 'mysql:mysql-connector-java:5.1.36'
 	compile 'org.springframework.boot:spring-boot-starter-mail'
+	compile 'com.google.guava:guava:20.0'
 }
