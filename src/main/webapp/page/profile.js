@@ -1,4 +1,4 @@
-app.controller('ProfileController', function ($scope, $state, $http, $mdDialog, friendsService) {
+app.controller('ProfileController', function ($scope, $state, $http, $mdDialog, usersService, friendsService, authenticationService) {
 
     $scope.page.current = 1;
 
@@ -6,6 +6,10 @@ app.controller('ProfileController', function ($scope, $state, $http, $mdDialog, 
     $scope.acceptedFriendships = [];
 
     $scope.loadData = function() {
+        usersService.getMe(function(response) {
+            $scope.user = response.data;
+            authenticationService.setUser(response.data);
+        });
         friendsService.list(function (response) {
             $scope.pendingFriendships = response.data.filter(function(friendship) {
                 return friendship.status === 'PENDING';
@@ -31,6 +35,8 @@ app.controller('ProfileController', function ($scope, $state, $http, $mdDialog, 
             parent: angular.element(document.body),
             templateUrl: 'dialog/editAccount.html',
             controller: 'EditAccountController'
+        }).finally(function () {
+            $scope.loadData();
         });
     };
 

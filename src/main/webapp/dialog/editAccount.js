@@ -1,16 +1,16 @@
 /**
  * Created by Alex on 10/30/16.
  */
-app.controller('EditAccountController', function ($scope, $state, $http, $mdDialog, authenticationService) {
+app.controller('EditAccountController', function ($scope, $state, $http, $mdDialog, authenticationService, usersService) {
+
+    $scope.user = authenticationService.getUser();
 
     $scope.close = function () {
         $mdDialog.hide();
     };
 
     $scope.submit = function () {
-        $http.patch('/api/users/guests', $scope.user).success(function () {
-            $scope.close();
-        }).error(function () {
+        usersService.edit($scope.user, function() {
             $scope.close();
         });
     };

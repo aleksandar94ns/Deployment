@@ -1,8 +1,11 @@
 package com.ftn.controller;
 
 import com.ftn.dto.ChangePasswordDTO;
+import com.ftn.dto.UserPatchDTO;
 import com.ftn.model.Guest;
 import com.ftn.model.User;
+import com.ftn.model.Waiter;
+import com.ftn.protocol.HasUniform;
 import com.ftn.repository.UserDao;
 import com.ftn.service.MailService;
 import com.google.common.base.Strings;
@@ -77,6 +80,21 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         user.setPassword(encoder.encode(changePasswordDTO.getPassword()));
+        userDao.save(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(method = RequestMethod.PATCH, value = "/me")
+    public ResponseEntity update(@RequestBody UserPatchDTO userPatchDTO) {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final User user = userDao.findByEmail(authentication.getName());
+        user.setFirstName(userPatchDTO.getFirstName());
+        user.setLastName(userPatchDTO.getLastName());
+        if (user instanceof HasUniform) {
+            ((HasUniform) user).setDressSize(userPatchDTO.getDressSize());
+            ((HasUniform) user).setFootwearSize(userPatchDTO.getFootwearSize());
+        }
         userDao.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }

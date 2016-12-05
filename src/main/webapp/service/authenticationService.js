@@ -42,6 +42,9 @@ app.service('authenticationService', function ($http, $window) {
         removeUser: function () {
             LOCAL_STORAGE_INSTANCE && LOCAL_STORAGE_INSTANCE.removeItem(LOCAL_STORAGE_KEY);
         },
+        hasUniform: function() {
+            return isBartender() || isChef() || isWaiter();
+        },
         isBartender: function () {
             return this.getUser().role === 'BARTENDER';
         },
