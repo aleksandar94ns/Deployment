@@ -81,8 +81,8 @@ public class FriendshipController {
     public ResponseEntity edit(@RequestBody Friendship updatedFriendship) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Guest guest = userDao.findByEmail(authentication.getName());
-        final Friendship friendship = friendshipDao.findById(updatedFriendship.getId());
-        if (friendship == null || friendship.getRecipient().getId() != guest.getId()) {
+        final Friendship friendship = friendshipDao.findById(updatedFriendship.getId()).orElseThrow(NotFoundException::new);
+        if (friendship.getRecipient().getId() != guest.getId()) {
             throw new NotFoundException();
         }
         if (updatedFriendship.getStatus() == null) {
@@ -98,7 +98,7 @@ public class FriendshipController {
     public ResponseEntity delete(@PathVariable long id) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Guest originator = userDao.findByEmail(authentication.getName());
-        final Friendship friendship = friendshipDao.findById(id);
+        final Friendship friendship = friendshipDao.findById(id).orElseThrow(NotFoundException::new);
         if (originator.getId() != friendship.getOriginator().getId()) {
             throw new NotFoundException();
         }

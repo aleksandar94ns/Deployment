@@ -15,7 +15,7 @@ app.controller('CreateFriendshipController', function ($scope, $stateParams, $ht
             }
         }
         return queryResults;
-    }
+    };
 
     $scope.submit = function () {
         friendsService.create($scope.selectedUser, function() {
