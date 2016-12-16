@@ -1,5 +1,7 @@
 package com.ftn.controller;
 
+import com.ftn.exception.BadRequestException;
+import com.ftn.exception.NotFoundException;
 import com.ftn.model.Friendship;
 import com.ftn.model.Guest;
 import com.ftn.model.User;
@@ -67,7 +69,7 @@ public class FriendshipController {
         final Guest originator = userDao.findByEmail(authentication.getName());
         final Guest recipient = userDao.findById(guest.getId());
         if (recipient == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new NotFoundException();
         }
         final Friendship friendship = new Friendship(originator, recipient);
         friendshipDao.save(friendship);
@@ -81,10 +83,10 @@ public class FriendshipController {
         final Guest guest = userDao.findByEmail(authentication.getName());
         final Friendship friendship = friendshipDao.findById(updatedFriendship.getId());
         if (friendship == null || friendship.getRecipient().getId() != guest.getId()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new NotFoundException();
         }
         if (updatedFriendship.getStatus() == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new BadRequestException();
         }
         friendship.setStatus(updatedFriendship.getStatus());
         friendshipDao.save(friendship);
@@ -98,7 +100,7 @@ public class FriendshipController {
         final Guest originator = userDao.findByEmail(authentication.getName());
         final Friendship friendship = friendshipDao.findById(id);
         if (originator.getId() != friendship.getOriginator().getId()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new NotFoundException();
         }
         friendshipDao.delete(friendship);
         return new ResponseEntity<>(HttpStatus.OK);

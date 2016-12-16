@@ -2,9 +2,10 @@ package com.ftn.controller;
 
 import com.ftn.dto.ChangePasswordDTO;
 import com.ftn.dto.UserPatchDTO;
+import com.ftn.exception.BadRequestException;
+import com.ftn.exception.NotFoundException;
 import com.ftn.model.Guest;
 import com.ftn.model.User;
-import com.ftn.model.Waiter;
 import com.ftn.protocol.HasUniform;
 import com.ftn.repository.UserDao;
 import com.ftn.service.MailService;
@@ -15,11 +16,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -53,7 +54,7 @@ public class UserController {
     public ResponseEntity verify(@PathVariable String confirmationCode) {
         final Guest guest = userDao.findByConfirmationCode(confirmationCode);
         if (guest == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new NotFoundException();
         }
         guest.setEnabled(true);
         userDao.save(guest);
@@ -74,10 +75,10 @@ public class UserController {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final User user = userDao.findByEmail(authentication.getName());
         if (Strings.isNullOrEmpty(changePasswordDTO.getOldPassword()) || Strings.isNullOrEmpty(changePasswordDTO.getPassword())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new BadRequestException();
         }
         if (!encoder.matches(changePasswordDTO.getOldPassword(), user.getPassword())) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            throw new com.ftn.exception.AuthenticationException();
         }
         user.setPassword(encoder.encode(changePasswordDTO.getPassword()));
         userDao.save(user);

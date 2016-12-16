@@ -1,16 +1,11 @@
 <div class="container">
     <div layout="column">
         <div layout="row">
-            <h3>Home</h3>
+            <h3>Restaurants</h3>
         </div>
         <md-divider></md-divider>
         <md-card ng-class="{'md-whiteframe-4dp':hovering}"
                  ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
-            <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">Restaurants you visited</span>
-                </md-card-title-text>
-            </md-card-title>
             <md-list flex>
                 <md-list-item class="md-3-line" ng-repeat="restaurant in restaurants" ng-click="null">
                     <div class="md-list-item-text" style="margin-left: 20px;">

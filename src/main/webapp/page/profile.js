@@ -1,6 +1,6 @@
 app.controller('ProfileController', function ($scope, $state, $http, $mdDialog, usersService, friendsService, authenticationService) {
 
-    $scope.page.current = 1;
+    $scope.page.current = 2;
 
     $scope.pendingFriendships = [];
     $scope.acceptedFriendships = [];
