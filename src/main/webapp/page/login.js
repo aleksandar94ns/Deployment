@@ -5,7 +5,11 @@ app.controller('LoginController', function ($scope, $state, $http, $mdDialog, au
             $http.get('/api/users/me')
                 .success(function (user) {
                     authenticationService.setUser(user);
-                    $state.transitionTo('navigation.home');
+                    if (authenticationService.isSystemManager()) {
+                        $state.transitionTo('navigation.managers');
+                    } else {
+                        $state.transitionTo('navigation.home');
+                    }
                 })
                 .error(error);
         }, error);
