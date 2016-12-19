@@ -1,0 +1,52 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="restaurantForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Name</label>
+                    <input id="name" name="name" type="text" data-ng-model="restaurant.name"
+                           required>
+                    <div ng-messages="restaurantForm.name.$error"
+                         ng-if="restaurantForm.name.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Description</label>
+                    <input id="description" name="description" type="text" data-ng-model="restaurant.description"
+                           required>
+                    <div ng-messages="restaurantForm.description.$error"
+                         ng-if="restaurantForm.description.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-autocomplete
+                        ng-disabled="ctrl.isDisabled"
+                        md-no-cache="ctrl.noCache"
+                        md-selected-item="restaurant.restaurantType"
+                        md-search-text="searchText"
+                        md-items="item in queryTypes(searchText)"
+                        md-item-text="item.name"
+                        placeholder="Search restaurant types...">
+                    <md-item-template>
+                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.name}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No restaurant types matching "{{searchText}}" were found.
+                    </md-not-found>
+                </md-autocomplete>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Close</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="restaurantForm.$invalid || restaurant.restaurantType == null">Create
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+
+
+
+

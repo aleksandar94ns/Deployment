@@ -5,6 +5,9 @@ app.service('restaurantsService', function($http){
         },
         list: function(onSuccess, onError){
             $http.get('/api/restaurants').then(onSuccess, onError);
+        },
+        create: function (restaurant, onSuccess, onError) {
+            $http.post('/api/restaurants', restaurant).then(onSuccess, onError);
         }
     }
 });
