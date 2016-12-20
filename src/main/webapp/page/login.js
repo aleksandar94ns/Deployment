@@ -6,7 +6,7 @@ app.controller('LoginController', function ($scope, $state, $http, $mdDialog, au
                 .success(function (user) {
                     authenticationService.setUser(user);
                     if (authenticationService.isSystemManager()) {
-                        $state.transitionTo('navigation.managers');
+                        $state.transitionTo('navigation.restaurantManagers');
                     } else {
                         $state.transitionTo('navigation.home');
                     }

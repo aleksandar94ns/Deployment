@@ -32,8 +32,8 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
         $mdSidenav('left').close();
     };
 
-    $scope.goToManagers = function() {
-        $state.transitionTo('navigation.managers');
+    $scope.goToRestaurantManagers = function() {
+        $state.transitionTo('navigation.restaurantManagers');
         $mdSidenav('left').close();
     };
 

@@ -44,10 +44,10 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             controller: 'HomeController',
             templateUrl: 'page/home.html'
         })
-        .state('navigation.managers', {
-            url: '/managers',
-            controller: 'ManagersController',
-            templateUrl: 'page/managers.html'
+        .state('navigation.restaurantManagers', {
+            url: '/restaurantManagers',
+            controller: 'RestaurantManagersController',
+            templateUrl: 'page/restaurantManagers.html'
         })
         .state('navigation.systemManagers', {
             url: '/systemManagers',
