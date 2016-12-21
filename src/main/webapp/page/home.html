@@ -12,12 +12,13 @@
                 </md-card-title-text>
             </md-card-title>
             <md-list flex>
-                <md-list-item class="md-3-line" ng-repeat="restaurant in restaurants" ng-click="null">
+                <md-list-item class="md-3-line" ng-repeat="restaurant in restaurants">
                     <div class="md-list-item-text" style="margin-left: 20px;">
                         <h3>{{ restaurant.name }}</h3>
                         <h4>{{ restaurant.description }}</h4>
                         <p>{{ restaurant.restaurantType.name }}</p>
                     </div>
+                    <md-button class="md-secondary" ng-click="rate(restaurant)">Rate</md-button>
                 </md-list-item>
             </md-list>
             </md-card-content>

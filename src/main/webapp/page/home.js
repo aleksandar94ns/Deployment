@@ -7,4 +7,15 @@ app.controller('HomeController', function ($scope, $http, $state, $location, $lo
     restaurantsService.listVisited(function(response) {
        $scope.restaurants = response.data;
     });
+
+    $scope.rate = function(reservation) {
+        $mdDialog.show({
+            parent: angular.element(document.body),
+            templateUrl: 'dialog/rateRestaurant.html',
+            controller: 'RateRestaurantController',
+            locals: {
+                reservation: reservation
+            }
+        });
+    };
 });
