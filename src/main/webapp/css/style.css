@@ -2,3 +2,28 @@ pre {
     border: none;
     background-color: transparent;
 }
+
+.virtualRepeatInfiniteScroll #vertical-container {
+    height: 292px;
+    width: 100%;
+    max-width: 400px; }
+
+.virtualRepeatInfiniteScroll .repeated-item {
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    height: 40px;
+    padding-top: 10px; }
+
+.virtualRepeatInfiniteScroll md-content {
+    margin: 16px; }
+
+.virtualRepeatInfiniteScroll md-virtual-repeat-container {
+    border: solid 1px grey; }
+
+.virtualRepeatInfiniteScroll .md-virtual-repeat-container .md-virtual-repeat-offsetter div {
+    padding-left: 16px; }
+
+.navBardemoBasicUsage md-content .ext-content {
+    padding: 50px;
+    margin: 20px;
+    background-color: #FFF2E0; }

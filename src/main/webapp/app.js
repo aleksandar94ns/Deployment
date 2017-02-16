@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var app = angular.module('app', ['ui.router', 'ngMessages', 'ngMaterial']);
+var app = angular.module('app', ['ui.router', 'ngMessages', 'ngMaterial', 'material.svgAssetsCache']);
 
 app.factory('authInterceptor', ['$q', '$injector', function ($q, $injector) {
     var authInterceptor = {
@@ -63,5 +63,40 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             url: '/profile',
             controller: 'ProfileController',
             templateUrl: 'page/profile.html'
+        })
+        .state('navigation.workingPlace', {
+            url: '/workingPlace',
+            controller: 'WorkingPlaceController',
+            templateUrl: 'page/workingPlace.html'
+        })
+        .state('navigation.workingPlace.workingArea', {
+            url: '/workingArea',
+            controller: 'WorkingAreaController',
+            templateUrl: 'page/workingArea.html'
+        })
+        .state('navigation.workingPlace.workingHours', {
+            url: '/workingHourse',
+            controller: 'WorkingHoursController',
+            templateUrl: 'page/workingHours.html'
+        })
+        .state('navigation.workingPlace.drinks', {
+            url: '/drinks',
+            controller: 'DrinksController',
+            templateUrl: 'page/drinks.html'
+        })
+        .state('navigation.workingPlace.salads', {
+            url: '/salads',
+            controller: 'SaladsController',
+            templateUrl: 'page/salads.html'
+        })
+        .state('navigation.workingPlace.cookedMeals', {
+            url: '/cookedMeals',
+            controller: 'CookedMealsController',
+            templateUrl: 'page/cookedMeals.html'
+        })
+        .state('navigation.workingPlace.grillMeals', {
+            url: '/grillMeals',
+            controller: 'GrillMealsController',
+            templateUrl: 'page/grillMeals.html'
         });
 });
