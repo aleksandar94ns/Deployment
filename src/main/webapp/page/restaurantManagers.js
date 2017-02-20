@@ -3,7 +3,7 @@ app.controller('RestaurantManagersController', function ($scope, $http, $state, 
     $scope.page.current = 0;
 
     restaurantManagersService.list(function (response) {
-       $scope.restaurantManagers = response.data;
+        $scope.restaurantManagers = response.data;
     });
 
     $scope.addRestaurantManager = function() {
@@ -11,6 +11,10 @@ app.controller('RestaurantManagersController', function ($scope, $http, $state, 
             parent: angular.element(document.body),
             templateUrl: 'dialog/createRestaurantManager.html',
             controller: 'CreateRestaurantManagerController'
+        }).finally(function () {
+            restaurantManagersService.list(function (response) {
+                $scope.restaurantManagers = response.data;
+            });
         });
     };
 

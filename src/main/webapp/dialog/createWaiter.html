@@ -1,0 +1,77 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="createWaiterForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Email</label>
+                    <input id="email" name="email" type="email" data-ng-model="user.email" required
+                           ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/">
+                    <div ng-messages="createWaiterForm.email.$error" role="alert"
+                         ng-if="createWaiterForm.email.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                        <div ng-message="pattern">Email address must be valid.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Password</label>
+                    <input id="password" name="password" type="password" data-ng-model="user.password"
+                           required>
+                    <div ng-messages="createWaiterForm.password.$error"
+                         ng-if="createWaiterForm.password.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Confirm password</label>
+                    <input id="confirmPassword" name="confirmPassword" type="password"
+                           required>
+                    <div ng-messages="createWaiterForm.password.$error"
+                         ng-if="createWaiterForm.password.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>First Name</label>
+                    <input id="firstName" name="firstName" type="text" data-ng-model="user.firstName" required>
+                    <div ng-messages="createWaiterForm.firstName.$error" ng-if="createWaiterForm.firstName.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Last Name</label>
+                    <input id="lastName" name="lastName" type="text" data-ng-model="user.lastName"
+                           required>
+                    <div ng-messages="createWaiterForm.lastName.$error" ng-if="createWaiterForm.lastName.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-autocomplete
+                        ng-disabled="ctrl.isDisabled"
+                        md-no-cache="ctrl.noCache"
+                        md-selected-item="user.restaurant"
+                        md-search-text="searchText"
+                        md-items="item in queryRestaurants(searchText)"
+                        md-item-text="item.name"
+                        placeholder="Search restaurants...">
+                    <md-item-template>
+                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.name}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No restaurants matching "{{searchText}}" were found.
+                    </md-not-found>
+                </md-autocomplete>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Close</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="createWaiterForm.$invalid">Create
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+
+
+
+

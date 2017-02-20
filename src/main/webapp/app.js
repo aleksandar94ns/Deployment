@@ -59,6 +59,11 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             controller: 'RestaurantsController',
             templateUrl: 'page/restaurants.html'
         })
+        .state('navigation.waiters', {
+            url: '/waiters',
+            controller: 'WaitersController',
+            templateUrl: 'page/waiters.html'
+        })
         .state('navigation.profile', {
             url: '/profile',
             controller: 'ProfileController',

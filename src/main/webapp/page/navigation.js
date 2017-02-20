@@ -51,4 +51,9 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
         $state.transitionTo('navigation.profile');
         $mdSidenav('left').close();
     };
+
+    $scope.goToWaiters = function () {
+        $state.transitionTo('navigation.waiters');
+        $mdSidenav('left').close();
+    };
 });

@@ -13,6 +13,10 @@ app.controller('RestaurantsController', function ($scope, $http, $state, $locati
             parent: angular.element(document.body),
             templateUrl: 'dialog/createRestaurant.html',
             controller: 'CreateRestaurantController'
+        }).finally(function () {
+            restaurantsService.list(function(response) {
+                $scope.restaurants = response.data;
+            });
         });
     };
 

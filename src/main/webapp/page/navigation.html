@@ -27,7 +27,7 @@
             </div>
         </md-toolbar>
         <md-content layout-padding>
-            <md-input-container class="md-block sidenav-item" ng-if="!authService.isSystemManager()">
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isGuest()">
                 <md-button ng-click="goToHome()" class="md-primary sidenav-item"  ng-disabled="isActive(0)">
                     Home
                 </md-button>
@@ -47,7 +47,11 @@
                     Restaurants
                 </md-button>
             </md-input-container>
-
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">
+                <md-button ng-click="goToWaiters()" class="md-primary sidenav-item"  ng-disabled="isActive(4)">
+                    Waiters
+                </md-button>
+            </md-input-container>
             <md-input-container class="md-block sidenav-item">
                 <md-button ng-click="goToProfile()" class="md-primary sidenav-item"  ng-disabled="isActive(2)">
                     Profile
