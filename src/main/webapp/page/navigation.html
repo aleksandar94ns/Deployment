@@ -52,6 +52,11 @@
                     Waiters
                 </md-button>
             </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">
+                <md-button ng-click="goToBartenders()" class="md-primary sidenav-item"  ng-disabled="isActive(5)">
+                    Bartenders
+                </md-button>
+            </md-input-container>
             <md-input-container class="md-block sidenav-item">
                 <md-button ng-click="goToProfile()" class="md-primary sidenav-item"  ng-disabled="isActive(2)">
                     Profile

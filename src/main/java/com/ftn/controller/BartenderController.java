@@ -1,14 +1,10 @@
 package com.ftn.controller;
 
 import com.ftn.exception.BadRequestException;
-import com.ftn.model.Guest;
-import com.ftn.model.Manager;
-import com.ftn.model.User;
-import com.ftn.model.Waiter;
-import com.ftn.model.Restaurant;
+import com.ftn.model.*;
+import com.ftn.repository.BartenderDao;
 import com.ftn.repository.RestaurantDao;
 import com.ftn.repository.UserDao;
-import com.ftn.repository.WaiterDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 /**
- * Created by Alek on 2/20/2017.
+ * Created by Alek on 2/21/2017.
  */
 @RestController
-@RequestMapping("/api/users/waiters")
-public class WaitersController {
+@RequestMapping("/api/users/bartenders")
+public class BartenderController {
 
     @Autowired
     UserDao userDao;
@@ -41,7 +34,7 @@ public class WaitersController {
     RestaurantDao restaurantDao;
 
     @Autowired
-    WaiterDao waiterDao;
+    BartenderDao bartenderDao;
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
@@ -49,27 +42,25 @@ public class WaitersController {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Manager manager = userDao.findByEmail(authentication.getName());
         final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
-        return new ResponseEntity<>(waiterDao.findByRestaurantIdAndRole(restaurant.getId(), User.Role.WAITER), HttpStatus.OK);
-        //return new ResponseEntity<>(waiterDao.findByRestaurant(restaurant.getId()), HttpStatus.OK);
-        //return new ResponseEntity<>(userDao.findByRole(User.Role.WAITER).stream().filter(waiter -> restaurant.equals(waiterDao.findByRestaurant(restaurant.getClass().getName()))).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<>(bartenderDao.findByRestaurantIdAndRole(restaurant.getId(), User.Role.BARTENDER), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity create(@RequestBody Waiter waiter) {
+    public ResponseEntity create(@RequestBody Bartender bartender) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Manager manager = userDao.findByEmail(authentication.getName());
-        waiter.setRestaurant(manager.getRestaurant());
-        if (waiter.getRestaurant() == null) {
+        bartender.setRestaurant(manager.getRestaurant());
+        if (bartender.getRestaurant() == null) {
             throw new BadRequestException();
         }
-        restaurantDao.findById(waiter.getRestaurant().getId()).orElseThrow(BadRequestException::new);
-        waiter.setRole(User.Role.WAITER);
-        waiter.setPassword(encoder.encode(waiter.getPassword()));
-        waiter.setEnabled(true);
+        restaurantDao.findById(bartender.getRestaurant().getId()).orElseThrow(BadRequestException::new);
+        bartender.setRole(User.Role.BARTENDER);
+        bartender.setPassword(encoder.encode(bartender.getPassword()));
+        bartender.setEnabled(true);
         //manager.setConfirmationCode(UUID.randomUUID().toString());
-        userDao.save(waiter);
+        userDao.save(bartender);
         //mailService.sendVerificationMail(request, manager.getEmail(), manager.getConfirmationCode());
-        return new ResponseEntity<>(waiter, HttpStatus.CREATED);
+        return new ResponseEntity<>(bartender, HttpStatus.CREATED);
     }
 }
