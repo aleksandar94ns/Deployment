@@ -53,7 +53,7 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
 
     //--------------------------------------
     $scope.goToWorkingPlace = function () {
-        $state.transitionTo('navigation.workingPlace');
+        $state.transitionTo('navigation.workingPlace.workingHours');
         $mdSidenav('left').close();
         $scope.page.current = 3;
     };

@@ -54,7 +54,7 @@
                 </md-button>
             </md-input-container>
             <!--Boki-->
-            <md-input-container class="md-block sidenav-item">
+            <md-input-container class="md-block sidenav-item" ng-if="authService.hasUniform()">
                 <md-button ng-click="goToWorkingPlace()" class="md-primary sidenav-item"  ng-disabled="isActive(3)">
                     Working place
                 </md-button>

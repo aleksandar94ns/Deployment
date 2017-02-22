@@ -6,23 +6,25 @@
                 <ui-view></ui-view>
             </md-tab>
             //dostupno konobaru
-            <md-tab label="Working Area" ng-click="goToWorkingArea()">
+            <md-tab label="Working Area" ng-click="goToWorkingArea()" ng-if="authService.isWaiter()">
                 <ui-view></ui-view>
             </md-tab>
             //dostupno sankeru
-            <md-tab label="List of orders - DRINKS" ng-click="goToDrinks()">
+            <md-tab label="List of orders - DRINKS" ng-click="goToDrinks()" ng-if="authService.isBartender()">
                 <ui-view></ui-view>
             </md-tab>
             //dostupno kuvaru zaduzenom za salate
-            <md-tab label="List of orders - SALADS" ng-click="goToSalads()">
+
+            <md-tab label="List of orders - SALADS" ng-click="goToSalads()" ng-if="authService.isChef()">
                 <ui-view></ui-view>
             </md-tab>
             //dostupno kuvaru zaduzenom za kuvana jela
-            <md-tab label="List of orders - COOKED MEALS" ng-click="goToCookedMeals()">
+
+            <md-tab label="List of orders - COOKED MEALS" ng-click="goToCookedMeals()" ng-if="authService.isChef()">
                 <ui-view></ui-view>
             </md-tab>
             //dostupno kuvaru zaduzenom za pecena jela
-            <md-tab label="List of orders - GRILL MEALS" ng-click="goToGrillMeals()">
+            <md-tab label="List of orders - GRILL MEALS" ng-click="goToGrillMeals()" ng-if="authService.isChef()">
                 <ui-view></ui-view>
             </md-tab>
 

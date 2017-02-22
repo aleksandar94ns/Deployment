@@ -1,7 +1,8 @@
 app.controller('WorkingPlaceController', WorkingPlaceController);
 
-function WorkingPlaceController($scope, $state) {
+function WorkingPlaceController($scope, $state, authenticationService) {
 
+    $scope.authService = authenticationService;
     $scope.goToWorkingArea = function() {
         $state.transitionTo('navigation.workingPlace.workingArea');
 
