@@ -45,6 +45,22 @@
                         <div ng-message="required">This field cannot be empty.</div>
                     </div>
                 </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Dress Size</label>
+                    <input id="dressSize" name="dressSize" type="text" data-ng-model="user.dressSize"
+                           required>
+                    <div ng-messages="createBartenderForm.dressSize.$error" ng-if="createBartenderForm.dressSize.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Footwear Size</label>
+                    <input id="footwearSize" name="footwearSize" type="text" data-ng-model="user.footwearSize"
+                           required>
+                    <div ng-messages="createBartenderForm.footwearSize.$error" ng-if="createBartenderForm.footwearSize.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
             </md-dialog-content>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
