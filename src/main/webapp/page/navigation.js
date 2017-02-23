@@ -66,4 +66,9 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
         $state.transitionTo('navigation.sellers');
         $mdSidenav('left').close();
     };
+
+    $scope.goToDrinkCards = function () {
+        $state.transitionTo('navigation.drinkCards');
+        $mdSidenav('left').close();
+    };
 });
