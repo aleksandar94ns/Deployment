@@ -45,8 +45,7 @@ public class DrinkItemController {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Manager manager = userDao.findByEmail(authentication.getName());
         final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
-        DrinkItem drinkItemList = drinkItemDao.findById((long)1);
-        return new ResponseEntity<>(drinkItemDao.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(drinkItemDao.findByDrinkCardRestaurantId(restaurant.getId()), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('MANAGER')")

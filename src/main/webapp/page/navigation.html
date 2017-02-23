@@ -37,7 +37,7 @@
                     Restaurant Managers
                 </md-button>
             </md-input-container>
-            <md-input-container class="md-block sidenav-item" ng-if="authService.isSystemManager()">
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isAdmin()">
                 <md-button ng-click="goToSystemManagers()" class="md-primary sidenav-item"  ng-disabled="isActive(-1)">
                     System Managers
                 </md-button>

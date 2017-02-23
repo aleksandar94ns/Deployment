@@ -1,0 +1,27 @@
+<div class="container">
+    <div layout="column">
+        <div layout="row">
+            <h3>System Managers</h3>
+            <span flex></span>
+            <md-button class="md-fab md-mini md-primary"
+                       aria-label="Add System Manager" ng-click="addSystemManager()">
+                <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
+            </md-button>
+        </div>
+        <md-divider></md-divider>
+        <md-card ng-class="{'md-whiteframe-4dp':hovering}"
+                 ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+            <md-card-title>
+            </md-card-title>
+            <md-list flex>
+                <md-list-item class="md-3-line" ng-repeat="systemManager in systemManagers" ng-click="null">
+                    <div class="md-list-item-text" style="margin-left: 20px;">
+                        <h3>{{ systemManager.firstName }} {{ systemManager.lastName }}</h3>
+                        <h4>{{ systemManager.email }}</h4>
+                    </div>
+                </md-list-item>
+            </md-list>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>
