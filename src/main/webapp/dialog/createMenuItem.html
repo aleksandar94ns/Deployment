@@ -1,0 +1,70 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="createMenuItemForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Name</label>
+                    <input id="name" name="name" type="text" data-ng-model="menuItem.name" required>
+                    <div ng-messages="createMenuItemForm.name.$error" ng-if="createMenuItemForm.name.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Description</label>
+                    <input id="description" name="description" type="text" data-ng-model="menuItem.description" required>
+                    <div ng-messages="createMenuItemForm.description.$error" ng-if="createMenuItemForm.description.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Price</label>
+                    <input id="price" name="price" type="number" data-ng-model="menuItem.price" required>
+                    <div ng-messages="createMenuItemForm.price.$error" ng-if="createMenuItemForm.price.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-autocomplete
+                        ng-disabled="ctrl.isDisabled"
+                        md-no-cache="ctrl.noCache"
+                        md-selected-item="menuItem.menu"
+                        md-search-text="searchText"
+                        md-items="item in queryMenus(searchText)"
+                        md-item-text="item.name"
+                        placeholder="Search Menus...">
+                    <md-item-template>
+                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.name}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No menus matching "{{searchText}}" were found.
+                    </md-not-found>
+                </md-autocomplete>
+                <md-autocomplete
+                        ng-disabled="ctrl.isDisabled"
+                        md-no-cache="ctrl.noCache"
+                        md-selected-item="menuItem.speciality"
+                        md-search-text="searchSpec"
+                        md-items="item in queryChefs(searchSpec)"
+                        md-item-text="item"
+                        placeholder="Search specialities...">
+                    <md-item-template>
+                        <span md-highlight-text="searchSpec" md-highlight-flags="^i">{{item}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No specialities matching "{{searchSpec}}" were found.
+                    </md-not-found>
+                </md-autocomplete>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Close</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="createMenuItemForm.$invalid">Create
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+
+
+
+

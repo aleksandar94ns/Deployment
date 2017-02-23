@@ -77,6 +77,11 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
         $mdSidenav('left').close();
     };
 
+    $scope.goToMenuItems = function () {
+        $state.transitionTo('navigation.menuItems');
+        $mdSidenav('left').close();
+    };
+
     $scope.goToDrinkCards = function () {
         $state.transitionTo('navigation.drinkCards');
         $mdSidenav('left').close();
