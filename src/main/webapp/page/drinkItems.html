@@ -1,10 +1,10 @@
 <div class="container">
     <div layout="column">
         <div layout="row">
-            <h3>Drink Cards</h3>
+            <h3>Drink Items</h3>
             <span flex></span>
             <md-button class="md-fab md-mini md-primary"
-                       aria-label="Add Drink Card" ng-click="addDrinkCard()">
+                       aria-label="Add DrinkItem" ng-click="addDrinkItem()">
                 <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
             </md-button>
         </div>
@@ -14,10 +14,11 @@
             <md-card-title>
             </md-card-title>
             <md-list flex>
-                <md-list-item class="md-3-line" ng-repeat="drinkCard in drinkCards" ng-click="null">
+                <md-list-item class="md-3-line" ng-repeat="drinkItem in drinkItems" ng-click="null">
                     <div class="md-list-item-text" style="margin-left: 20px;">
-                        <h3>{{ drinkCard.name }}</h3>
-                        <p>{{ drinkCard.restaurant.name }}</p>
+                        <h3>{{ drinkItem.name }}</h3>
+                        <h4> Drink Card : {{ drinkItem.drinkCard.name }}</h4>
+                        <p> Restaurant : {{ drinkItem.drinkCard.restaurant.name }}</p>
                     </div>
                 </md-list-item>
             </md-list>
