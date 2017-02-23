@@ -62,6 +62,11 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
         $mdSidenav('left').close();
     };
 
+    $scope.goToChefs = function () {
+        $state.transitionTo('navigation.chefs');
+        $mdSidenav('left').close();
+    };
+
     $scope.goToSellers = function () {
         $state.transitionTo('navigation.sellers');
         $mdSidenav('left').close();
