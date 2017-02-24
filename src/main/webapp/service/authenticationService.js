@@ -42,8 +42,9 @@ app.service('authenticationService', function ($http, $window) {
         removeUser: function () {
             LOCAL_STORAGE_INSTANCE && LOCAL_STORAGE_INSTANCE.removeItem(LOCAL_STORAGE_KEY);
         },
+
         hasUniform: function() {
-            return isBartender() || isChef() || isWaiter();
+            return this.isBartender() || this.isChef() || this.isWaiter();
         },
         isBartender: function () {
             return this.getUser().role === 'BARTENDER';
@@ -65,7 +66,9 @@ app.service('authenticationService', function ($http, $window) {
         },
         isSeller: function () {
             return this.getUser().role === 'SELLER';
+        },
+        isAdmin: function () {
+            return this.getUser().role === 'ADMIN';
         }
-
     }
 });

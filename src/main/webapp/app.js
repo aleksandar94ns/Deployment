@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var app = angular.module('app', ['ui.router', 'ngMessages', 'ngMaterial']);
+var app = angular.module('app', ['ui.router', 'ngMessages', 'ngMaterial', 'material.svgAssetsCache']);
 
 app.factory('authInterceptor', ['$q', '$injector', function ($q, $injector) {
     var authInterceptor = {
@@ -44,14 +44,99 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             controller: 'HomeController',
             templateUrl: 'page/home.html'
         })
+        .state('navigation.restaurantManagers', {
+            url: '/restaurantManagers',
+            controller: 'RestaurantManagersController',
+            templateUrl: 'page/restaurantManagers.html'
+        })
+        .state('navigation.systemManagers', {
+            url: '/systemManagers',
+            controller: 'SystemManagersController',
+            templateUrl: 'page/systemManagers.html'
+        })
         .state('navigation.restaurants', {
             url: '/restaurants',
             controller: 'RestaurantsController',
             templateUrl: 'page/restaurants.html'
         })
+        .state('navigation.waiters', {
+            url: '/waiters',
+            controller: 'WaitersController',
+            templateUrl: 'page/waiters.html'
+        })
+        .state('navigation.bartenders', {
+            url: '/bartenders',
+            controller: 'BartendersController',
+            templateUrl: 'page/bartenders.html'
+        })
+        .state('navigation.sellers', {
+            url: '/sellers',
+            controller: 'SellersController',
+            templateUrl: 'page/sellers.html'
+        })
+        .state('navigation.drinkCards', {
+            url: '/drinkCards',
+            controller: 'DrinkCardsController',
+            templateUrl: 'page/drinkCards.html'
+        })
+        .state('navigation.drinkItems', {
+            url: '/drinkItems',
+            controller: 'DrinkItemsController',
+            templateUrl: 'page/drinkItems.html'
+        })
+        .state('navigation.chefs', {
+            url: '/chefs',
+            controller: 'ChefsController',
+            templateUrl: 'page/chefs.html'
+        })
+        .state('navigation.menus', {
+            url: '/menus',
+            controller: 'MenusController',
+            templateUrl: 'page/menus.html'
+        })
+        .state('navigation.menuItems', {
+            url: '/menuItems',
+            controller: 'MenuItemsController',
+            templateUrl: 'page/menuItems.html'
+        })
         .state('navigation.profile', {
             url: '/profile',
             controller: 'ProfileController',
             templateUrl: 'page/profile.html'
+        })
+        .state('navigation.workingPlace', {
+            url: '/workingPlace',
+            controller: 'WorkingPlaceController',
+            templateUrl: 'page/workingPlace.html'
+        })
+        .state('navigation.workingPlace.workingArea', {
+            url: '/workingArea',
+            controller: 'WorkingAreaController',
+            templateUrl: 'page/workingArea.html'
+        })
+        .state('navigation.workingPlace.workingHours', {
+            url: '/workingHourse',
+            controller: 'WorkingHoursController',
+            templateUrl: 'page/workingHours.html'
+        })
+        .state('navigation.workingPlace.drinks', {
+            url: '/drinks',
+            controller: 'DrinksController',
+            templateUrl: 'page/drinks.html'
+        })
+        .state('navigation.workingPlace.salads', {
+            url: '/salads',
+            controller: 'SaladsController',
+            templateUrl: 'page/salads.html'
+        })
+        .state('navigation.workingPlace.cookedMeals', {
+            url: '/cookedMeals',
+            controller: 'CookedMealsController',
+            templateUrl: 'page/cookedMeals.html'
+        })
+        .state('navigation.workingPlace.grillMeals', {
+            url: '/grillMeals',
+            controller: 'GrillMealsController',
+            templateUrl: 'page/grillMeals.html'
         });
 });

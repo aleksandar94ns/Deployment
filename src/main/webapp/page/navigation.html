@@ -27,14 +27,64 @@
             </div>
         </md-toolbar>
         <md-content layout-padding>
-            <md-input-container class="md-block sidenav-item">
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isGuest()">
                 <md-button ng-click="goToHome()" class="md-primary sidenav-item"  ng-disabled="isActive(0)">
                     Home
                 </md-button>
             </md-input-container>
-            <md-input-container class="md-block sidenav-item">
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isSystemManager()">
+                <md-button ng-click="goToRestaurantManagers()" class="md-primary sidenav-item"  ng-disabled="isActive(0)">
+                    Restaurant Managers
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isAdmin()">
+                <md-button ng-click="goToSystemManagers()" class="md-primary sidenav-item"  ng-disabled="isActive(-1)">
+                    System Managers
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isSystemManager()">
                 <md-button ng-click="goToRestaurants()" class="md-primary sidenav-item"  ng-disabled="isActive(1)">
                     Restaurants
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">
+                <md-button ng-click="goToWaiters()" class="md-primary sidenav-item"  ng-disabled="isActive(4)">
+                    Waiters
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">
+                <md-button ng-click="goToBartenders()" class="md-primary sidenav-item"  ng-disabled="isActive(5)">
+                    Bartenders
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">
+                <md-button ng-click="goToChefs()" class="md-primary sidenav-item"  ng-disabled="isActive(9)">
+                    Chefs
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">
+                <md-button ng-click="goToSellers()" class="md-primary sidenav-item"  ng-disabled="isActive(6)">
+                    Sellers
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">
+                <md-button ng-click="goToMenus()" class="md-primary sidenav-item"  ng-disabled="isActive(10)">
+                    Menus
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">
+                <md-button ng-click="goToMenuItems()" class="md-primary sidenav-item"  ng-disabled="isActive(11)">
+                    Menu Items
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">
+                <md-button ng-click="goToDrinkCards()" class="md-primary sidenav-item"  ng-disabled="isActive(7)">
+                    Drink Cards
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">
+                <md-button ng-click="goToDrinkItems()" class="md-primary sidenav-item"  ng-disabled="isActive(8)">
+                    Drink Items
                 </md-button>
             </md-input-container>
             <md-input-container class="md-block sidenav-item">
@@ -42,6 +92,13 @@
                     Profile
                 </md-button>
             </md-input-container>
+            <!--Boki-->
+            <md-input-container class="md-block sidenav-item" ng-if="authService.hasUniform()">
+                <md-button ng-click="goToWorkingPlace()" class="md-primary sidenav-item"  ng-disabled="isActive(9)">
+                    Working place
+                </md-button>
+            </md-input-container>
+            <!---->
         </md-content>
     </md-sidenav>
     <section id="container" class="page active">

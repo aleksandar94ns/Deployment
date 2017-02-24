@@ -2,6 +2,11 @@
     <div layout="column">
         <div layout="row">
             <h3>Restaurants</h3>
+            <span flex></span>
+            <md-button class="md-fab md-mini md-primary" ng-if="authService.isSystemManager()"
+                       aria-label="Add Store" ng-click="addRestaurant()">
+                <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
+            </md-button>
         </div>
         <md-divider></md-divider>
         <md-card ng-class="{'md-whiteframe-4dp':hovering}"

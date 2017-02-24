@@ -1,0 +1,55 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="createDrinkItemForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Name</label>
+                    <input id="name" name="name" type="text" data-ng-model="drinkItem.name" required>
+                    <div ng-messages="createDrinkItemForm.name.$error" ng-if="createDrinkItemForm.name.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Description</label>
+                    <input id="description" name="description" type="text" data-ng-model="drinkItem.description" required>
+                    <div ng-messages="createDrinkItemForm.description.$error" ng-if="createDrinkItemForm.description.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Price</label>
+                    <input id="price" name="price" type="number" data-ng-model="drinkItem.price" required>
+                    <div ng-messages="createDrinkItemForm.price.$error" ng-if="createDrinkItemForm.price.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-autocomplete
+                        ng-disabled="ctrl.isDisabled"
+                        md-no-cache="ctrl.noCache"
+                        md-selected-item="drinkItem.drinkCard"
+                        md-search-text="searchText"
+                        md-items="item in queryDrinkCards(searchText)"
+                        md-item-text="item.name"
+                        placeholder="Search drink cards...">
+                    <md-item-template>
+                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.name}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No drink cards matching "{{searchText}}" were found.
+                    </md-not-found>
+                </md-autocomplete>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Close</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="createDrinkItemForm.$invalid">Create
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+
+
+
+

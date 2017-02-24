@@ -18,4 +18,19 @@ public class Manager extends User {
     public Manager() {
         this.setRole(Role.MANAGER);
     }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    @Override
+    public String toString() {
+        return "Manager{" +
+                "restaurant=" + restaurant +
+                '}';
+    }
 }

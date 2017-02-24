@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class User extends BaseModel {
 
     public enum Role {
+        ADMIN,
         GUEST,
         MANAGER,
         WAITER,

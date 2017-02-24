@@ -1,0 +1,15 @@
+
+<div ng-controller="CookedMealsController as ctrl" ng-cloak="" class="virtualRepeatdemoInfiniteScroll" >
+    <md-content layout="column">
+        <p>
+        <h2>Cooked Meals</h2>
+        </p>
+
+        <md-virtual-repeat-container id="vertical-container">
+            <div md-virtual-repeat="item in ctrl.infiniteItems" md-on-demand="" class="repeated-item" flex="">
+                {{item}}
+            </div>
+        </md-virtual-repeat-container>
+    </md-content>
+
+</div>

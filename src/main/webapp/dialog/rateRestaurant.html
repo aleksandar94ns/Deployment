@@ -1,0 +1,26 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="rateForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Restaurant rating</label>
+                    <md-slider style="margin-left: 20px; margin-right: 20px; margin-top: 30px;" flex class="md-primary" md-discrete ng-model="grade.restaurant" step="1" min="1" max="10" aria-label="rating" value></md-slider>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Meal rating</label>
+                    <md-slider style="margin-left: 20px; margin-right: 20px; margin-top: 30px;" flex class="md-primary" md-discrete ng-model="grade.meal" step="1" min="1" max="10" aria-label="rating"></md-slider>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Waiter rating</label>
+                    <md-slider style="margin-left: 20px; margin-right: 20px; margin-top: 30px;" flex class="md-primary" md-discrete ng-model="grade.waiter" step="1" min="1" max="10" aria-label="rating"></md-slider>
+                </md-input-container>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Close</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="rateForm.$invalid">Submit
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
