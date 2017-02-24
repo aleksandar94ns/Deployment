@@ -1,0 +1,35 @@
+<div ng-cloak="" class="tabsdemoDynamicHeight" ng-controller="WorkingPlaceController" >
+    <md-content>
+        <md-tabs md-dynamic-height="" md-border-bottom="">
+
+            <md-tab label="Working Hours" ng-click="goToWorkingHours()">
+                <ui-view></ui-view>
+            </md-tab>
+            //dostupno konobaru
+            <md-tab label="Working Area" ng-click="goToWorkingArea()" ng-if="authService.isWaiter()">
+                <ui-view></ui-view>
+            </md-tab>
+            //dostupno sankeru
+            <md-tab label="List of orders - DRINKS" ng-click="goToDrinks()" ng-if="authService.isBartender()">
+                <ui-view></ui-view>
+            </md-tab>
+            //dostupno kuvaru zaduzenom za salate
+
+            <md-tab label="List of orders - SALADS" ng-click="goToSalads()" ng-if="authService.isChef()">
+                <ui-view></ui-view>
+            </md-tab>
+            //dostupno kuvaru zaduzenom za kuvana jela
+
+            <md-tab label="List of orders - COOKED MEALS" ng-click="goToCookedMeals()" ng-if="authService.isChef()">
+                <ui-view></ui-view>
+            </md-tab>
+            //dostupno kuvaru zaduzenom za pecena jela
+            <md-tab label="List of orders - GRILL MEALS" ng-click="goToGrillMeals()" ng-if="authService.isChef()">
+                <ui-view></ui-view>
+            </md-tab>
+
+
+
+        </md-tabs>
+    </md-content>
+</div>

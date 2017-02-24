@@ -31,7 +31,6 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
         $state.transitionTo('navigation.home');
         $mdSidenav('left').close();
     };
-
     $scope.goToRestaurantManagers = function() {
         $state.transitionTo('navigation.restaurantManagers');
         $mdSidenav('left').close();
@@ -89,6 +88,11 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
 
     $scope.goToDrinkItems = function () {
         $state.transitionTo('navigation.drinkItems');
+        $mdSidenav('left').close();
+    };
+    //--------------------------------------
+    $scope.goToWorkingPlace = function () {
+        $state.transitionTo('navigation.workingPlace.workingHours');
         $mdSidenav('left').close();
     };
 });

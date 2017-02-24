@@ -22,6 +22,8 @@ public class Chef extends User implements HasUniform {
 
     private String speciality;
 
+    private String profile;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant", nullable = false)
     private Restaurant restaurant;
@@ -70,6 +72,14 @@ public class Chef extends User implements HasUniform {
         this.speciality = speciality;
     }
 
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
     @Override
     public String toString() {
         return "Chef{" +
@@ -77,6 +87,7 @@ public class Chef extends User implements HasUniform {
                 ", footwearSize=" + footwearSize +
                 ", birthDate=" + birthDate +
                 ", speciality='" + speciality + '\'' +
+                ", profile='" + profile + '\'' +
                 ", restaurant=" + restaurant +
                 '}';
     }
