@@ -32,19 +32,24 @@
                     Home
                 </md-button>
             </md-input-container>
-            <md-input-container class="md-block sidenav-item" ng-if="authService.isSystemManager()">
-                <md-button ng-click="goToRestaurantManagers()" class="md-primary sidenav-item"  ng-disabled="isActive(0)">
-                    Restaurant Managers
-                </md-button>
-            </md-input-container>
             <md-input-container class="md-block sidenav-item" ng-if="authService.isAdmin()">
                 <md-button ng-click="goToSystemManagers()" class="md-primary sidenav-item"  ng-disabled="isActive(-1)">
                     System Managers
                 </md-button>
             </md-input-container>
             <md-input-container class="md-block sidenav-item" ng-if="authService.isSystemManager()">
+                <md-button ng-click="goToRestaurantTypes()" class="md-primary sidenav-item"  ng-disabled="isActive(13)">
+                    Restaurant Types
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isSystemManager()">
                 <md-button ng-click="goToRestaurants()" class="md-primary sidenav-item"  ng-disabled="isActive(1)">
                     Restaurants
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isSystemManager()">
+                <md-button ng-click="goToRestaurantManagers()" class="md-primary sidenav-item"  ng-disabled="isActive(0)">
+                    Restaurant Managers
                 </md-button>
             </md-input-container>
             <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">

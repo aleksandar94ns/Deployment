@@ -1,10 +1,10 @@
 <div class="container">
     <div layout="column">
         <div layout="row">
-            <h3>Supplies</h3>
+            <h3>Restaurant Types</h3>
             <span flex></span>
             <md-button class="md-fab md-mini md-primary"
-                       aria-label="Add Supply" ng-click="addSupply()">
+                       aria-label="Add Restaurant Type" ng-click="addRestaurantType()">
                 <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
             </md-button>
         </div>
@@ -14,11 +14,10 @@
             <md-card-title>
             </md-card-title>
             <md-list flex>
-                <md-list-item class="md-3-line" ng-repeat="supply in supplies" ng-click="null">
+                <md-list-item class="md-3-line" ng-repeat="restaurantType in restaurantTypes" ng-click="null">
                     <div class="md-list-item-text" style="margin-left: 20px;">
-                        <h3>{{ supply.name }}</h3>
-                        <h4>{{ supply.quantity }}</h4>
-                        <p>{{ supply.restaurant.name }}</p>
+                        <h3>{{ restaurantType.name }}</h3>
+                        <p> Description : {{ restaurantType.description }}</p>
                     </div>
                 </md-list-item>
             </md-list>

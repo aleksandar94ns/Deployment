@@ -63,6 +63,11 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             controller: 'SystemManagersController',
             templateUrl: 'page/systemManagers.html'
         })
+        .state('navigation.restaurantTypes', {
+            url: '/restaurantTypes',
+            controller: 'RestaurantTypesController',
+            templateUrl: 'page/restaurantTypes.html'
+        })
         .state('navigation.restaurants', {
             url: '/restaurants',
             controller: 'RestaurantsController',
