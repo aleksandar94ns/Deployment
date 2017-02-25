@@ -18,7 +18,16 @@ app.factory('authInterceptor', ['$q', '$injector', function ($q, $injector) {
     return authInterceptor;
 }]);
 
-app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $httpProvider, $mdThemingProvider) {
+app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $httpProvider, $mdThemingProvider, $mdDateLocaleProvider) {
+
+    $mdDateLocaleProvider.formatDate = function(date) {
+        return moment(date).format('DD-MM-YYYY');
+    };
+
+    $mdDateLocaleProvider.parseDate = function(dateString) {
+        var m = moment(dateString, 'DD-MM-YYYY', true);
+        return m.isValid() ? m.toDate() : new Date(NaN);
+    };
 
     $mdThemingProvider.theme('default')
         .accentPalette('orange');
@@ -59,20 +68,20 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             controller: 'RestaurantsController',
             templateUrl: 'page/restaurants.html'
         })
-        .state('navigation.waiters', {
-            url: '/waiters',
-            controller: 'WaitersController',
-            templateUrl: 'page/waiters.html'
-        })
-        .state('navigation.bartenders', {
-            url: '/bartenders',
-            controller: 'BartendersController',
-            templateUrl: 'page/bartenders.html'
+        .state('navigation.employees', {
+            url: '/employees',
+            controller: 'EmployeesController',
+            templateUrl: 'page/employees.html'
         })
         .state('navigation.sellers', {
             url: '/sellers',
             controller: 'SellersController',
             templateUrl: 'page/sellers.html'
+        })
+        .state('navigation.supplies', {
+            url: '/supplies',
+            controller: 'SuppliesController',
+            templateUrl: 'page/supplies.html'
         })
         .state('navigation.drinkCards', {
             url: '/drinkCards',
@@ -83,11 +92,6 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             url: '/drinkItems',
             controller: 'DrinkItemsController',
             templateUrl: 'page/drinkItems.html'
-        })
-        .state('navigation.chefs', {
-            url: '/chefs',
-            controller: 'ChefsController',
-            templateUrl: 'page/chefs.html'
         })
         .state('navigation.menus', {
             url: '/menus',

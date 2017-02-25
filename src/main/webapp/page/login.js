@@ -8,7 +8,7 @@ app.controller('LoginController', function ($scope, $state, $http, $mdDialog, au
                     if (authenticationService.isSystemManager()) {
                         $state.transitionTo('navigation.restaurantManagers');
                     } else if (authenticationService.isManager()) {
-                        $state.transitionTo('navigation.waiters');
+                        $state.transitionTo('navigation.employees');
                     } else {
                         $state.transitionTo('navigation.home');
                     }

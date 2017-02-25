@@ -12,7 +12,7 @@ import java.util.Date;
  * Created by Alex on 10/28/2016.
  */
 @Entity
-public class Waiter extends User implements HasUniform {
+public class Waiter extends Employee implements HasUniform {
 
     private int dressSize;
 
@@ -23,6 +23,10 @@ public class Waiter extends User implements HasUniform {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant", nullable = false)
     private Restaurant restaurant;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "area")
+    private Area area;
 
     public Waiter() {
         this.setRole(Role.WAITER);
@@ -60,6 +64,14 @@ public class Waiter extends User implements HasUniform {
         this.restaurant = restaurant;
     }
 
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
     @Override
     public String toString() {
         return "Waiter{" +
@@ -67,6 +79,7 @@ public class Waiter extends User implements HasUniform {
                 ", footwearSize=" + footwearSize +
                 ", birthDate=" + birthDate +
                 ", restaurant=" + restaurant +
+                ", area=" + area +
                 '}';
     }
 }

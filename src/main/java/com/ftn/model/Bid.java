@@ -22,6 +22,10 @@ public class Bid extends BaseModel {
     @JoinColumn(name = "seller", nullable = false)
     private Seller seller;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "supply", nullable = false)
+    private Supply supply;
+
     @Column(name = "currency")
     private String currency;
 

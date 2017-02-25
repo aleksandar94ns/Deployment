@@ -59,23 +59,18 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
         $mdSidenav('left').close();
     };
 
-    $scope.goToBartenders = function () {
-        $state.transitionTo('navigation.bartenders');
-        $mdSidenav('left').close();
-    };
-
-    $scope.goToWaiters = function () {
-        $state.transitionTo('navigation.waiters');
-        $mdSidenav('left').close();
-    };
-
-    $scope.goToChefs = function () {
-        $state.transitionTo('navigation.chefs');
+    $scope.goToEmployees = function () {
+        $state.transitionTo('navigation.employees');
         $mdSidenav('left').close();
     };
 
     $scope.goToSellers = function () {
         $state.transitionTo('navigation.sellers');
+        $mdSidenav('left').close();
+    };
+
+    $scope.goToSupplies = function () {
+        $state.transitionTo('navigation.supplies');
         $mdSidenav('left').close();
     };
 
