@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Alex on 11/29/16.
  */
 @Entity
-public class BidItem extends BaseModel {
+public class Item extends BaseModel {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -18,9 +18,9 @@ public class BidItem extends BaseModel {
     private double price;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "bid_id", nullable = false)
-    private Bid bid;
+    @JoinColumn(name = "restaurant", nullable = false)
+    private Restaurant restaurant;
 
-    public BidItem() {
+    public Item() {
     }
 }

@@ -12,7 +12,7 @@ import java.util.Date;
  * Created by Alex on 10/28/2016.
  */
 @Entity
-public class Chef extends User implements HasUniform {
+public class Chef extends Employee implements HasUniform {
 
     private int dressSize;
 
