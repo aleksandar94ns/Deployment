@@ -88,6 +88,11 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             controller: 'SuppliesController',
             templateUrl: 'page/supplies.html'
         })
+        .state('navigation.areas', {
+            url: '/areas',
+            controller: 'AreasController',
+            templateUrl: 'page/areas.html'
+        })
         .state('navigation.drinkCards', {
             url: '/drinkCards',
             controller: 'DrinkCardsController',
