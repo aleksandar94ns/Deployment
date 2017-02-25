@@ -4,7 +4,6 @@ package com.ftn.controller;
  * Created by Alek on 2/23/2017.
  */
 
-import com.ftn.model.Seller;
 import com.ftn.model.SystemManager;
 import com.ftn.model.User;
 import com.ftn.repository.UserDao;
@@ -20,13 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/users/systemManagers")
-public class SystemManagerConroller {
+public class SystemManagerController {
+
+    private final UserDao userDao;
+
+    private final BCryptPasswordEncoder encoder;
 
     @Autowired
-    UserDao userDao;
-
-    @Autowired
-    BCryptPasswordEncoder encoder;
+    public SystemManagerController(UserDao userDao, BCryptPasswordEncoder encoder) {
+        this.userDao = userDao;
+        this.encoder = encoder;
+    }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)

@@ -41,11 +41,11 @@
                 <md-autocomplete
                         ng-disabled="ctrl.isDisabled"
                         md-no-cache="ctrl.noCache"
-                        md-selected-item="menuItem.speciality"
+                        md-selected-item="menuItem.profile"
                         md-search-text="searchSpec"
                         md-items="item in queryChefs(searchSpec)"
                         md-item-text="item"
-                        placeholder="Search specialities...">
+                        placeholder="Search profiles...">
                     <md-item-template>
                         <span md-highlight-text="searchSpec" md-highlight-flags="^i">{{item}}</span>
                     </md-item-template>

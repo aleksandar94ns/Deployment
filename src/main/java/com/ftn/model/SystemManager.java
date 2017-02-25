@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 @Entity
 public class SystemManager extends User {
 
-    private boolean supreme;
-
     public SystemManager() {
         this.setRole(Role.SYSTEM_MANAGER);
     }

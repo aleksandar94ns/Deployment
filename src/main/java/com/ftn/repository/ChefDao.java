@@ -11,7 +11,5 @@ import java.util.List;
  */
 public interface ChefDao extends JpaRepository<Chef, Long> {
 
-    Chef findById(Long id);
-
     List<Chef> findByRestaurantIdAndRole(Long id, User.Role role);
 }

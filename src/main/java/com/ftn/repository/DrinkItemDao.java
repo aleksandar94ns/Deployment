@@ -10,7 +10,5 @@ import java.util.List;
  */
 public interface DrinkItemDao extends JpaRepository<DrinkItem, Long> {
 
-    DrinkItem findById(Long id);
-
     List<DrinkItem> findByDrinkCardRestaurantId(Long id);
 }

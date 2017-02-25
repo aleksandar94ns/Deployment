@@ -19,14 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users/restaurantManagers")
 public class RestaurantManagerController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final BCryptPasswordEncoder encoder;
+
+    private final RestaurantDao restaurantDao;
 
     @Autowired
-    BCryptPasswordEncoder encoder;
-
-    @Autowired
-    RestaurantDao restaurantDao;
+    public RestaurantManagerController(UserDao userDao, BCryptPasswordEncoder encoder, RestaurantDao restaurantDao) {
+        this.userDao = userDao;
+        this.encoder = encoder;
+        this.restaurantDao = restaurantDao;
+    }
 
     @PreAuthorize("hasAuthority('SYSTEM_MANAGER')")
     @RequestMapping(method = RequestMethod.GET)
@@ -44,9 +48,7 @@ public class RestaurantManagerController {
         manager.setRole(User.Role.MANAGER);
         manager.setPassword(encoder.encode(manager.getPassword()));
         manager.setEnabled(true);
-        //manager.setConfirmationCode(UUID.randomUUID().toString());
         userDao.save(manager);
-        //mailService.sendVerificationMail(request, manager.getEmail(), manager.getConfirmationCode());
         return new ResponseEntity<>(manager, HttpStatus.CREATED);
     }
 }

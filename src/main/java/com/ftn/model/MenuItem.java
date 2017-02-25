@@ -14,8 +14,8 @@ public class MenuItem extends BaseModel {
 
     private String description;
 
-    @JoinColumn(name = "speciality_id", nullable = false)
-    private String speciality;
+    @Column(nullable = false)
+    private String profile;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "menu_id", nullable = false)
@@ -48,12 +48,12 @@ public class MenuItem extends BaseModel {
         this.description = description;
     }
 
-    public String getSpeciality() {
-        return speciality;
+    public String getProfile() {
+        return profile;
     }
 
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
     public Menu getMenu() {
@@ -70,7 +70,7 @@ public class MenuItem extends BaseModel {
                 "name='" + name + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
-                ", speciality='" + speciality + '\'' +
+                ", profile='" + profile + '\'' +
                 ", menu=" + menu +
                 '}';
     }

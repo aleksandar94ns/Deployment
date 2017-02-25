@@ -11,7 +11,5 @@ import java.util.List;
  */
 public interface WaiterDao extends JpaRepository<Waiter, Long> {
 
-    Waiter findById(Long id);
-
     List<Waiter> findByRestaurantIdAndRole(Long id, User.Role role);
 }

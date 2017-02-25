@@ -1,8 +1,5 @@
 package com.ftn.controller;
 
-import com.ftn.exception.BadRequestException;
-import com.ftn.model.Bartender;
-import com.ftn.model.Manager;
 import com.ftn.model.Seller;
 import com.ftn.model.User;
 import com.ftn.repository.UserDao;
@@ -23,11 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users/sellers")
 public class SellerController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final BCryptPasswordEncoder encoder;
 
     @Autowired
-    BCryptPasswordEncoder encoder;
+    public SellerController(UserDao userDao, BCryptPasswordEncoder encoder) {
+        this.userDao = userDao;
+        this.encoder = encoder;
+    }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
@@ -41,9 +42,7 @@ public class SellerController {
         seller.setRole(User.Role.SELLER);
         seller.setPassword(encoder.encode(seller.getPassword()));
         seller.setEnabled(true);
-        //manager.setConfirmationCode(UUID.randomUUID().toString());
         userDao.save(seller);
-        //mailService.sendVerificationMail(request, manager.getEmail(), manager.getConfirmationCode());
         return new ResponseEntity<>(seller, HttpStatus.CREATED);
     }
 }

@@ -5,7 +5,6 @@ import com.ftn.exception.NotFoundException;
 import com.ftn.model.Guest;
 import com.ftn.model.Reservation;
 import com.ftn.model.Restaurant;
-import com.ftn.model.RestaurantType;
 import com.ftn.repository.RestaurantDao;
 import com.ftn.repository.RestaurantTypeDao;
 import com.ftn.repository.UserDao;
@@ -31,14 +30,18 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/restaurants")
 public class RestaurantController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final RestaurantDao restaurantDao;
+
+    private final RestaurantTypeDao restaurantTypeDao;
 
     @Autowired
-    RestaurantDao restaurantDao;
-
-    @Autowired
-    RestaurantTypeDao restaurantTypeDao;
+    public RestaurantController(UserDao userDao, RestaurantDao restaurantDao, RestaurantTypeDao restaurantTypeDao) {
+        this.userDao = userDao;
+        this.restaurantDao = restaurantDao;
+        this.restaurantTypeDao = restaurantTypeDao;
+    }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)

@@ -16,8 +16,12 @@ import java.util.Collection;
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    private final UserDao userDao;
+
     @Autowired
-    private UserDao userDao;
+    public UserDetailsServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

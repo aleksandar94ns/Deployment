@@ -20,8 +20,6 @@ public class Chef extends User implements HasUniform {
 
     private Date birthDate;
 
-    private String speciality;
-
     private String profile;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -64,14 +62,6 @@ public class Chef extends User implements HasUniform {
         this.restaurant = restaurant;
     }
 
-    public String getSpeciality() {
-        return speciality;
-    }
-
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
-    }
-
     public String getProfile() {
         return profile;
     }
@@ -86,7 +76,6 @@ public class Chef extends User implements HasUniform {
                 "dressSize=" + dressSize +
                 ", footwearSize=" + footwearSize +
                 ", birthDate=" + birthDate +
-                ", speciality='" + speciality + '\'' +
                 ", profile='" + profile + '\'' +
                 ", restaurant=" + restaurant +
                 '}';
