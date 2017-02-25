@@ -19,11 +19,8 @@
             </md-tab>
             <md-tab label="Time" ng-disabled="data.selectedIndex != 1">
                 <md-content class="md-padding">
-                    <h1 class="md-display-2">Tab Three</h1>
-                    <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere
-                        molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat,
-                        at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent
-                        ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+                    <mdp-date-picker mdp-placeholder="Date" ng-model="reservation.date"></mdp-date-picker>
+                    <mdp-time-picker mdp-placeholder="Time" ng-model="reservation.time"></mdp-time-picker>
                 </md-content>
             </md-tab>
             <md-tab label="Table" ng-disabled="data.selectedIndex != 2">
