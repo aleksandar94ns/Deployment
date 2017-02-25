@@ -1,0 +1,29 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="createSupplyForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Name</label>
+                    <input id="name" name="name" type="text" data-ng-model="supply.name" required>
+                    <div ng-messages="createSupplyForm.name.$error" ng-if="createSupplyForm.name.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Quantity</label>
+                    <input id="quantity" name="quantity" type="number" data-ng-model="supply.quantity" required>
+                    <div ng-messages="createSupplyForm.quantity.$error" ng-if="createSupplyForm.quantity.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-datepicker id="expiration" name="expiration" ng-model="expiration" md-placeholder="Enter date" md-open-on-focus></md-datepicker>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Close</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="createSupplyForm.$invalid">Create
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
