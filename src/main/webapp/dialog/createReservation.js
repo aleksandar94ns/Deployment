@@ -7,12 +7,10 @@ app.controller('CreateReservationController', function ($rootScope, $scope, $sta
     $scope.restaurantSelected = function(restaurant) {
         $scope.restaurant  = restaurant;
         $scope.data.selectedIndex = 1;
-        areasService.list(function(response) {
+        areasService.listByRestaurant(restaurant.id, function(response) {
             $rootScope.$broadcast('SetAreas', response.data);
         });
     };
-
-
 
     $scope.close = function () {
         $mdDialog.hide();
