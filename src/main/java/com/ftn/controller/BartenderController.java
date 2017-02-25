@@ -1,6 +1,7 @@
 package com.ftn.controller;
 
 import com.ftn.exception.BadRequestException;
+import com.ftn.exception.NotFoundException;
 import com.ftn.model.*;
 import com.ftn.repository.BartenderDao;
 import com.ftn.repository.RestaurantDao;
@@ -24,24 +25,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users/bartenders")
 public class BartenderController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final BCryptPasswordEncoder encoder;
+
+    private final RestaurantDao restaurantDao;
+
+    private final BartenderDao bartenderDao;
 
     @Autowired
-    BCryptPasswordEncoder encoder;
-
-    @Autowired
-    RestaurantDao restaurantDao;
-
-    @Autowired
-    BartenderDao bartenderDao;
+    public BartenderController(BartenderDao bartenderDao, UserDao userDao, BCryptPasswordEncoder encoder, RestaurantDao restaurantDao) {
+        this.bartenderDao = bartenderDao;
+        this.userDao = userDao;
+        this.encoder = encoder;
+        this.restaurantDao = restaurantDao;
+    }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Manager manager = userDao.findByEmail(authentication.getName());
-        final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
+        final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(NotFoundException::new);
         return new ResponseEntity<>(bartenderDao.findByRestaurantIdAndRole(restaurant.getId(), User.Role.BARTENDER), HttpStatus.OK);
     }
 
@@ -58,9 +63,7 @@ public class BartenderController {
         bartender.setRole(User.Role.BARTENDER);
         bartender.setPassword(encoder.encode(bartender.getPassword()));
         bartender.setEnabled(true);
-        //manager.setConfirmationCode(UUID.randomUUID().toString());
         userDao.save(bartender);
-        //mailService.sendVerificationMail(request, manager.getEmail(), manager.getConfirmationCode());
         return new ResponseEntity<>(bartender, HttpStatus.CREATED);
     }
 }

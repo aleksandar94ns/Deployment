@@ -14,8 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailService {
 
+    private final MailSender mailSender;
+
     @Autowired
-    MailSender mailSender;
+    public MailService(MailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     @Async
     public void sendVerificationMail(HttpServletRequest request, String recipient, String confirmationCode) {

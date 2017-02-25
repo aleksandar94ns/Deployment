@@ -1,6 +1,7 @@
 package com.ftn.controller;
 
 import com.ftn.exception.BadRequestException;
+import com.ftn.exception.NotFoundException;
 import com.ftn.model.*;
 import com.ftn.repository.ChefDao;
 import com.ftn.repository.RestaurantDao;
@@ -23,24 +24,29 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/users/chefs")
 public class ChefController {
-    @Autowired
-    UserDao userDao;
+
+    private final UserDao userDao;
+
+    private final BCryptPasswordEncoder encoder;
+
+    private final RestaurantDao restaurantDao;
+
+    private final ChefDao chefDao;
 
     @Autowired
-    BCryptPasswordEncoder encoder;
-
-    @Autowired
-    RestaurantDao restaurantDao;
-
-    @Autowired
-    ChefDao chefDao;
+    public ChefController(UserDao userDao, BCryptPasswordEncoder encoder, RestaurantDao restaurantDao, ChefDao chefDao) {
+        this.userDao = userDao;
+        this.encoder = encoder;
+        this.restaurantDao = restaurantDao;
+        this.chefDao = chefDao;
+    }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Manager manager = userDao.findByEmail(authentication.getName());
-        final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
+        final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(NotFoundException::new);
         return new ResponseEntity<>(chefDao.findByRestaurantIdAndRole(restaurant.getId(), User.Role.CHEF), HttpStatus.OK);
     }
 
@@ -57,9 +63,7 @@ public class ChefController {
         chef.setRole(User.Role.CHEF);
         chef.setPassword(encoder.encode(chef.getPassword()));
         chef.setEnabled(true);
-        //manager.setConfirmationCode(UUID.randomUUID().toString());
         userDao.save(chef);
-        //mailService.sendVerificationMail(request, manager.getEmail(), manager.getConfirmationCode());
         return new ResponseEntity<>(chef, HttpStatus.CREATED);
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,17 +25,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/menus")
 public class MenuController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final RestaurantDao restaurantDao;
+
+    private final MenuDao menuDao;
 
     @Autowired
-    BCryptPasswordEncoder encoder;
-
-    @Autowired
-    RestaurantDao restaurantDao;
-
-    @Autowired
-    MenuDao menuDao;
+    public MenuController(UserDao userDao, RestaurantDao restaurantDao, MenuDao menuDao) {
+        this.userDao = userDao;
+        this.restaurantDao = restaurantDao;
+        this.menuDao = menuDao;
+    }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)

@@ -25,11 +25,15 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/friends")
 public class FriendshipController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final FriendshipDao friendshipDao;
 
     @Autowired
-    FriendshipDao friendshipDao;
+    public FriendshipController(UserDao userDao, FriendshipDao friendshipDao) {
+        this.userDao = userDao;
+        this.friendshipDao = friendshipDao;
+    }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)

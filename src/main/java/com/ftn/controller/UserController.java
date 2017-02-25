@@ -29,14 +29,18 @@ import java.util.UUID;
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final BCryptPasswordEncoder encoder;
+
+    private final MailService mailService;
 
     @Autowired
-    BCryptPasswordEncoder encoder;
-
-    @Autowired
-    MailService mailService;
+    public UserController(UserDao userDao, BCryptPasswordEncoder encoder, MailService mailService) {
+        this.userDao = userDao;
+        this.encoder = encoder;
+        this.mailService = mailService;
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/guests")
     public ResponseEntity create(HttpServletRequest request, @RequestBody Guest guest) {

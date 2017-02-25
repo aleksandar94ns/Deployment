@@ -9,13 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * Created by Alek on 2/23/2017.
@@ -24,17 +21,18 @@ import java.util.List;
 @RequestMapping("/api/drinkItems")
 public class DrinkItemController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final RestaurantDao restaurantDao;
+
+    private final DrinkItemDao drinkItemDao;
 
     @Autowired
-    BCryptPasswordEncoder encoder;
-
-    @Autowired
-    RestaurantDao restaurantDao;
-
-    @Autowired
-    DrinkItemDao drinkItemDao;
+    public DrinkItemController(UserDao userDao, RestaurantDao restaurantDao, DrinkItemDao drinkItemDao) {
+        this.userDao = userDao;
+        this.restaurantDao = restaurantDao;
+        this.drinkItemDao = drinkItemDao;
+    }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)

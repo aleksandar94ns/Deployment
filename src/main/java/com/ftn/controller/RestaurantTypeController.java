@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/restaurantTypes")
 public class RestaurantTypeController {
 
+    private final RestaurantTypeDao restaurantTypeDao;
+
     @Autowired
-    RestaurantTypeDao restaurantTypeDao;
+    public RestaurantTypeController(RestaurantTypeDao restaurantTypeDao) {
+        this.restaurantTypeDao = restaurantTypeDao;
+    }
 
     @PreAuthorize("hasAuthority('SYSTEM_MANAGER')")
     @RequestMapping(method = RequestMethod.GET)

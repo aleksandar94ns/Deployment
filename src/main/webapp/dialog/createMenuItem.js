@@ -23,9 +23,9 @@ app.controller('CreateMenuItemController', function ($scope, $http, $state, $mdD
     $scope.queryChefs = function (searchSpec) {
         var queryResults = [];
         for (var i = 0; i < $scope.chefs.length; i++) {
-            if ($scope.chefs[i].speciality.toLowerCase().match(searchSpec.toLowerCase())) {
+            if ($scope.chefs[i].profile.toLowerCase().match(searchSpec.toLowerCase())) {
                 //queryResults.push($scope.chefs[i]);
-                $scope.specialities = $scope.chefs[i].speciality;
+                $scope.specialities = $scope.chefs[i].profile;
                 queryResults.push($scope.specialities);
             }
         }

@@ -2,7 +2,6 @@ package com.ftn.controller;
 
 import com.ftn.exception.BadRequestException;
 import com.ftn.model.*;
-import com.ftn.repository.BartenderDao;
 import com.ftn.repository.DrinkCardDao;
 import com.ftn.repository.RestaurantDao;
 import com.ftn.repository.UserDao;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,17 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/drinkCards")
 public class DrinkCardController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final RestaurantDao restaurantDao;
+
+    private final DrinkCardDao drinkCardDao;
 
     @Autowired
-    BCryptPasswordEncoder encoder;
-
-    @Autowired
-    RestaurantDao restaurantDao;
-
-    @Autowired
-    DrinkCardDao drinkCardDao;
+    public DrinkCardController(UserDao userDao, RestaurantDao restaurantDao, DrinkCardDao drinkCardDao) {
+        this.userDao = userDao;
+        this.restaurantDao = restaurantDao;
+        this.drinkCardDao = drinkCardDao;
+    }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
