@@ -5,6 +5,9 @@ app.service('areasService', function($http){
         },
         listByRestaurant: function(restaurant, onSuccess, onError){
             $http.get('/api/areas/restaurant/' + restaurant).then(onSuccess, onError);
+        },
+        listByRestaurantAndAvailability: function(restaurant, arrivalDate, departureDate,  onSuccess, onError) {
+            $http.get('/api/areas/available/?restaurant=' + restaurant + '&arrivalDate=' + arrivalDate + '&departureDate=' + departureDate).then(onSuccess, onError);
         }
     }
 });

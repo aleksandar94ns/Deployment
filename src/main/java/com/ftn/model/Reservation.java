@@ -11,11 +11,9 @@ import java.util.Set;
 @Entity
 public class Reservation extends BaseModel {
 
-    private Date date;
+    private Date arrivalDate;
 
-    private int start_hour;
-
-    private int end_hour;
+    private Date departureDate;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "reservations")
     private List<Guest> guests;
@@ -33,28 +31,20 @@ public class Reservation extends BaseModel {
     public Reservation() {
     }
 
-    public Date getDate() {
-        return date;
+    public Date getArrivalDate() {
+        return arrivalDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setArrivalDate(Date arrivalDate) {
+        this.arrivalDate = arrivalDate;
     }
 
-    public int getStart_hour() {
-        return start_hour;
+    public Date getDepartureDate() {
+        return departureDate;
     }
 
-    public void setStart_hour(int start_hour) {
-        this.start_hour = start_hour;
-    }
-
-    public int getEnd_hour() {
-        return end_hour;
-    }
-
-    public void setEnd_hour(int end_hour) {
-        this.end_hour = end_hour;
+    public void setDepartureDate(Date departureDate) {
+        this.departureDate = departureDate;
     }
 
     public List<Guest> getGuests() {
@@ -84,9 +74,8 @@ public class Reservation extends BaseModel {
     @Override
     public String toString() {
         return "Reservation{" +
-                "date=" + date +
-                ", start_hour=" + start_hour +
-                ", end_hour=" + end_hour +
+                "arrivalDate=" + arrivalDate +
+                ", departureDate=" + departureDate +
                 ", guests=" + guests +
                 ", restaurant_tables=" + restaurant_tables +
                 ", restaurant=" + restaurant +

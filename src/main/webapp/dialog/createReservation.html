@@ -19,8 +19,10 @@
             </md-tab>
             <md-tab label="Time" ng-disabled="data.selectedIndex != 1">
                 <md-content class="md-padding">
-                    <mdp-date-picker mdp-placeholder="Date" ng-model="reservation.date"></mdp-date-picker>
-                    <mdp-time-picker mdp-placeholder="Time" ng-model="reservation.time"></mdp-time-picker>
+                    <mdp-date-picker mdp-placeholder="Date" ng-model="reservation.arrivalDate"></mdp-date-picker>
+                    <mdp-time-picker mdp-placeholder="Time" ng-model="reservation.arrivalDate"></mdp-time-picker>
+                    <mdp-date-picker mdp-placeholder="Date" ng-model="reservation.departureDate"></mdp-date-picker>
+                    <mdp-time-picker mdp-placeholder="Time" ng-model="reservation.departureDate"></mdp-time-picker>
                 </md-content>
             </md-tab>
             <md-tab label="Table" ng-disabled="data.selectedIndex != 2">
