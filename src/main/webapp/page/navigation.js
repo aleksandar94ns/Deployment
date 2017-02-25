@@ -1,4 +1,4 @@
-app.controller('NavigationController', function ($scope, $state, $location, $log, $rootScope, $mdSidenav, $http, authenticationService) {
+app.controller('NavigationController', function ($scope, $state, $location, $log, $rootScope, $mdSidenav, $http, $mdDialog, authenticationService) {
 
     $scope.page = {
         title: 'Restaurant',
@@ -25,6 +25,14 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
 
     $scope.isActive = function(pageIndex) {
         return $scope.page.current === pageIndex;
+    };
+
+    $scope.addReservation = function() {
+        $mdDialog.show({
+            parent: angular.element(document.body),
+            templateUrl: 'dialog/createReservation.html',
+            controller: 'CreateReservationController'
+        });
     };
 
     $scope.goToHome = function () {

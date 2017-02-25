@@ -5,7 +5,7 @@ app.controller('HomeController', function ($scope, $http, $state, $location, $lo
     $scope.authService = authenticationService;
 
     restaurantsService.listVisited(function(response) {
-       $scope.restaurants = response.data;
+        $scope.restaurants = response.data;
     });
 
     $scope.rate = function(reservation) {
