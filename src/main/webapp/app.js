@@ -59,15 +59,10 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             controller: 'RestaurantsController',
             templateUrl: 'page/restaurants.html'
         })
-        .state('navigation.waiters', {
-            url: '/waiters',
-            controller: 'WaitersController',
-            templateUrl: 'page/waiters.html'
-        })
-        .state('navigation.bartenders', {
-            url: '/bartenders',
-            controller: 'BartendersController',
-            templateUrl: 'page/bartenders.html'
+        .state('navigation.employees', {
+            url: '/employees',
+            controller: 'EmployeesController',
+            templateUrl: 'page/employees.html'
         })
         .state('navigation.sellers', {
             url: '/sellers',
@@ -83,11 +78,6 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             url: '/drinkItems',
             controller: 'DrinkItemsController',
             templateUrl: 'page/drinkItems.html'
-        })
-        .state('navigation.chefs', {
-            url: '/chefs',
-            controller: 'ChefsController',
-            templateUrl: 'page/chefs.html'
         })
         .state('navigation.menus', {
             url: '/menus',

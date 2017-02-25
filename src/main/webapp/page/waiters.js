@@ -1,7 +1,5 @@
 app.controller('WaitersController', function ($scope, $http, $state, $location, $log, $rootScope, $mdDialog, waitersService) {
 
-    $scope.page.current = 4;
-
     waitersService.list(function (response) {
         $scope.waiters = response.data;
     });

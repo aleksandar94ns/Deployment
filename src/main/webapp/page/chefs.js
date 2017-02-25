@@ -1,6 +1,5 @@
 app.controller('ChefsController', function ($scope, $http, $state, $location, $log, $rootScope, $mdDialog, chefsService) {
 
-    $scope.page.current = 9;
 
     chefsService.list(function (response) {
         $scope.chefs = response.data;
