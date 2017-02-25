@@ -1,0 +1,43 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="createRestaurantTableForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Horizontal position</label>
+                    <input id="horizontalPosition" name="horizontalPosition" type="number" data-ng-model="restaurantTable.horizontalPosition" required>
+                    <div ng-messages="createRestaurantTableForm.horizontalPosition.$error" ng-if="createRestaurantTableForm.horizontalPosition.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Vertical Position</label>
+                    <input id="verticalPosition" name="verticalPosition" type="number" data-ng-model="restaurantTable.verticalPosition" required>
+                    <div ng-messages="createRestaurantTableForm.verticalPosition.$error" ng-if="createRestaurantTableForm.verticalPosition.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-autocomplete
+                        ng-disabled="ctrl.isDisabled"
+                        md-no-cache="ctrl.noCache"
+                        md-selected-item="restaurantTable.area"
+                        md-search-text="searchText"
+                        md-items="item in queryAreas(searchText)"
+                        md-item-text="item.name"
+                        placeholder="Search areas...">
+                    <md-item-template>
+                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.name}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No areas matching "{{searchText}}" were found.
+                    </md-not-found>
+                </md-autocomplete>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Close</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="createRestaurantTableForm.$invalid">Create
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

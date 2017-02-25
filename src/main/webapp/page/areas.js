@@ -17,4 +17,12 @@ app.controller('AreasController', function ($scope, $http, $state, $location, $l
             });
         });
     };
+
+    $scope.addRestaurantTable = function() {
+        $mdDialog.show({
+            parent: angular.element(document.body),
+            templateUrl: 'dialog/createRestaurantTable.html',
+            controller: 'CreateRestaurantTableController'
+        });
+    };
 });
