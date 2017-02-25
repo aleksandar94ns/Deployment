@@ -7,7 +7,9 @@ app.controller('CreateReservationController', function ($scope, $stateParams, $h
     $scope.restaurantSelected = function(restaurant) {
         $scope.restaurant  = restaurant;
         $scope.data.selectedIndex = 1;
+        console.log($scope.restaurant);
     };
+
 
     $scope.close = function () {
         $mdDialog.hide();
