@@ -1,16 +1,16 @@
-app.controller('CreateWaiterController', function ($scope, $http, $state, $mdDialog, restaurantsService, waitersService, authenticationService) {
+app.controller('CreateWaiterController', function ($scope, $http, $state, $mdDialog, areasService, waitersService, authenticationService) {
 
     $scope.manager = authenticationService.getUser();
 
-    restaurantsService.list(function(response) {
-        $scope.restaurants = response.data;
+    areasService.listByRestaurant($scope.manager.restaurant.id, function(response) {
+        $scope.areas = response.data;
     });
 
-    $scope.queryRestaurants = function (searchText) {
+    $scope.queryAreas = function (searchText) {
         var queryResults = [];
-        for (var i = 0; i < $scope.restaurants.length; i++) {
-            if ($scope.restaurants[i].name.toLowerCase().match(searchText.toLowerCase())) {
-                queryResults.push($scope.restaurants[i]);
+        for (var i = 0; i < $scope.areas.length; i++) {
+            if ($scope.areas[i].name.toLowerCase().match(searchText.toLowerCase())) {
+                queryResults.push($scope.areas[i]);
             }
         }
         return queryResults;

@@ -5,6 +5,7 @@ import com.ftn.model.Manager;
 import com.ftn.model.User;
 import com.ftn.model.Waiter;
 import com.ftn.model.Restaurant;
+import com.ftn.repository.AreaDao;
 import com.ftn.repository.RestaurantDao;
 import com.ftn.repository.UserDao;
 import com.ftn.repository.WaiterDao;
@@ -35,12 +36,15 @@ public class WaitersController {
 
     private final WaiterDao waiterDao;
 
+    private final AreaDao areaDao;
+
     @Autowired
-    public WaitersController(UserDao userDao, BCryptPasswordEncoder encoder, RestaurantDao restaurantDao, WaiterDao waiterDao) {
+    public WaitersController(UserDao userDao, BCryptPasswordEncoder encoder, RestaurantDao restaurantDao, WaiterDao waiterDao, AreaDao areaDao) {
         this.userDao = userDao;
         this.encoder = encoder;
         this.restaurantDao = restaurantDao;
         this.waiterDao = waiterDao;
+        this.areaDao = areaDao;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -62,6 +66,10 @@ public class WaitersController {
             throw new BadRequestException();
         }
         restaurantDao.findById(waiter.getRestaurant().getId()).orElseThrow(BadRequestException::new);
+        if (waiter.getArea() == null) {
+            throw new BadRequestException();
+        }
+        areaDao.findById(waiter.getArea().getId()).orElseThrow(BadRequestException::new);
         waiter.setRole(User.Role.WAITER);
         waiter.setPassword(encoder.encode(waiter.getPassword()));
         waiter.setEnabled(true);

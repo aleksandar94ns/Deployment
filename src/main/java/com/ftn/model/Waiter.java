@@ -64,6 +64,14 @@ public class Waiter extends Employee implements HasUniform {
         this.restaurant = restaurant;
     }
 
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
     @Override
     public String toString() {
         return "Waiter{" +
@@ -71,6 +79,7 @@ public class Waiter extends Employee implements HasUniform {
                 ", footwearSize=" + footwearSize +
                 ", birthDate=" + birthDate +
                 ", restaurant=" + restaurant +
+                ", area=" + area +
                 '}';
     }
 }
