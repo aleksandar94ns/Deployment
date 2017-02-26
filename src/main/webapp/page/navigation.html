@@ -62,7 +62,7 @@
                     Sellers
                 </md-button>
             </md-input-container>
-            <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">
+            <md-input-container class="md-block sidenav-item" ng-if="authService.canBid()">
                 <md-button ng-click="goToSupplies()" class="md-primary sidenav-item"  ng-disabled="isActive(12)">
                     Supplies
                 </md-button>

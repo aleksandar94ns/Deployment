@@ -1,9 +1,11 @@
 package com.ftn.controller;
 
 import com.ftn.exception.BadRequestException;
+import com.ftn.exception.NotFoundException;
 import com.ftn.model.Manager;
 import com.ftn.model.Restaurant;
 import com.ftn.model.Supply;
+import com.ftn.model.User;
 import com.ftn.repository.RestaurantDao;
 import com.ftn.repository.SupplyDao;
 import com.ftn.repository.UserDao;
@@ -41,9 +43,19 @@ public class SupplyController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        final Manager manager = userDao.findByEmail(authentication.getName());
-        final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
-        return new ResponseEntity<>(supplyDao.findByRestaurantId(restaurant.getId()), HttpStatus.OK);
+        try {
+            final Manager manager = userDao.findByEmail(authentication.getName());
+            final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
+            return new ResponseEntity<>(supplyDao.findByRestaurantId(restaurant.getId()), HttpStatus.OK);
+        }
+        catch (Exception e) {
+            if (userDao.findByEmail(authentication.getName()).getRole().equals(User.Role.SELLER)) {
+                return new ResponseEntity<>(supplyDao.findAll(), HttpStatus.OK);
+            }
+            else {
+                throw new BadRequestException();
+            }
+        }
     }
 
     @PreAuthorize("hasAuthority('MANAGER')")

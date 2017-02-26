@@ -69,6 +69,9 @@ app.service('authenticationService', function ($http, $window) {
         },
         isAdmin: function () {
             return this.getUser().role === 'ADMIN';
+        },
+        canBid: function () {
+            return this.isManager() || this.isSeller();
         }
     }
 });

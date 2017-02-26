@@ -1,0 +1,28 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="createBidForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Price </label>
+                    <input id="price" name="price" type="number" data-ng-model="bid.price" required>
+                    <div ng-messages="createBidForm.price.$error" ng-if="createBidForm.price.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Currency</label>
+                    <input id="currency" name="currency" type="text" data-ng-model="bid.currency" required>
+                    <div ng-messages="createBidForm.currency.$error" ng-if="createBidForm.currency.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Close</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="createBidForm.$invalid">Create
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
