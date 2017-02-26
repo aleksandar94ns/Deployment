@@ -3,7 +3,7 @@
         <div layout="row">
             <h3>Supplies</h3>
             <span flex></span>
-            <md-button class="md-fab md-mini md-primary"
+            <md-button class="md-fab md-mini md-primary" ng-if="isManager()"
                        aria-label="Add Supply" ng-click="addSupply()">
                 <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
             </md-button>
@@ -14,10 +14,25 @@
             <md-card-title>
             </md-card-title>
             <md-list flex>
-                <md-list-item class="md-3-line" ng-repeat="supply in supplies" ng-click="null">
+                <md-list-item class="md-3-line" ng-repeat="supply in supplies">
                     <div class="md-list-item-text" style="margin-left: 20px;">
                         <h3>{{ supply.name }}</h3>
+                        <h4>{{ supply.quantity }}</h4>
                         <p>{{ supply.restaurant.name }}</p>
+                        <md-button class="md-fab md-mini md-primary" ng-if="isSeller()"
+                                   aria-label="Add Bid" ng-click="addBid(supply)">
+                            <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
+                        </md-button>
+                    </div>
+                </md-list-item>
+                <md-list-item class="md-3-line" ng-repeat="bid in bids">
+                    <div class="md-list-item-text" style="margin-left: 20px;">
+                        <h3>  Bid : {{bid.price}} </h3>
+                        <p>  Supply : {{bid.supply.name}} </p>
+                        <md-button class="md-fab md-mini md-primary" ng-if="isSeller()"
+                                   aria-label="Edit Bid" ng-click="editBid(bid)">
+                            <md-icon md-svg-src="img/pencil.svg"></md-icon>
+                        </md-button>
                     </div>
                 </md-list-item>
             </md-list>

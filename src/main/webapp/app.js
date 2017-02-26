@@ -63,6 +63,11 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             controller: 'SystemManagersController',
             templateUrl: 'page/systemManagers.html'
         })
+        .state('navigation.restaurantTypes', {
+            url: '/restaurantTypes',
+            controller: 'RestaurantTypesController',
+            templateUrl: 'page/restaurantTypes.html'
+        })
         .state('navigation.restaurants', {
             url: '/restaurants',
             controller: 'RestaurantsController',
@@ -82,6 +87,11 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             url: '/supplies',
             controller: 'SuppliesController',
             templateUrl: 'page/supplies.html'
+        })
+        .state('navigation.areas', {
+            url: '/areas',
+            controller: 'AreasController',
+            templateUrl: 'page/areas.html'
         })
         .state('navigation.drinkCards', {
             url: '/drinkCards',

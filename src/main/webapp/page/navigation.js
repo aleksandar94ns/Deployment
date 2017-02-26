@@ -49,6 +49,11 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
         $mdSidenav('left').close();
     };
 
+    $scope.goToRestaurantTypes = function () {
+        $state.transitionTo('navigation.restaurantTypes');
+        $mdSidenav('left').close();
+    };
+
     $scope.goToRestaurants = function () {
         $state.transitionTo('navigation.restaurants');
         $mdSidenav('left').close();
@@ -71,6 +76,11 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
 
     $scope.goToSupplies = function () {
         $state.transitionTo('navigation.supplies');
+        $mdSidenav('left').close();
+    };
+
+    $scope.goToAreas = function () {
+        $state.transitionTo('navigation.areas');
         $mdSidenav('left').close();
     };
 
