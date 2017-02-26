@@ -103,9 +103,14 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
         $state.transitionTo('navigation.drinkItems');
         $mdSidenav('left').close();
     };
-    //--------------------------------------
+
     $scope.goToWorkingPlace = function () {
         $state.transitionTo('navigation.workingPlace.workingHours');
+        $mdSidenav('left').close();
+    };
+
+    $scope.goToReservations = function () {
+        $state.transitionTo('navigation.reservations');
         $mdSidenav('left').close();
     };
 });

@@ -1,6 +1,7 @@
 package com.ftn.controller;
 
 import com.ftn.dto.CreateReservationDTO;
+import com.ftn.exception.BadRequestException;
 import com.ftn.model.Guest;
 import com.ftn.model.GuestReservation;
 import com.ftn.model.Reservation;
@@ -42,6 +43,14 @@ public class ReservationController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @RequestMapping(method = RequestMethod.GET, value = "/me")
+    public ResponseEntity read() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Guest guest = userDao.findByEmail(authentication.getName());
+        return new ResponseEntity<>(guestReservationDao.findByGuestId(guest.getId()), HttpStatus.OK);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody CreateReservationDTO createReservationDTO) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -55,5 +64,17 @@ public class ReservationController {
         guestReservationDao.save(ownerReservation);
         guests.forEach(guest -> guestReservationDao.save(new GuestReservation(reservation, guest)));
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(method = RequestMethod.PATCH)
+    public ResponseEntity update(@RequestBody GuestReservation guestReservation) {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Guest guest = userDao.findByEmail(authentication.getName());
+        if (guestReservation.getGuest() == null || guestReservation.getGuest().getId() != guest.getId()) {
+            throw new BadRequestException();
+        }
+        guestReservationDao.save(guestReservation);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

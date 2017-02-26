@@ -32,6 +32,11 @@
                     Home
                 </md-button>
             </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isGuest()">
+                <md-button ng-click="goToReservations()" class="md-primary sidenav-item"  ng-disabled="isActive(15)">
+                    Reservations
+                </md-button>
+            </md-input-container>
             <md-input-container class="md-block sidenav-item" ng-if="authService.isAdmin()">
                 <md-button ng-click="goToSystemManagers()" class="md-primary sidenav-item"  ng-disabled="isActive(-1)">
                     System Managers

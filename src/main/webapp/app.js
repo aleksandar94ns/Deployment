@@ -48,6 +48,11 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             controller: 'NavigationController',
             templateUrl: 'page/navigation.html'
         })
+        .state('navigation.reservations', {
+            url: '/reservations',
+            controller: 'ReservationsController',
+            templateUrl: 'page/reservations.html'
+        })
         .state('navigation.home', {
             url: '/home',
             controller: 'HomeController',
