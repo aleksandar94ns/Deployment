@@ -14,10 +14,16 @@
             <md-card-title>
             </md-card-title>
             <md-list flex>
+                <md-toolbar class="md-theme-light">
+                    <h2 class="md-toolbar-tools">
+                        <span>Items</span>
+                    </h2>
+                </md-toolbar>
                 <md-list-item class="md-3-line" ng-repeat="supply in supplies">
                     <div class="md-list-item-text" style="margin-left: 20px;">
                         <h3>{{ supply.name }}</h3>
                         <h4>{{ supply.quantity }}</h4>
+                        <h4> Expiration date : {{ supply.expiration }}</h4>
                         <p>{{ supply.restaurant.name }}</p>
                         <md-button class="md-fab md-mini md-primary" ng-if="isSeller()"
                                    aria-label="Add Bid" ng-click="addBid(supply)">
@@ -25,15 +31,27 @@
                         </md-button>
                     </div>
                 </md-list-item>
-                <md-list-item class="md-3-line" ng-repeat="bid in bids">
+                <md-divider></md-divider>
+                <md-toolbar class="md-theme-light">
+                    <h2 class="md-toolbar-tools">
+                        <span>Bids</span>
+                    </h2>
+                </md-toolbar>
+                <md-list-item class="md-2-line" ng-repeat="bid in bids">
                     <div class="md-list-item-text" style="margin-left: 20px;">
-                        <h3>  Bid : {{bid.price}} </h3>
+                        <h3>  Bid : {{bid.price}} {{bid.currency}}</h3>
+                        <h3 ng-if="isSeller()"> STATUS : {{bid.status}} </h3>
+                        <h3 ng-if="isManager()"> Seller : {{bid.seller.firstName}} {{bid.seller.lastName}} </h3>
                         <p>  Supply : {{bid.supply.name}} </p>
-                        <md-button class="md-fab md-mini md-primary" ng-if="isSeller()"
-                                   aria-label="Edit Bid" ng-click="editBid(bid)">
-                            <md-icon md-svg-src="img/pencil.svg"></md-icon>
-                        </md-button>
                     </div>
+                    <md-button class="md-fab md-mini md-primary" ng-if="bidStatus(bid)"
+                               aria-label="Edit Bid" ng-click="editBid(bid)">
+                        <md-icon md-svg-src="img/pencil.svg"></md-icon>
+                    </md-button>
+                    <md-button class="md-fab md-mini md-primary" ng-if="bidStatusManger(bid)"
+                               aria-label="Accept Bid" ng-click="acceptBid(bid)">
+                        <md-icon md-svg-src="img/ic_check_white_24px.svg"></md-icon>
+                    </md-button>
                 </md-list-item>
             </md-list>
             </md-card-content>

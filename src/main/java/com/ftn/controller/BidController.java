@@ -5,6 +5,7 @@ import com.ftn.exception.NotFoundException;
 import com.ftn.model.*;
 import com.ftn.repository.BidDao;
 import com.ftn.repository.RestaurantDao;
+import com.ftn.repository.SupplyDao;
 import com.ftn.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Alek on 2/26/2017.
@@ -30,6 +32,9 @@ public class BidController {
     RestaurantDao restaurantDao;
 
     @Autowired
+    SupplyDao supplyDao;
+
+    @Autowired
     BidDao bidDao;
 
     @PreAuthorize("isAuthenticated()")
@@ -42,9 +47,21 @@ public class BidController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(method = RequestMethod.GET, value = "/supply/{id}")
-    public ResponseEntity read(@PathVariable long id){
-        return new ResponseEntity<>(bidDao.findBySupplyId(id), HttpStatus.OK);
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity read(@RequestBody Bid bid){
+        bid.setStatus("ACCEPTED");
+        bidDao.save(bid);
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Manager manager = userDao.findByEmail(authentication.getName());
+        final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
+        List<Bid> bids = bidDao.findBySupplyIdAndSupplyRestaurantId(supplyDao.findById(bid.getSupply().getId()).getId(), restaurant.getId());
+        for (Bid declinedBid : bids) {
+            if (declinedBid.getId() != bid.getId()) {
+                declinedBid.setStatus("DECLINED");
+                bidDao.save(declinedBid);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("isAuthenticated()")

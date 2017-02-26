@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,7 +53,7 @@ public class SupplyController {
         if (user.getRole().equals(User.Role.MANAGER)) {
             final Manager manager = (Manager) user;
             final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
-            return new ResponseEntity<>(supplyDao.findByRestaurantId(restaurant.getId()), HttpStatus.OK);
+            return new ResponseEntity<>(supplyDao.findByRestaurantIdAndExpirationBefore(restaurant.getId(), new Date()), HttpStatus.OK);
         } else if (user.getRole().equals(User.Role.SELLER)) {
             final Seller seller = (Seller) user;
             final List<Supply> allSupplies = supplyDao.findAll();

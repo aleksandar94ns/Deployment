@@ -18,5 +18,7 @@ public interface BidDao extends JpaRepository<Bid, Long> {
 
     List<Bid> findBySellerId(Long id);
 
+    List<Bid> findBySupplyIdAndSupplyRestaurantId(Long supplyId, Long restaurantId);
+
     List<Bid> findBySupplyRestaurantId(Long id);
 }

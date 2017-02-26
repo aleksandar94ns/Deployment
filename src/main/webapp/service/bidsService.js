@@ -14,6 +14,9 @@ app.service('bidsService', function($http){
         },
         patch: function (bid, onSuccess, onError) {
             $http.patch('/api/bids', bid).then(onSuccess, onError);
+        },
+        put: function (bid, onSuccess, onError) {
+            $http.put('/api/bids', bid).then(onSuccess, onError);
         }
     }
 });
