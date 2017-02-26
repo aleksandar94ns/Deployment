@@ -1,5 +1,6 @@
 package com.ftn.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -19,7 +20,11 @@ public class Reservation extends BaseModel {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss.S")
     private Date departureDate;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "reservations")
+    @JsonBackReference("guest-reservations")
+    @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
+    @JoinTable(name = "guest_reservation",
+            joinColumns = {@JoinColumn(name = "reservation_id",  nullable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "guest_id",  nullable = false)})
     private List<Guest> guests;
 
     @ManyToMany(fetch = FetchType.EAGER)

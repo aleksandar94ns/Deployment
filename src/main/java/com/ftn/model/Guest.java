@@ -1,7 +1,5 @@
 package com.ftn.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,11 +9,7 @@ import java.util.Set;
 @Entity
 public class Guest extends User {
 
-    @JsonBackReference("guest-reservations")
-    @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
-    @JoinTable(name = "guest_reservation",
-            joinColumns = {@JoinColumn(name = "guest_id",  nullable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "reservation_id",  nullable = false)})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "guests")
     private Set<Reservation> reservations;
 
     public Guest(){

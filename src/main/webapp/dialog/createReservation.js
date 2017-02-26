@@ -19,7 +19,7 @@ app.controller('CreateReservationController', function ($rootScope, $scope, $sta
         $scope.reservation.restaurantTables = data;
     });
 
-    friendsService.listPotentialFriends(function(response) {
+    friendsService.listFriends(function(response) {
         $scope.users = response.data;
     });
 

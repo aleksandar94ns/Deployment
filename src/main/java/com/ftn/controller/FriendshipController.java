@@ -47,6 +47,17 @@ public class FriendshipController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @RequestMapping(method = RequestMethod.GET, value = "/me")
+    public ResponseEntity readFriends() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final User user = userDao.findByEmail(authentication.getName());
+        final List<Friendship> friendships = friendshipDao.findByOriginatorIdOrRecipientId(user.getId(), user.getId()).stream().filter(friendship ->
+                friendship.getStatus().equals(Friendship.FriendshipStatus.ACCEPTED))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(friendships.stream().map(friendship -> friendship.getOriginator().equals(user) ? friendship.getRecipient() : friendship.getOriginator()).collect(Collectors.toList()), HttpStatus.OK);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "/potential")
     public ResponseEntity readPotential() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

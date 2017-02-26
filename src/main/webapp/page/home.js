@@ -4,9 +4,13 @@ app.controller('HomeController', function ($scope, $http, $state, $location, $lo
 
     $scope.authService = authenticationService;
 
-    restaurantsService.listVisited(function(response) {
-        $scope.restaurants = response.data;
-    });
+    var loadData = function () {
+        restaurantsService.listVisited(function(response) {
+            $scope.restaurants = response.data;
+        });
+    };
+
+    loadData();
 
     $scope.rate = function(reservation) {
         $mdDialog.show({
@@ -16,6 +20,8 @@ app.controller('HomeController', function ($scope, $http, $state, $location, $lo
             locals: {
                 reservation: reservation
             }
+        }).finally(function () {
+            loadData();
         });
     };
 });

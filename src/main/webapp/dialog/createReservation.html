@@ -61,11 +61,10 @@
     </md-dialog-content>
     <md-dialog-actions layout="row" layout-align="end center">
         <md-button ng-click="close()">Close</md-button>
-        <md-button type="submit" class="md-primary md-raised" ng-click="inviteFriends()"
-                   ng-if="data.selectedIndex == 2">
+        <md-button type="submit" class="md-primary md-raised" ng-click="inviteFriends()" ng-if="data.selectedIndex == 2" ng-disabled="data.selectedIndex == 2 && reservation.restaurantTables.length == 0">
             Invite Friends
         </md-button>
-        <md-button type="submit" class="md-primary md-raised" ng-click="next()" ng-if="!data.selectedIndex == 0">
+        <md-button type="submit" class="md-primary md-raised" ng-click="next()" ng-disabled="data.selectedIndex == 2 && reservation.restaurantTables.length == 0" ng-if="!data.selectedIndex == 0">
             {{ data.selectedIndex == 1 ? 'Next' : 'Complete reservation' }}
         </md-button>
     </md-dialog-actions>

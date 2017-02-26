@@ -3,6 +3,9 @@ app.service('friendsService', function($http){
         list: function(onSuccess, onError){
             $http.get('/api/friends').then(onSuccess, onError);
         },
+        listFriends: function(onSuccess, onError){
+            $http.get('/api/friends/me').then(onSuccess, onError);
+        },
         listPotentialFriends: function (onSuccess, onError) {
             $http.get('/api/friends/potential').then(onSuccess, onError);
         },
