@@ -21,6 +21,9 @@ public abstract class BaseModel {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private Date updated;
 
+    @Column(nullable = false)
+    private boolean active = true;
+
     @PrePersist
     protected void onCreate() {
         created = new Date();
@@ -41,5 +44,13 @@ public abstract class BaseModel {
 
     public Date getUpdated() {
         return updated;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

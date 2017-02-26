@@ -5,7 +5,7 @@
                 md-row-height-gt-md="1:1" md-row-height="1:1"
                 md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
             <md-grid-tile
-                    ng-click="tile.hasOwnProperty('id') ? select(tile) : null"
+                    ng-click="select(tile)"
                     tabIndex="-1"
                     ng-repeat="tile in tiles"
                     ng-style="{
@@ -15,6 +15,7 @@
                     md-rowspan-gt-sm="1">
                 <md-icon ng-if="tile.selected" md-svg-src="img/ic_check_white_24px.svg"></md-icon>
                 <md-icon ng-if="tile.reserved" md-svg-src="img/ic_not_interested_white_24px.svg"></md-icon>
+                <md-icon ng-if="tile.notRelevantArea" md-svg-src="img/ic_not_interested_white_24px.svg"></md-icon>
             </md-grid-tile>
         </md-grid-list>
     </md-content>

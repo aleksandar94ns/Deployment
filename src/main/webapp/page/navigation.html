@@ -109,8 +109,8 @@
     <section id="container" class="page active">
         <ui-view></ui-view>
     </section>
-    <md-button class="md-primary md-fab md-fab-bottom-right"
-               aria-label="Add Store" ng-click="addReservation()">
+    <md-button class="md-primary md-fab md-fab-bottom-right" ng-if="authService.isGuest()"
+               aria-label="Add Reservation" ng-click="addReservation()">
         <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
     </md-button>
 </div>

@@ -2,9 +2,13 @@ app.controller('AreasController', function ($scope, $http, $state, $location, $l
 
     $scope.page.current = 14;
 
-    areasService.list(function (response) {
-        $scope.areas = response.data;
-    });
+    var loadData = function () {
+        areasService.list(function (response) {
+            $scope.areas = response.data;
+        });
+    };
+
+    loadData();
 
     $scope.addArea = function() {
         $mdDialog.show({
@@ -12,17 +16,18 @@ app.controller('AreasController', function ($scope, $http, $state, $location, $l
             templateUrl: 'dialog/createArea.html',
             controller: 'CreateAreaController'
         }).finally(function () {
-            areasService.list(function (response) {
-                $scope.areas = response.data;
-            });
+            loadData();
         });
     };
 
-    $scope.addRestaurantTable = function() {
+    $scope.arrangeTables = function (area) {
         $mdDialog.show({
             parent: angular.element(document.body),
-            templateUrl: 'dialog/createRestaurantTable.html',
-            controller: 'CreateRestaurantTableController'
+            templateUrl: 'dialog/editTableArrangement.html',
+            controller: 'EditTableArrangementController',
+            locals: { area: area }
+        }).finally(function () {
+            loadData();
         });
     };
 });

@@ -13,10 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by Alek on 2/26/2017.
@@ -25,22 +25,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/restaurantTables")
 public class RestaurantTableController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final RestaurantDao restaurantDao;
+
+    private final RestaurantTableDao restaurantTableDao;
 
     @Autowired
-    RestaurantDao restaurantDao;
-
-    @Autowired
-    RestaurantTableDao restaurantTableDao;
-
-    @PreAuthorize("isAuthenticated()")
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity read(){
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        final Manager manager = userDao.findByEmail(authentication.getName());
-        final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
-        return new ResponseEntity<>(restaurantTableDao.findByAreaRestaurantId(restaurant.getId()), HttpStatus.OK);
+    public RestaurantTableController(UserDao userDao, RestaurantDao restaurantDao, RestaurantTableDao restaurantTableDao) {
+        this.userDao = userDao;
+        this.restaurantDao = restaurantDao;
+        this.restaurantTableDao = restaurantTableDao;
     }
 
     @PreAuthorize("hasAuthority('MANAGER')")
@@ -48,5 +43,15 @@ public class RestaurantTableController {
     public ResponseEntity create(@RequestBody RestaurantTable restaurantTable) {
         restaurantTableDao.save(restaurantTable);
         return new ResponseEntity<>(restaurantTable, HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("hasAuthority('MANAGER')")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{areaId}")
+    @Transactional
+    public ResponseEntity create(@PathVariable long areaId, @RequestBody List<RestaurantTable> restaurantTables) {
+        final List<RestaurantTable> allTables = restaurantTableDao.findByAreaId(areaId);
+        allTables.forEach(restaurantTable -> restaurantTable.setActive(false));
+        restaurantTableDao.save(restaurantTables);
+        return new ResponseEntity<>(restaurantTables, HttpStatus.OK);
     }
 }

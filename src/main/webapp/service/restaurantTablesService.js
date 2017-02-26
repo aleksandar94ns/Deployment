@@ -1,10 +1,10 @@
 app.service('restaurantTablesService', function($http){
     return {
-        list: function(onSuccess, onError){
-            $http.get('/api/restaurantTables').then(onSuccess, onError);
-        },
         create: function (restaurantTable, onSuccess, onError) {
             $http.post('/api/restaurantTables', restaurantTable).then(onSuccess, onError);
+        },
+        update: function (area, restaurantTables, onSuccess, onError) {
+            $http.put('/api/restaurantTables/' + area.id, restaurantTables).then(onSuccess, onError);
         }
     }
 });

@@ -1,5 +1,7 @@
 package com.ftn.model;
 
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class Area extends BaseModel {
     private Restaurant restaurant;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "area")
+    @Where(clause = "active = true")
     private List<RestaurantTable> restaurantTables;
 
     public Area() {

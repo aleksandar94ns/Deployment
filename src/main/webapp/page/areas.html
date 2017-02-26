@@ -14,7 +14,7 @@
             <md-card-title>
             </md-card-title>
             <md-list flex>
-                <md-list-item class="md-3-line" ng-repeat="area in areas" ng-click="null">
+                <md-list-item class="md-3-line" ng-repeat="area in areas" ng-click="arrangeTables(area)">
                     <div class="md-list-item-text" style="margin-left: 20px;">
                         <h3>{{ area.name }}</h3>
                         <p> Restaurant : {{ area.restaurant.name }}</p>
@@ -23,9 +23,5 @@
             </md-list>
             </md-card-content>
         </md-card>
-        <md-button class="md-fab md-mini md-primary"
-                   aria-label="Add Restaurant Table" ng-click="addRestaurantTable()">
-            <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
-        </md-button>
     </div>
 </div>
