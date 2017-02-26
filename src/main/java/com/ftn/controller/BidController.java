@@ -56,7 +56,7 @@ public class BidController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.PATCH)
     public ResponseEntity edit(@RequestBody Bid updatedBid) {
-        final Bid bid = bidDao.findById(updatedBid.getId()).orElseThrow(NotFoundException::new);
+        bidDao.findById(updatedBid.getId()).orElseThrow(NotFoundException::new);
         bidDao.save(updatedBid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
