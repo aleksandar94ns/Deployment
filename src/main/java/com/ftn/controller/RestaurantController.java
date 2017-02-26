@@ -3,8 +3,10 @@ package com.ftn.controller;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.Guest;
+import com.ftn.model.GuestReservation;
 import com.ftn.model.Reservation;
 import com.ftn.model.Restaurant;
+import com.ftn.repository.GuestReservationDao;
 import com.ftn.repository.RestaurantDao;
 import com.ftn.repository.RestaurantTypeDao;
 import com.ftn.repository.UserDao;
@@ -36,11 +38,14 @@ public class RestaurantController {
 
     private final RestaurantTypeDao restaurantTypeDao;
 
+    private final GuestReservationDao guestReservationDao;
+
     @Autowired
-    public RestaurantController(UserDao userDao, RestaurantDao restaurantDao, RestaurantTypeDao restaurantTypeDao) {
+    public RestaurantController(UserDao userDao, RestaurantDao restaurantDao, RestaurantTypeDao restaurantTypeDao, GuestReservationDao guestReservationDao) {
         this.userDao = userDao;
         this.restaurantDao = restaurantDao;
         this.restaurantTypeDao = restaurantTypeDao;
+        this.guestReservationDao = guestReservationDao;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -57,8 +62,8 @@ public class RestaurantController {
         if (user == null) {
             throw new NotFoundException();
         }
-        final List<Reservation> reservations = new ArrayList<>(user.getReservations());
-        return new ResponseEntity<>(reservations.stream().map(Reservation::getRestaurant).collect(Collectors.toList()), HttpStatus.OK);
+        final List<GuestReservation> guestReservations = new ArrayList<>(guestReservationDao.findByGuestId(user.getId()));
+        return new ResponseEntity<>(guestReservations.stream().map(GuestReservation::getReservation).map(Reservation::getRestaurant).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('SYSTEM_MANAGER')")

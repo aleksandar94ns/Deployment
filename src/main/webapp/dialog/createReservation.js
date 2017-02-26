@@ -4,7 +4,7 @@ app.controller('CreateReservationController', function ($rootScope, $scope, $sta
     $scope.reservation.arrivalDate = new Date();
     $scope.reservation.departureDate = new Date();
     $scope.reservation.restaurantTables = [];
-    $scope.reservation.guests = [];
+    $scope.guests = [];
 
     restaurantsService.list(function(response) {
         $scope.restaurants = response.data;
@@ -44,12 +44,12 @@ app.controller('CreateReservationController', function ($rootScope, $scope, $sta
                 });
                 break;
             case 2:
-                reservationsService.create($scope.reservation, function () {
+                reservationsService.create({reservation: $scope.reservation, guests: $scope.guests}, function () {
                     $mdDialog.hide();
                 });
                 break;
             case 3:
-                reservationsService.create($scope.reservation, function () {
+                reservationsService.create({reservation: $scope.reservation, guests: $scope.guests}, function () {
                     $mdDialog.hide();
                 });
                 break;
