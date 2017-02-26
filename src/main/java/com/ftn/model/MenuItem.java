@@ -1,5 +1,7 @@
 package com.ftn.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 /**
@@ -17,6 +19,7 @@ public class MenuItem extends BaseModel {
     @Column(nullable = false)
     private String profile;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "menu_id", nullable = false)
     private Menu menu;

@@ -13,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Alek on 2/23/2017.
@@ -38,13 +35,20 @@ public class MenuController {
         this.menuDao = menuDao;
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity read(){
+    public ResponseEntity read() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Manager manager = userDao.findByEmail(authentication.getName());
         final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
         return new ResponseEntity<>(menuDao.findByRestaurantId(restaurant.getId()), HttpStatus.OK);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(method = RequestMethod.GET, value = "/restaurant/{restaurantId}")
+    public ResponseEntity read(@PathVariable Long restaurantId) {
+        restaurantDao.findById(restaurantId).orElseThrow(BadRequestException::new);
+        return new ResponseEntity<>(menuDao.findByRestaurantId(restaurantId), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('MANAGER')")

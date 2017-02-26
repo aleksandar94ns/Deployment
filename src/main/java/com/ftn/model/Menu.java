@@ -1,6 +1,7 @@
 package com.ftn.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Alex on 10/28/2016.
@@ -13,6 +14,9 @@ public class Menu extends BaseModel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "menu")
+    private List<MenuItem> menuItems;
 
     public Menu() {
     }
@@ -33,11 +37,20 @@ public class Menu extends BaseModel {
         this.restaurant = restaurant;
     }
 
+    public List<MenuItem> getMenuItems() {
+        return menuItems;
+    }
+
+    public void setMenuItems(List<MenuItem> menuItems) {
+        this.menuItems = menuItems;
+    }
+
     @Override
     public String toString() {
         return "Menu{" +
                 "name='" + name + '\'' +
                 ", restaurant=" + restaurant +
+                ", menuItems=" + menuItems +
                 '}';
     }
 }

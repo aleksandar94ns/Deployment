@@ -1,0 +1,47 @@
+<md-dialog style="width: 500px">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>New Order</h2>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <md-tabs md-dynamic-height md-border-bottom md-selected="data.selectedIndex">
+            <md-tab label="Meal menu">
+                <md-list flex>
+                    <md-content class="md-padding">
+                        <div ng-repeat="menu in menus">
+                            <md-subheader class="md-no-sticky">{{ menu.name }}</md-subheader>
+                            <md-list-item ng-repeat="menuItem in menu.menuItems">
+                                <md-checkbox ng-model="menuItem.selected"></md-checkbox>
+                                <p>{{menuItem.name}}</p>
+                                <p>{{menuItem.price}}</p>
+                                <md-icon class="md-secondary" ng-click="doSecondaryAction($event)" aria-label="Chat"
+                                         ng-if="menuItem.selected"
+                                         md-svg-src="img/ic_note_add_black_24px.svg"></md-icon>
+                            </md-list-item>
+                        </div>
+                    </md-content>
+                </md-list>
+            </md-tab>
+            <md-tab label="Drink card">
+                <md-content class="md-padding">
+                    <div ng-repeat="drinkCard in drinkCards">
+                        <md-subheader class="md-no-sticky">{{ drinkCard.name }}</md-subheader>
+                        <md-list-item ng-repeat="drinkItem in drinkCard.drinkItems">
+                            <md-checkbox ng-model="drinkItem.selected"></md-checkbox>
+                            <p>{{drinkItem.name}}</p>
+                            <p>{{drinkItem.price}}</p>
+                            <md-icon class="md-secondary" ng-click="doSecondaryAction($event)" aria-label="Chat"
+                                     ng-if="menuItem.selected"
+                                     md-svg-src="img/ic_note_add_black_24px.svg"></md-icon>
+                        </md-list-item>
+                    </div>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="end center">
+        <md-button ng-click="close()">Close</md-button>
+        <md-button type="submit" class="md-primary md-raised" ng-click="submit()">Save</md-button>
+    </md-dialog-actions>
+</md-dialog>

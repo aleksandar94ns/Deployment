@@ -1,5 +1,7 @@
 package com.ftn.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 /**
@@ -14,6 +16,7 @@ public class DrinkItem extends BaseModel {
 
     private double price;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "drink_card_id", nullable = false)
     private DrinkCard drinkCard;

@@ -1,4 +1,4 @@
-app.controller('ReservationsController', function ($scope, reservationsService) {
+app.controller('ReservationsController', function ($scope, $mdDialog, reservationsService) {
 
     $scope.page.current = 15;
 
@@ -14,6 +14,17 @@ app.controller('ReservationsController', function ($scope, reservationsService) 
     };
 
     loadData();
+
+    $scope.createOrder = function (reservation) {
+        $mdDialog.show({
+            parent: angular.element(document.body),
+            templateUrl: 'dialog/createOrder.html',
+            controller: 'CreateOrderController',
+            locals: {reservation: reservation}
+        }).finally(function () {
+            loadData();
+        });
+    };
 
     // Respond menu
 
