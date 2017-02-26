@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Alex on 2/26/17.
@@ -39,7 +42,17 @@ public class ReservationController {
     public ResponseEntity create(@RequestBody Reservation reservation) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Guest guest = userDao.findByEmail(authentication.getName());
-        reservation.setGuests(Collections.singletonList(guest));
+        guest.getReservations().add(reservation);
+        userDao.save(guest);
+        reservation.getGuests().forEach(friend -> {
+            final Guest friendFromDb = userDao.findById(friend.getId());
+            if (friendFromDb.getReservations() == null) {
+                friendFromDb.setReservations(new HashSet<>());
+            }
+            reservation.getGuests().remove(friend);
+            friendFromDb.getReservations().add(reservation);
+            userDao.save(friendFromDb);
+        });
         reservationDao.save(reservation);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

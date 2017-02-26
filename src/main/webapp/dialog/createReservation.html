@@ -8,7 +8,8 @@
         <md-tabs md-dynamic-height md-border-bottom md-selected="data.selectedIndex">
             <md-tab label="Restaurant" ng-disabled="data.selectedIndex != 0">
                 <md-list flex>
-                    <md-list-item class="md-3-line" ng-repeat="restaurant in restaurants" ng-click="restaurantSelected(restaurant)">
+                    <md-list-item class="md-3-line" ng-repeat="restaurant in restaurants"
+                                  ng-click="restaurantSelected(restaurant)">
                         <div class="md-list-item-text" style="margin-left: 20px;">
                             <h3>{{ restaurant.name }}</h3>
                             <h4>{{ restaurant.description }}</h4>
@@ -32,19 +33,40 @@
             </md-tab>
             <md-tab label="Invite friends" ng-disabled="data.selectedIndex != 3">
                 <md-content class="md-padding">
-                    <h1 class="md-display-2">Tab Three</h1>
-                    <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere
-                        molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat,
-                        at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent
-                        ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+                    <md-chips ng-model="reservation.guests" md-autocomplete-snap
+                              md-require-match="true">
+                        <md-autocomplete
+                                md-selected-item="selectedUser"
+                                md-search-text="searchText"
+                                md-items="item in queryUsers(searchText)"
+                                md-item-text="item.firstName + ' ' + item.lastName + ' ' + item.email"
+                                placeholder="Search users...">
+                            <md-item-template>
+                                <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.firstName}} {{item.lastName}} {{item.email}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                No users matching "{{searchText}}" were found.
+                            </md-not-found>
+                        </md-autocomplete>
+                        <md-chip-template>
+                            <span>
+                              <strong>{{$chip.firstName}} {{$chip.lastName}}</strong>
+                                <em>({{$chip.email}})</em>
+                            </span>
+                        </md-chip-template>
+                    </md-chips>
                 </md-content>
             </md-tab>
         </md-tabs>
     </md-dialog-content>
     <md-dialog-actions layout="row" layout-align="end center">
         <md-button ng-click="close()">Close</md-button>
+        <md-button type="submit" class="md-primary md-raised" ng-click="inviteFriends()"
+                   ng-if="data.selectedIndex == 2">
+            Invite Friends
+        </md-button>
         <md-button type="submit" class="md-primary md-raised" ng-click="next()" ng-if="!data.selectedIndex == 0">
-            {{ data.selectedIndex == 1 ? 'Next' : 'Submit' }}
+            {{ data.selectedIndex == 1 ? 'Next' : 'Complete reservation' }}
         </md-button>
     </md-dialog-actions>
 </md-dialog>
