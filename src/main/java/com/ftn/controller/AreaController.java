@@ -49,6 +49,7 @@ public class AreaController {
     public ResponseEntity read(@RequestParam("restaurant") long restaurantId, @RequestParam("arrivalDate") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss.S") Date arrivalDate, @RequestParam("departureDate") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss.S") Date departureDate) {
         final List<Area> areas = areaDao.findByRestaurantId(restaurantId);
         final List<Reservation> reservations = reservationDao.findByArrivalDateLessThanEqualAndDepartureDateGreaterThanEqual(departureDate, arrivalDate);
+        areas.forEach(area -> area.getRestaurantTables().forEach(restaurantTable -> restaurantTable.setReserved(reservations.stream().anyMatch(reservation -> reservation.getRestaurantTables().contains(restaurantTable)))));
         return new ResponseEntity<>(areas, HttpStatus.OK);
     }
 }

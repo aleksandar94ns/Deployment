@@ -1,5 +1,7 @@
 package com.ftn.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -11,8 +13,10 @@ import java.util.Set;
 @Entity
 public class Reservation extends BaseModel {
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss.S")
     private Date arrivalDate;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss.S")
     private Date departureDate;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "reservations")
@@ -22,7 +26,7 @@ public class Reservation extends BaseModel {
     @JoinTable(name = "reservation_table",
             joinColumns = {@JoinColumn(name = "reservation_id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "restaurant_table_id", nullable = false)})
-    private Set<RestaurantTable> restaurant_tables;
+    private Set<RestaurantTable> restaurantTables;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id")
@@ -55,12 +59,12 @@ public class Reservation extends BaseModel {
         this.guests = guests;
     }
 
-    public Set<RestaurantTable> getRestaurant_tables() {
-        return restaurant_tables;
+    public Set<RestaurantTable> getRestaurantTables() {
+        return restaurantTables;
     }
 
-    public void setRestaurant_tables(Set<RestaurantTable> restaurant_tables) {
-        this.restaurant_tables = restaurant_tables;
+    public void setRestaurantTables(Set<RestaurantTable> restaurantTables) {
+        this.restaurantTables = restaurantTables;
     }
 
     public Restaurant getRestaurant() {
@@ -77,7 +81,7 @@ public class Reservation extends BaseModel {
                 "arrivalDate=" + arrivalDate +
                 ", departureDate=" + departureDate +
                 ", guests=" + guests +
-                ", restaurant_tables=" + restaurant_tables +
+                ", restaurantTables=" + restaurantTables +
                 ", restaurant=" + restaurant +
                 '}';
     }

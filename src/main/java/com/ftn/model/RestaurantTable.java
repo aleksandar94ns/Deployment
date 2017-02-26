@@ -19,6 +19,9 @@ public class RestaurantTable extends BaseModel {
     @JsonBackReference
     private Area area;
 
+    @Transient
+    private boolean reserved;
+
     public RestaurantTable() {
     }
 
@@ -46,12 +49,21 @@ public class RestaurantTable extends BaseModel {
         this.area = area;
     }
 
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
+    }
+
     @Override
     public String toString() {
         return "RestaurantTable{" +
                 "horizontalPosition=" + horizontalPosition +
                 ", verticalPosition=" + verticalPosition +
                 ", area=" + area +
+                ", reserved=" + reserved +
                 '}';
     }
 }

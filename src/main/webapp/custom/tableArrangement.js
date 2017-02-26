@@ -35,12 +35,23 @@ app.controller('TableArrangementController', function ($scope) {
 
         for (var i in $scope.tiles) {
             if ($scope.tiles[i] == null) {
-                $scope.tiles[i] = {color: 'transparent', selected: false};
+                $scope.tiles[i] = {color: 'transparent', selected: false, reserved: false};
             }
         }
     });
 
     $scope.select = function(table) {
+        if (table.reserved) {
+            return;
+        }
         table.selected = !table.selected;
-    }
+
+        $scope.selectedTables = [];
+        for (var i in $scope.tiles) {
+            if ($scope.tiles[i].selected) {
+                $scope.selectedTables.push($scope.tiles[i]);
+            }
+        }
+        $scope.$emit('SelectedTables', $scope.selectedTables);
+    };
 });
