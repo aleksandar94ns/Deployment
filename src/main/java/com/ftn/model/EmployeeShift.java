@@ -1,4 +1,4 @@
-package com.ftn.controller;
+package com.ftn.model;
 
 import com.ftn.model.BaseModel;
 import com.ftn.model.Employee;
