@@ -6,24 +6,17 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
 
     $scope.seller = authenticationService.getUser();
 
-    $scope.deleteBids = [];
-
     $scope.bids = [];
 
     var loadBids = function () {
+        $scope.bids = [];
         if ($scope.authService.isManager()) {
             bidsService.list(function (response) {
-
-                $scope.bids = response.data;
-                $scope.bids.forEach(function (bidz) {
+                response.data.forEach(function (bidz) {
                     if (bidz.status == "PENDING") {
-                        $scope.deleteBids.push(bidz);
+                        $scope.bids.push(bidz);
                     }
                 });
-                $scope.bids = [];
-                $scope.deleteBids.forEach(function (bidzz) {
-                    $scope.bids.push(bidzz);
-                })
             })
         }
         else {
