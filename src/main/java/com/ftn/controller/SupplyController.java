@@ -1,11 +1,10 @@
 package com.ftn.controller;
 
+import com.ftn.exception.AuthenticationException;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
-import com.ftn.model.Manager;
-import com.ftn.model.Restaurant;
-import com.ftn.model.Supply;
-import com.ftn.model.User;
+import com.ftn.model.*;
+import com.ftn.repository.BidDao;
 import com.ftn.repository.RestaurantDao;
 import com.ftn.repository.SupplyDao;
 import com.ftn.repository.UserDao;
@@ -20,41 +19,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created by Alex on 2/25/17.
  */
 @RestController
 @RequestMapping("/api/supplies")
 public class SupplyController {
+
     private final UserDao userDao;
 
     private final RestaurantDao restaurantDao;
 
     private final SupplyDao supplyDao;
 
+    private final BidDao bidDao;
+
     @Autowired
-    public SupplyController(UserDao userDao, RestaurantDao restaurantDao, SupplyDao supplyDao) {
+    public SupplyController(UserDao userDao, RestaurantDao restaurantDao, SupplyDao supplyDao, BidDao bidDao) {
         this.userDao = userDao;
         this.restaurantDao = restaurantDao;
         this.supplyDao = supplyDao;
+        this.bidDao = bidDao;
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        try {
-            final Manager manager = userDao.findByEmail(authentication.getName());
+        final User user = userDao.findByEmail(authentication.getName());
+        if (user.getRole().equals(User.Role.MANAGER)) {
+            final Manager manager = (Manager) user;
             final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
-            return new ResponseEntity<>(supplyDao.findByRestaurantId(restaurant.getId()), HttpStatus.OK);
-        }
-        catch (Exception e) {
-            if (userDao.findByEmail(authentication.getName()).getRole().equals(User.Role.SELLER)) {
-                return new ResponseEntity<>(supplyDao.findAll(), HttpStatus.OK);
-            }
-            else {
-                throw new BadRequestException();
-            }
+            return new ResponseEntity<>(supplyDao.findByRestaurantIdAndExpirationBefore(restaurant.getId(), new Date()), HttpStatus.OK);
+        } else if (user.getRole().equals(User.Role.SELLER)) {
+            final Seller seller = (Seller) user;
+            final List<Supply> allSupplies = supplyDao.findAll();
+            final List<Bid> bids = bidDao.findBySellerId(seller.getId());
+            bids.forEach(bid -> allSupplies.remove(bid.getSupply()));
+            return new ResponseEntity<>(allSupplies, HttpStatus.OK);
+        } else {
+            throw new AuthenticationException();
         }
     }
 
