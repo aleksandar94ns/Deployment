@@ -9,11 +9,10 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
     $scope.bids = [];
 
     var loadBids = function () {
+        $scope.bids = [];
         if ($scope.authService.isManager()) {
             bidsService.list(function (response) {
-                $scope.bids = [];
-                $scope.bids = response.data;
-                $scope.bids.forEach(function (bidz) {
+                response.data.forEach(function (bidz) {
                     if (bidz.status == "PENDING") {
                         $scope.bids.push(bidz);
                     }
