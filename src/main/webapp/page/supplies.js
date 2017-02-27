@@ -92,12 +92,8 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
     $scope.acceptBid = function(bid) {
         $scope.bid = bid;
         bidsService.put($scope.bid, function () {
-            suppliesService.list(function (response) {
-                $scope.supplies = response.data;
-            });
-        }). finally(function () {
             loadBids();
-        });
+        })
     };
 
     $scope.isManager = function () {
