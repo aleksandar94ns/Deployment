@@ -8,6 +8,10 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
 
     $scope.bids = [];
 
+    $scope.supplies = [];
+
+    $scope.acceptedBids = [];
+
     var loadBids = function () {
         $scope.bids = [];
         if ($scope.authService.isManager()) {
@@ -15,6 +19,9 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
                 response.data.forEach(function (bidz) {
                     if (bidz.status == "PENDING") {
                         $scope.bids.push(bidz);
+                    }
+                    if (bidz.status == "ACCEPTED") {
+                        $scope.acceptedBids.push(bidz);
                     }
                 });
             })
@@ -28,9 +35,14 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
 
     loadBids();
 
-    suppliesService.list(function (response) {
-        $scope.supplies = response.data;
-    });
+    var loadSupplies = function () {
+        $scope.supplies = [];
+        suppliesService.list(function (response) {
+            $scope.supplies = response.data;
+        });
+    };
+
+    loadSupplies();
 
     $scope.addSupply = function() {
         $mdDialog.show({
@@ -75,9 +87,6 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
             }
         })
             .finally(function () {
-                suppliesService.list(function (response) {
-                    $scope.supplies = response.data;
-                });
                 loadBids();
             });
     };
@@ -85,6 +94,7 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
     $scope.acceptBid = function(bid) {
         $scope.bid = bid;
         bidsService.put($scope.bid, function () {
+            loadSupplies();
             loadBids();
         })
     };

@@ -16,7 +16,7 @@
             <md-list flex>
                 <md-toolbar class="md-theme-light">
                     <h2 class="md-toolbar-tools">
-                        <span>Items</span>
+                        <span>Supplies</span>
                     </h2>
                 </md-toolbar>
                 <md-list-item class="md-3-line" ng-repeat="supply in supplies">
@@ -52,6 +52,20 @@
                                aria-label="Accept Bid" ng-click="acceptBid(bid)">
                         <md-icon md-svg-src="img/ic_check_white_24px.svg"></md-icon>
                     </md-button>
+                </md-list-item>
+                <md-divider></md-divider>
+                <md-toolbar ng-if="isManager()" class="md-theme-light">
+                    <h2 class="md-toolbar-tools">
+                        <span>Accepted</span>
+                    </h2>
+                </md-toolbar>
+                <md-list-item ng-if="isManager()" class="md-2-line" ng-repeat="bid in acceptedBids">
+                    <div class="md-list-item-text" style="margin-left: 20px;">
+                        <h3>  Bid : {{bid.price}} {{bid.currency}}</h3>
+                        <h3 ng-if="isManager()"> STATUS : {{bid.status}} </h3>
+                        <h3 ng-if="isManager()"> Seller : {{bid.seller.firstName}} {{bid.seller.lastName}} </h3>
+                        <p>  Supply : {{bid.supply.name}} </p>
+                    </div>
                 </md-list-item>
             </md-list>
             </md-card-content>
