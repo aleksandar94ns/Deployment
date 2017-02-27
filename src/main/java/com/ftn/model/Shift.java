@@ -20,9 +20,6 @@ public class Shift extends BaseModel {
     private Date day;
 
     @Column(nullable = false)
-    private boolean valid;
-
-    @Column(nullable = false)
     private String startHour;
 
     @Column(nullable = false)

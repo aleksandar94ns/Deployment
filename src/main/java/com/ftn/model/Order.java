@@ -8,7 +8,7 @@ import java.util.Set;
  * Created by Alex on 11/29/16.
  */
 @Entity
-@Table(name = "order_pls")
+@Table(name = "order_")
 public class Order extends BaseModel {
 
     @Column(name = "status")
