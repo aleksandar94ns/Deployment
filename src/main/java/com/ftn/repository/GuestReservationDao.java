@@ -11,6 +11,8 @@ import java.util.Optional;
  */
 public interface GuestReservationDao extends JpaRepository<GuestReservation, Long> {
 
+    List<GuestReservation> findByReservationId(Long id);
+
     List<GuestReservation> findByGuestId(Long id);
 
     Optional<GuestReservation> findByGuestIdAndReservationId(Long guestId, Long reservationId);
