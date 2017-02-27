@@ -53,12 +53,29 @@ public class SupplyController {
         if (user.getRole().equals(User.Role.MANAGER)) {
             final Manager manager = (Manager) user;
             final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
-            return new ResponseEntity<>(supplyDao.findByRestaurantIdAndExpirationBefore(restaurant.getId(), new Date()), HttpStatus.OK);
+            final List<Supply> allSupplies = supplyDao.findByRestaurantIdAndExpirationAfter(restaurant.getId(), new Date());
+            final List<Bid> bids = bidDao.findBySupplyRestaurantId(restaurant.getId());
+            for (Bid bid: bids) {
+                if (bid.getStatus().equals("ACCEPTED") || bid.getStatus().equals("DECLINED")) {
+                    allSupplies.remove(bid.getSupply());
+                }
+            }
+            return new ResponseEntity<>(allSupplies, HttpStatus.OK);
         } else if (user.getRole().equals(User.Role.SELLER)) {
             final Seller seller = (Seller) user;
             final List<Supply> allSupplies = supplyDao.findAll();
             final List<Bid> bids = bidDao.findBySellerId(seller.getId());
             bids.forEach(bid -> allSupplies.remove(bid.getSupply()));
+            final List<Supply> expiredSupplies = supplyDao.findByExpirationBefore(new Date());
+            for (Supply supply: expiredSupplies) {
+                allSupplies.remove(supply);
+            }
+            final List<Bid> allBids = bidDao.findAll();
+            for (Bid bid: allBids) {
+                if (bid.getStatus().equals("ACCEPTED") || bid.getStatus().equals("DECLINED")) {
+                    allSupplies.remove(bid.getSupply());
+                }
+            }
             return new ResponseEntity<>(allSupplies, HttpStatus.OK);
         } else {
             throw new AuthenticationException();

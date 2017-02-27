@@ -8,6 +8,8 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
 
     $scope.deleteBids = [];
 
+    $scope.bids = [];
+
     var loadBids = function () {
         if ($scope.authService.isManager()) {
             bidsService.list(function (response) {
@@ -63,8 +65,8 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
             .finally(function () {
             suppliesService.list(function (response) {
                 $scope.supplies = response.data;
-                loadBids();
             });
+            loadBids();
         });
     };
 
@@ -90,6 +92,10 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
     $scope.acceptBid = function(bid) {
         $scope.bid = bid;
         bidsService.put($scope.bid, function () {
+            suppliesService.list(function (response) {
+                $scope.supplies = response.data;
+            });
+        }). finally(function () {
             loadBids();
         });
     };

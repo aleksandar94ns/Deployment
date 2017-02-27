@@ -13,7 +13,7 @@ public interface SupplyDao extends JpaRepository<Supply, Long> {
 
     Supply findById(Long id);
 
-    List<Supply> findByExpirationAfter(Date expiration);
+    List<Supply> findByExpirationBefore(Date expiration);
 
-    List<Supply> findByRestaurantIdAndExpirationBefore(Long id, Date expiration);
+    List<Supply> findByRestaurantIdAndExpirationAfter(Long id, Date expiration);
 }
