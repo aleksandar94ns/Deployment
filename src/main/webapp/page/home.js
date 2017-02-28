@@ -31,8 +31,13 @@ app.controller('HomeController', function ($scope, $http, $state, $location, $lo
     // Map
 
     NgMap.getMap().then(function(map) {
-        $scope.pinClicked = function (restaurant) {
-            
+        $scope.pinClicked = function (event, restaurant) {
+            $mdDialog.show({
+                parent: angular.element(document.body),
+                templateUrl: 'dialog/restaurant.html',
+                controller: 'RestaurantController',
+                locals: { restaurant: restaurant }
+            });
         };
     });
 });
