@@ -24,10 +24,12 @@
                 <md-input-container class="md-block">
                     <label>Confirm password</label>
                     <input id="confirmPassword" name="confirmPassword" type="password"
-                           required>
+                           required data-password-verify="user.password" ng-model="user.password_verify">
                     <div ng-messages="createSystemManagerForm.password.$error"
                          ng-if="createSystemManagerForm.password.$dirty">
                         <div ng-message="required">This field cannot be empty.</div>
+                        <div ng-show="createSystemManagerForm.confirmPassword.$error.passwordVerify">
+                            Passwords don't match!</div>
                     </div>
                 </md-input-container>
                 <md-input-container class="md-block">
