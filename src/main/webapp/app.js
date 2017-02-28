@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var app = angular.module('app', ['ui.router', 'ngMessages', 'ngMaterial', 'material.svgAssetsCache', 'mdPickers']);
+var app = angular.module('app', ['ui.router', 'ngMessages', 'ngMaterial', 'material.svgAssetsCache', 'mdPickers', 'materialCalendar']);
 
 app.factory('authInterceptor', ['$q', '$injector', function ($q, $injector) {
     var authInterceptor = {
