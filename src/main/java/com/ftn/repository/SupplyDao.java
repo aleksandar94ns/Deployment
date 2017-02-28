@@ -3,6 +3,7 @@ package com.ftn.repository;
 import com.ftn.model.Supply;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -10,5 +11,9 @@ import java.util.List;
  */
 public interface SupplyDao extends JpaRepository<Supply, Long> {
 
-    List<Supply> findByRestaurantId(Long id);
+    Supply findById(Long id);
+
+    List<Supply> findByExpirationBefore(Date expiration);
+
+    List<Supply> findByRestaurantIdAndExpirationAfter(Long id, Date expiration);
 }

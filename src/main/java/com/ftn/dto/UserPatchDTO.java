@@ -13,6 +13,16 @@ public class UserPatchDTO {
 
     private int footwearSize;
 
+    public UserPatchDTO() {
+    }
+
+    public UserPatchDTO(String firstName, String lastName, int dressSize, int footwearSize) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dressSize = dressSize;
+        this.footwearSize = footwearSize;
+    }
+
     public String getFirstName() {
         return firstName;
     }

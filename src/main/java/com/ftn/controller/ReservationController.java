@@ -2,11 +2,11 @@ package com.ftn.controller;
 
 import com.ftn.dto.CreateReservationDTO;
 import com.ftn.exception.BadRequestException;
-import com.ftn.model.Guest;
-import com.ftn.model.GuestReservation;
-import com.ftn.model.Reservation;
+import com.ftn.exception.NotFoundException;
+import com.ftn.model.*;
 import com.ftn.repository.GuestReservationDao;
 import com.ftn.repository.ReservationDao;
+import com.ftn.repository.RestaurantDao;
 import com.ftn.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,11 +35,23 @@ public class ReservationController {
 
     private final GuestReservationDao guestReservationDao;
 
+    private final RestaurantDao restaurantDao;
+
     @Autowired
-    public ReservationController(ReservationDao reservationDao, UserDao userDao, GuestReservationDao guestReservationDao) {
+    public ReservationController(ReservationDao reservationDao, UserDao userDao, GuestReservationDao guestReservationDao, RestaurantDao restaurantDao) {
         this.reservationDao = reservationDao;
         this.userDao = userDao;
         this.guestReservationDao = guestReservationDao;
+        this.restaurantDao = restaurantDao;
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity readManager() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Manager manager = userDao.findByEmail(authentication.getName());
+        final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(NotFoundException::new);
+        return new ResponseEntity<>(reservationDao.findByRestaurantId(restaurant.getId()), HttpStatus.OK);
     }
 
     @PreAuthorize("isAuthenticated()")

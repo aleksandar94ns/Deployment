@@ -1,5 +1,8 @@
 app.service('reservationsService', function($http){
     return {
+        listMen: function(onSuccess, onError){
+            $http.get('/api/reservations').then(onSuccess, onError);
+        },
         listMy: function(onSuccess, onError){
             $http.get('/api/reservations/me').then(onSuccess, onError);
         },

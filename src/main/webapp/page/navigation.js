@@ -104,6 +104,16 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
         $mdSidenav('left').close();
     };
 
+    $scope.goToStatistics = function () {
+        $state.transitionTo('navigation.statistics');
+        $mdSidenav('left').close();
+    };
+
+    $scope.goToShifts = function () {
+        $state.transitionTo('navigation.shifts');
+        $mdSidenav('left').close();
+    };
+    
     $scope.goToWorkingPlace = function () {
         $state.transitionTo('navigation.workingPlace.workingHours');
         $mdSidenav('left').close();

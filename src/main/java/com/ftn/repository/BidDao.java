@@ -4,6 +4,7 @@ import com.ftn.model.Bid;
 import com.ftn.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,8 @@ public interface BidDao extends JpaRepository<Bid, Long> {
     Bid findBySupplyId(Long id);
 
     List<Bid> findBySellerId(Long id);
+
+    List<Bid> findBySupplyIdAndSupplyRestaurantId(Long supplyId, Long restaurantId);
 
     List<Bid> findBySupplyRestaurantId(Long id);
 }

@@ -14,4 +14,6 @@ public interface FriendshipDao extends JpaRepository<Friendship, Long> {
     Optional<Friendship> findById(long id);
 
     List<Friendship> findByOriginatorIdOrRecipientId(long originatorId, long recipientId);
+
+    Friendship findByOriginatorIdAndRecipientId(long originatorId, long recipientId);
 }

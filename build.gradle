@@ -32,10 +32,20 @@ repositories {
 
 
 dependencies {
-	compile 'org.springframework.boot:spring-boot-starter-web:1.2.5.RELEASE'
-	compile 'org.springframework.boot:spring-boot-starter-data-jpa:1.2.5.RELEASE'
-	compile 'org.springframework.boot:spring-boot-starter-security:1.2.5.RELEASE'
+	// Spring
+	compile "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
+	compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+	compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+	testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+	testCompile group: 'org.springframework.security', name: 'spring-security-test', version: '4.0.0.RELEASE'
+
+	// Database
 	compile 'mysql:mysql-connector-java:5.1.36'
+	compile group: 'com.h2database', name: 'h2', version: '1.4.193'
+
+	// Email
 	compile 'org.springframework.boot:spring-boot-starter-mail'
+
+	// Util
 	compile 'com.google.guava:guava:20.0'
 }

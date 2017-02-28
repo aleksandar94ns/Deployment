@@ -6,6 +6,7 @@ import javax.persistence.*;
  * Created by Alex on 10/27/2016.
  */
 @Entity
+@Table(name = "[user]")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User extends BaseModel {
 

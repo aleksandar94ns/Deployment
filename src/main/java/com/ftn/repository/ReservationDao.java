@@ -11,5 +11,7 @@ import java.util.List;
  */
 public interface ReservationDao extends JpaRepository<Reservation, Long> {
 
+    List<Reservation> findByRestaurantId(Long id);
+
     List<Reservation> findByArrivalDateLessThanEqualAndDepartureDateGreaterThanEqual(Date departureDate, Date arrivalDate);
 }

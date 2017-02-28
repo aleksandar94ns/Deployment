@@ -2,17 +2,47 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
 
     $scope.page.current = 12;
 
-    $scope.authService = authenticationService.getUser();
+    $scope.authService = authenticationService;
 
     $scope.seller = authenticationService.getUser();
 
-    bidsService.listBySeller($scope.seller.id, function (response) {
-        $scope.bids = response.data;
-    });
+    $scope.bids = [];
 
-    suppliesService.list(function (response) {
-        $scope.supplies = response.data;
-    });
+    $scope.supplies = [];
+
+    $scope.acceptedBids = [];
+
+    var loadBids = function () {
+        $scope.bids = [];
+        if ($scope.authService.isManager()) {
+            bidsService.list(function (response) {
+                response.data.forEach(function (bidz) {
+                    if (bidz.status == "PENDING") {
+                        $scope.bids.push(bidz);
+                    }
+                    if (bidz.status == "ACCEPTED") {
+                        $scope.acceptedBids.push(bidz);
+                    }
+                });
+            })
+        }
+        else {
+            bidsService.listBySeller($scope.seller.id, function (response) {
+                $scope.bids = response.data;
+            });
+        }
+    };
+
+    loadBids();
+
+    var loadSupplies = function () {
+        $scope.supplies = [];
+        suppliesService.list(function (response) {
+            $scope.supplies = response.data;
+        });
+    };
+
+    loadSupplies();
 
     $scope.addSupply = function() {
         $mdDialog.show({
@@ -41,6 +71,7 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
             suppliesService.list(function (response) {
                 $scope.supplies = response.data;
             });
+            loadBids();
         });
     };
 
@@ -56,21 +87,43 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
             }
         })
             .finally(function () {
-                suppliesService.list(function (response) {
-                    $scope.supplies = response.data;
-                });
+                loadBids();
             });
+    };
+
+    $scope.acceptBid = function(bid) {
+        $scope.bid = bid;
+        bidsService.put($scope.bid, function () {
+            loadSupplies();
+            loadBids();
+        })
     };
 
     $scope.isManager = function () {
         if (authenticationService.getUser().role == "MANAGER") {
             return true;
         }
-    }
+    };
 
     $scope.isSeller = function () {
         if (authenticationService.getUser().role == "SELLER") {
             return true;
         }
-    }
+    };
+
+    $scope.bidStatus = function (bid) {
+        if (authenticationService.getUser().role == "SELLER") {
+            if (bid.status == "PENDING"){
+                return true;
+            }
+        }
+    };
+
+    $scope.bidStatusManger = function (bid) {
+        if (authenticationService.getUser().role == "MANAGER") {
+            if (bid.status == "PENDING"){
+                return true;
+            }
+        }
+    };
 });
