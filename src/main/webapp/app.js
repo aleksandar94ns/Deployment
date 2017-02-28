@@ -153,6 +153,16 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             controller: 'CookedMealsController',
             templateUrl: 'page/cookedMeals.html'
         })
+        .state('navigation.statistics', {
+            url: '/statistics',
+            controller: 'StatisticsController',
+            templateUrl: 'page/statistics.html'
+        })
+        .state('navigation.shifts', {
+            url: '/shifts',
+            controller: 'ShiftsController',
+            templateUrl: 'page/shifts.html'
+        })
         .state('navigation.workingPlace.grillMeals', {
             url: '/grillMeals',
             controller: 'GrillMealsController',
