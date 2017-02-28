@@ -5,6 +5,9 @@ app.controller('HomeController', function ($scope, $http, $state, $location, $lo
     $scope.authService = authenticationService;
 
     var loadData = function () {
+        restaurantsService.list(function (response) {
+           $scope.allRestaurants = response.data;
+        });
         restaurantsService.listVisited(function(response) {
             $scope.restaurants = response.data;
         });
@@ -28,8 +31,8 @@ app.controller('HomeController', function ($scope, $http, $state, $location, $lo
     // Map
 
     NgMap.getMap().then(function(map) {
-       $scope.pinClicked = function () {
-
-       };
+        $scope.pinClicked = function (restaurant) {
+            
+        };
     });
 });
