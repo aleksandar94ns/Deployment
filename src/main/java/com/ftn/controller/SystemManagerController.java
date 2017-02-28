@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
+
 @RestController
 @RequestMapping("/api/users/systemManagers")
 public class SystemManagerController {
@@ -31,12 +33,14 @@ public class SystemManagerController {
         this.encoder = encoder;
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
         return new ResponseEntity<>(userDao.findByRole(User.Role.SYSTEM_MANAGER), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody SystemManager systemManager) {

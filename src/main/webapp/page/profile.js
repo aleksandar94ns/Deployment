@@ -2,6 +2,8 @@ app.controller('ProfileController', function ($scope, $state, $http, $mdDialog, 
 
     $scope.page.current = 2;
 
+    $scope.authService = authenticationService;
+
     $scope.pendingFriendships = [];
     $scope.acceptedFriendships = [];
 
@@ -10,6 +12,9 @@ app.controller('ProfileController', function ($scope, $state, $http, $mdDialog, 
             $scope.user = response.data;
             authenticationService.setUser(response.data);
         });
+        if (!authenticationService.isGuest()) {
+            return;
+        }
         friendsService.list(function (response) {
             $scope.pendingFriendships = response.data.filter(function(friendship) {
                 return friendship.status === 'PENDING';

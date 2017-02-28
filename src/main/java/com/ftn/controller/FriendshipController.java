@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +36,7 @@ public class FriendshipController {
         this.friendshipDao = friendshipDao;
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read() {
@@ -46,6 +48,7 @@ public class FriendshipController {
         return new ResponseEntity<>(friendships, HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.GET, value = "/me")
     public ResponseEntity readFriends() {
@@ -57,6 +60,7 @@ public class FriendshipController {
         return new ResponseEntity<>(friendships.stream().map(friendship -> friendship.getOriginator().equals(user) ? friendship.getRecipient() : friendship.getOriginator()).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.GET, value = "/potential")
     public ResponseEntity readPotential() {
@@ -77,6 +81,7 @@ public class FriendshipController {
         return new ResponseEntity<>(guests, HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Guest guest) {
@@ -95,6 +100,7 @@ public class FriendshipController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.PATCH)
     public ResponseEntity edit(@RequestBody Friendship updatedFriendship) {
@@ -112,6 +118,7 @@ public class FriendshipController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public ResponseEntity delete(@PathVariable long id) {

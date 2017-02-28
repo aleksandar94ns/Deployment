@@ -22,6 +22,8 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import javax.transaction.Transactional;
+
 /**
  * Created by Alex on 2/24/17.
  */
@@ -45,6 +47,7 @@ public class AreaController {
         this.reservationDao = reservationDao;
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
@@ -54,12 +57,14 @@ public class AreaController {
         return new ResponseEntity<>(areaDao.findByRestaurantId(restaurant.getId()), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "/restaurant/{id}")
     public ResponseEntity read(@PathVariable long id){
         return new ResponseEntity<>(areaDao.findByRestaurantId(id), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "/available")
     public ResponseEntity read(@RequestParam("restaurant") long restaurantId, @RequestParam("arrivalDate") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss.S") Date arrivalDate, @RequestParam("departureDate") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss.S") Date departureDate) {
@@ -70,6 +75,7 @@ public class AreaController {
 
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Area area) {

@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
@@ -25,18 +26,23 @@ import java.util.List;
 @RequestMapping("/api/bids")
 public class BidController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final RestaurantDao restaurantDao;
+
+    private final SupplyDao supplyDao;
+
+    private final BidDao bidDao;
 
     @Autowired
-    RestaurantDao restaurantDao;
+    public BidController(UserDao userDao, RestaurantDao restaurantDao, SupplyDao supplyDao, BidDao bidDao) {
+        this.userDao = userDao;
+        this.restaurantDao = restaurantDao;
+        this.supplyDao = supplyDao;
+        this.bidDao = bidDao;
+    }
 
-    @Autowired
-    SupplyDao supplyDao;
-
-    @Autowired
-    BidDao bidDao;
-
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
@@ -46,6 +52,7 @@ public class BidController {
         return new ResponseEntity<>(bidDao.findBySupplyRestaurantId(restaurant.getId()), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity read(@RequestBody Bid bid){
@@ -64,12 +71,14 @@ public class BidController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "/seller/{id}")
     public ResponseEntity listBySeller(@PathVariable long id){
         return new ResponseEntity<>(bidDao.findBySellerId(id), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.PATCH)
     public ResponseEntity edit(@RequestBody Bid updatedBid) {
@@ -78,6 +87,7 @@ public class BidController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('SELLER')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Bid bid) {

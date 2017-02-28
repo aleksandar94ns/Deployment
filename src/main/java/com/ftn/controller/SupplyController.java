@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class SupplyController {
         this.bidDao = bidDao;
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
@@ -82,6 +84,7 @@ public class SupplyController {
         }
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Supply supply) {

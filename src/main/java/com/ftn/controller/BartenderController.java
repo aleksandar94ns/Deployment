@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
+
 /**
  * Created by Alek on 2/21/2017.
  */
@@ -41,6 +43,7 @@ public class BartenderController {
         this.restaurantDao = restaurantDao;
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
@@ -50,6 +53,7 @@ public class BartenderController {
         return new ResponseEntity<>(bartenderDao.findByRestaurantIdAndRole(restaurant.getId(), User.Role.BARTENDER), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Bartender bartender) {
