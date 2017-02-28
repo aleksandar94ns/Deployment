@@ -27,9 +27,9 @@
                 </md-input-container>
                 <md-input-container class="md-block" ng-if="authenticationService.hasUniform()">
                     <label>Footwear</label>
-                    <input id="footWear" name="footWear" type="text" data-ng-model="user.footWear"
+                    <input id="footwearSize" name="footwearSize" type="text" data-ng-model="user.footwearSize"
                            required>
-                    <div ng-messages="editProfileForm.footWear.$error" ng-if="registerForm.footWear.$dirty">
+                    <div ng-messages="editProfileForm.footwearSize.$error" ng-if="registerForm.footwearSize.$dirty">
                         <div ng-message="required">This field cannot be empty.</div>
                     </div>
                 </md-input-container>
