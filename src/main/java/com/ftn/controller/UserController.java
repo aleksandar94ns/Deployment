@@ -100,6 +100,6 @@ public class UserController {
             ((HasUniform) user).setFootwearSize(userPatchDTO.getFootwearSize());
         }
         userDao.save(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

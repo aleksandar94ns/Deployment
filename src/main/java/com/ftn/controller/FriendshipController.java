@@ -35,7 +35,7 @@ public class FriendshipController {
         this.friendshipDao = friendshipDao;
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -46,7 +46,7 @@ public class FriendshipController {
         return new ResponseEntity<>(friendships, HttpStatus.OK);
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.GET, value = "/me")
     public ResponseEntity readFriends() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -57,7 +57,7 @@ public class FriendshipController {
         return new ResponseEntity<>(friendships.stream().map(friendship -> friendship.getOriginator().equals(user) ? friendship.getRecipient() : friendship.getOriginator()).collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.GET, value = "/potential")
     public ResponseEntity readPotential() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -77,7 +77,7 @@ public class FriendshipController {
         return new ResponseEntity<>(guests, HttpStatus.OK);
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Guest guest) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -86,12 +86,16 @@ public class FriendshipController {
         if (recipient == null) {
             throw new NotFoundException();
         }
+        if (friendshipDao.findByOriginatorIdAndRecipientId(originator.getId(), recipient.getId()) != null ||
+                friendshipDao.findByOriginatorIdAndRecipientId(recipient.getId(), originator.getId()) != null) {
+            throw new BadRequestException();
+        }
         final Friendship friendship = new Friendship(originator, recipient);
         friendshipDao.save(friendship);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.PATCH)
     public ResponseEntity edit(@RequestBody Friendship updatedFriendship) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -108,7 +112,7 @@ public class FriendshipController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public ResponseEntity delete(@PathVariable long id) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
