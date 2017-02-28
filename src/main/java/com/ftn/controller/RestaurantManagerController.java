@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
+
 @RestController
 @RequestMapping("/api/users/restaurantManagers")
 public class RestaurantManagerController {
@@ -32,12 +34,14 @@ public class RestaurantManagerController {
         this.restaurantDao = restaurantDao;
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('SYSTEM_MANAGER')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
         return new ResponseEntity<>(userDao.findByRole(User.Role.MANAGER), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('SYSTEM_MANAGER')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Manager manager) {

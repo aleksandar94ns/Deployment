@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 
 /**
@@ -27,15 +28,20 @@ import java.util.Date;
 @RequestMapping("/api/shifts")
 public class ShiftController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final RestaurantDao restaurantDao;
+
+    private final ShiftDao shiftDao;
 
     @Autowired
-    RestaurantDao restaurantDao;
+    public ShiftController(UserDao userDao, RestaurantDao restaurantDao, ShiftDao shiftDao) {
+        this.userDao = userDao;
+        this.restaurantDao = restaurantDao;
+        this.shiftDao = shiftDao;
+    }
 
-    @Autowired
-    ShiftDao shiftDao;
-
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
@@ -45,6 +51,7 @@ public class ShiftController {
         return new ResponseEntity<>(shiftDao.findByRestaurantId(restaurant.getId()), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Shift shift) {

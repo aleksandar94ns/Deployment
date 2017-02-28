@@ -38,6 +38,7 @@ public class RestaurantTableController {
         this.restaurantTableDao = restaurantTableDao;
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody RestaurantTable restaurantTable) {
@@ -45,9 +46,9 @@ public class RestaurantTableController {
         return new ResponseEntity<>(restaurantTable, HttpStatus.CREATED);
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.PUT, value = "/{areaId}")
-    @Transactional
     public ResponseEntity create(@PathVariable long areaId, @RequestBody List<RestaurantTable> restaurantTables) {
         final List<RestaurantTable> allTables = restaurantTableDao.findByAreaId(areaId);
         allTables.forEach(restaurantTable -> restaurantTable.setActive(false));

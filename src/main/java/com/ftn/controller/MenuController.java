@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+
 /**
  * Created by Alek on 2/23/2017.
  */
@@ -35,6 +37,7 @@ public class MenuController {
         this.menuDao = menuDao;
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read() {
@@ -44,6 +47,7 @@ public class MenuController {
         return new ResponseEntity<>(menuDao.findByRestaurantId(restaurant.getId()), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "/restaurant/{restaurantId}")
     public ResponseEntity read(@PathVariable Long restaurantId) {
@@ -51,6 +55,7 @@ public class MenuController {
         return new ResponseEntity<>(menuDao.findByRestaurantId(restaurantId), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Menu menu) {

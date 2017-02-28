@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -24,15 +25,20 @@ import java.util.List;
 @RequestMapping("/api/grades")
 public class GradesController {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    private final RestaurantDao restaurantDao;
+
+    private final GradeDao gradeDao;
 
     @Autowired
-    RestaurantDao restaurantDao;
+    public GradesController(UserDao userDao, RestaurantDao restaurantDao, GradeDao gradeDao) {
+        this.userDao = userDao;
+        this.restaurantDao = restaurantDao;
+        this.gradeDao = gradeDao;
+    }
 
-    @Autowired
-    GradeDao gradeDao;
-
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){

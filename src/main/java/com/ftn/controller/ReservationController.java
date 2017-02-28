@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class ReservationController {
         this.restaurantDao = restaurantDao;
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity readManager() {
@@ -54,6 +56,7 @@ public class ReservationController {
         return new ResponseEntity<>(reservationDao.findByRestaurantId(restaurant.getId()), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "/me")
     public ResponseEntity read() {
@@ -62,6 +65,7 @@ public class ReservationController {
         return new ResponseEntity<>(guestReservationDao.findByGuestId(guest.getId()), HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody CreateReservationDTO createReservationDTO) {
@@ -78,6 +82,7 @@ public class ReservationController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.PATCH)
     public ResponseEntity update(@RequestBody GuestReservation guestReservation) {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -20,9 +21,14 @@ import java.util.List;
 @RequestMapping("/api/guestReservations")
 public class GuestReservatoinsController {
 
-    @Autowired
-    GuestReservationDao guestReservationDao;
+    private final GuestReservationDao guestReservationDao;
 
+    @Autowired
+    public GuestReservatoinsController(GuestReservationDao guestReservationDao) {
+        this.guestReservationDao = guestReservationDao;
+    }
+
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity read(@RequestBody Reservation reservation){

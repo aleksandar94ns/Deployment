@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 /**
@@ -42,6 +43,7 @@ public class UserController {
         this.mailService = mailService;
     }
 
+    @Transactional
     @RequestMapping(method = RequestMethod.POST, value = "/guests")
     public ResponseEntity create(HttpServletRequest request, @RequestBody Guest guest) {
         guest.setRole(User.Role.GUEST);
@@ -53,6 +55,7 @@ public class UserController {
         return new ResponseEntity<>(guest, HttpStatus.CREATED);
     }
 
+    @Transactional
     @RequestMapping(method = RequestMethod.GET, value = "/guests/{confirmationCode}")
     public ResponseEntity verify(@PathVariable String confirmationCode) {
         final Guest guest = userDao.findByConfirmationCode(confirmationCode);
@@ -64,6 +67,7 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "/me")
     public ResponseEntity getProfile() {
@@ -72,6 +76,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.PATCH, value = "/me/changePassword")
     public ResponseEntity changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
@@ -88,6 +93,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.PATCH, value = "/me")
     public ResponseEntity update(@RequestBody UserPatchDTO userPatchDTO) {
