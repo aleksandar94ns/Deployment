@@ -1,4 +1,4 @@
-app.controller('HomeController', function ($scope, $http, $state, $location, $log, $rootScope, $mdSidenav, $mdDialog, $interval, authenticationService, restaurantsService) {
+app.controller('HomeController', function ($scope, $http, $state, $location, $log, $rootScope, $mdSidenav, $mdDialog, $interval, NgMap, authenticationService, restaurantsService) {
 
     $scope.page.current = 0;
 
@@ -24,4 +24,12 @@ app.controller('HomeController', function ($scope, $http, $state, $location, $lo
             loadData();
         });
     };
+
+    // Map
+
+    NgMap.getMap().then(function(map) {
+       $scope.pinClicked = function () {
+
+       };
+    });
 });

@@ -11,6 +11,21 @@
                     <span class="md-headline">Restaurants you visited</span>
                 </md-card-title-text>
             </md-card-title>
+            <!--
+            <ng-map zoom="13" center="1600 pennsylvania ave, washington DC" style="height:300px"
+                    on-center-changed="centerCustomMarker()">
+                <marker position="10 pennsylvania ave, washington DC" on-click="pinClicked()"></marker>
+                <marker position="2600 pennsylvania ave, washington DC" on-click="pinClicked()"></marker>
+            </ng-map>
+            -->
+            <ng-map zoom="14" center="current-location" >
+                <directions
+                        draggable="true"
+                        travel-mode="DRIVING"
+                        origin="current-location"
+                        destination="Belgrade, Serbia">
+                </directions>
+            </ng-map>
             <md-list flex>
                 <md-list-item class="md-3-line" ng-repeat="restaurant in restaurants">
                     <div class="md-list-item-text" style="margin-left: 20px;">
