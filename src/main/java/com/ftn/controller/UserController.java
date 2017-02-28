@@ -19,6 +19,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.transaction.Transactional;
 import java.util.UUID;
@@ -57,14 +59,14 @@ public class UserController {
 
     @Transactional
     @RequestMapping(method = RequestMethod.GET, value = "/guests/{confirmationCode}")
-    public ResponseEntity verify(@PathVariable String confirmationCode) {
+    public ModelAndView verify(@PathVariable String confirmationCode) {
         final Guest guest = userDao.findByConfirmationCode(confirmationCode);
         if (guest == null) {
             throw new NotFoundException();
         }
         guest.setEnabled(true);
         userDao.save(guest);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ModelAndView(new RedirectView("/", true));
     }
 
     @Transactional
