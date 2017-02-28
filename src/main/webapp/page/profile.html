@@ -29,7 +29,7 @@
                 </form>
             </md-card-content>
         </md-card>
-        <md-card ng-class="{'md-whiteframe-4dp':hovering}"
+        <md-card ng-class="{'md-whiteframe-4dp':hovering}" ng-if="authService.isGuest()"
                  ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
             <md-card-title>
                 <md-card-title-text>
