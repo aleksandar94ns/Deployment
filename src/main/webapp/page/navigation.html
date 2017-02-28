@@ -102,6 +102,11 @@
                     Statistics
                 </md-button>
             </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isManager()">
+                <md-button ng-click="goToShifts()" class="md-primary sidenav-item"  ng-disabled="isActive(17)">
+                    Shifts
+                </md-button>
+            </md-input-container>
             <md-input-container class="md-block sidenav-item">
                 <md-button ng-click="goToProfile()" class="md-primary sidenav-item"  ng-disabled="isActive(2)">
                     Profile

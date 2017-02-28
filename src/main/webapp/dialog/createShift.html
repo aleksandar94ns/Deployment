@@ -1,0 +1,23 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="createShiftForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Name</label>
+                    <input id="name" name="name" type="text" data-ng-model="shift.name" required>
+                    <div ng-messages="createShiftForm.name.$error" ng-if="createShiftForm.name.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <mdp-time-picker mdp-placeholder="Start Hour" ng-model="shift.startHour"></mdp-time-picker>
+                <mdp-time-picker mdp-placeholder="End Hour" ng-model="shift.endHour"></mdp-time-picker>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Close</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="createShiftForm.$invalid">Create
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
