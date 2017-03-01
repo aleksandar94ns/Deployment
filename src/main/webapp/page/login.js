@@ -1,4 +1,4 @@
-app.controller('LoginController', function ($scope, $state, $http, $mdDialog, authenticationService, usersService) {
+app.controller('LoginController', function ($scope, $state, $http, $mdDialog, authenticationService, usersService, reservationsService) {
 
     $scope.submit = function () {
         authenticationService.login($scope.user, function () {
@@ -16,6 +16,16 @@ app.controller('LoginController', function ($scope, $state, $http, $mdDialog, au
                                 $state.transitionTo('navigation.supplies');
                             } else {
                                 $state.transitionTo('navigation.changePasswordSeller');
+                            }
+                        });
+                    } else if (authenticationService.isGuest()) {
+                        reservationsService.listMy(function (response) {
+                            if (response.data.filter(function(reservation) {
+                                return reservation.status === 'PENDING';
+                            }).length > 0) {
+                                $state.transitionTo('navigation.reservations');
+                            } else {
+                                $state.transitionTo('navigation.home');
                             }
                         });
                     } else {
