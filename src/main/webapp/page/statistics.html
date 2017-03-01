@@ -1,42 +1,50 @@
-<div class="container" ng-controller="WaitersController">
-    <div layout="column">
-        <div layout="row">
-            <h3>Statistics</h3>
-            <span flex></span>
-            <md-button class="md-fab md-mini md-primary"
-                       aria-label="Add Waiter" ng-click="addWaiter()">
-                <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
-            </md-button>
+<md-card-content>
+    <div class="container" ng-controller="WaitersController">
+        <div layout="column">
+            <div layout="row">
+                <h3>Statistics</h3>
+                <span flex></span>
+                <md-button class="md-fab md-mini md-primary"
+                           aria-label="Add Waiter" ng-click="addWaiter()">
+                    <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
+                </md-button>
+            </div>
+            <md-divider></md-divider>
+            <p>
+            <h2>Restaurant : {{restaurant}} , grade : {{resGrade}}</h2>
+            </p>
+            <md-divider></md-divider>
+            <p>
+            <h3>Waiters grade : {{weiGrade}}</h3>
+            </p>
+            <md-divider></md-divider>
+            <p>
+            <h3>Meals grade : {{mealGrade}}</h3>
+            </p>
+            <md-divider></md-divider>
+            <p>
+            <h3>Total guests : {{totalGuests}}</h3>
+            </p>
+            <md-divider></md-divider>
+            <p>
+            <h3>Total Restaurant earnings : {{totalEarnings}}</h3>
+            </p>
+            <md-divider></md-divider>
+            <p>
+            <h3>Bartender Avarage earnings : {{totalEarnings}}</h3>
+            </p>
+            <md-divider></md-divider>
+            <canvas id="line" class="chart chart-line" chart-data="data"
+                    chart-labels="labels" chart-series="series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+            <md-divider></md-divider>
+            <md-card ng-class="{'md-whiteframe-4dp':hovering}"
+                     ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+                <md-card-title>
+                </md-card-title>
+
+            </md-card>
         </div>
-        <md-divider></md-divider>
-        <p>
-            <h2>Restaurant : {{restaurant.name}} , grade : {{resGrade}}</h2>
-        </p>
-        <md-divider></md-divider>
-        <p>
-        <h3>Waiters grade : {{weiGrade}}</h3>
-        </p>
-        <md-divider></md-divider>
-        <p>
-        <h3>Meals grade : {{mealGrade}}</h3>
-        </p>
-        <md-divider></md-divider>
-        <p>
-        <h3>Total guests : {{totalGuests}}</h3>
-        </p>
-        <md-divider></md-divider>
-        <md-card ng-class="{'md-whiteframe-4dp':hovering}"
-                 ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
-            <md-card-title>
-            </md-card-title>
-            <md-list flex>
-                <md-list-item class="md-line" ng-repeat="grade in grades" ng-click="null">
-                    <div class="md-list-item-text" style="margin-left: 20px;">
-                        <h3>{{ grade.reservation.restaurant.name }}</h3>
-                    </div>
-                </md-list-item>
-            </md-list>
-            </md-card-content>
-        </md-card>
     </div>
-</div>
+</md-card-content>

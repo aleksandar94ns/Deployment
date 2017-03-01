@@ -20,6 +20,42 @@
                         <div ng-message="required">This field cannot be empty.</div>
                     </div>
                 </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Country</label>
+                    <input id="country" name="country" type="text" data-ng-model="restaurant.country"
+                           required>
+                    <div ng-messages="restaurantForm.country.$error"
+                         ng-if="restaurantForm.country.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>City</label>
+                    <input id="city" name="city" type="text" data-ng-model="restaurant.city"
+                           required>
+                    <div ng-messages="restaurantForm.city.$error"
+                         ng-if="restaurantForm.city.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Street</label>
+                    <input id="street" name="street" type="text" data-ng-model="restaurant.street"
+                           required>
+                    <div ng-messages="restaurantForm.street.$error"
+                         ng-if="restaurantForm.street.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Street Number</label>
+                    <input id="streetNumber" name="streetNumber" type="text" data-ng-model="restaurant.streetNumber"
+                           required>
+                    <div ng-messages="restaurantForm.streetNumber.$error"
+                         ng-if="restaurantForm.streetNumber.$dirty">
+                        <div ng-message="required">This field cannot be empty.</div>
+                    </div>
+                </md-input-container>
                 <md-autocomplete
                         ng-disabled="ctrl.isDisabled"
                         md-no-cache="ctrl.noCache"

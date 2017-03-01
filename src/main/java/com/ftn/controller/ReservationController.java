@@ -2,12 +2,15 @@ package com.ftn.controller;
 
 import com.ftn.dto.CreateReservationDTO;
 import com.ftn.exception.BadRequestException;
+import com.ftn.exception.ForbiddenException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.*;
 import com.ftn.repository.GuestReservationDao;
 import com.ftn.repository.ReservationDao;
 import com.ftn.repository.RestaurantDao;
 import com.ftn.repository.UserDao;
+import com.ftn.service.MailService;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,16 +41,19 @@ public class ReservationController {
 
     private final RestaurantDao restaurantDao;
 
+    private final MailService mailService;
+
     @Autowired
-    public ReservationController(ReservationDao reservationDao, UserDao userDao, GuestReservationDao guestReservationDao, RestaurantDao restaurantDao) {
+    public ReservationController(ReservationDao reservationDao, UserDao userDao, GuestReservationDao guestReservationDao, RestaurantDao restaurantDao, MailService mailService) {
         this.reservationDao = reservationDao;
         this.userDao = userDao;
         this.guestReservationDao = guestReservationDao;
         this.restaurantDao = restaurantDao;
+        this.mailService = mailService;
     }
 
     @Transactional
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity readManager() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -57,7 +63,7 @@ public class ReservationController {
     }
 
     @Transactional
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.GET, value = "/me")
     public ResponseEntity read() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -68,12 +74,22 @@ public class ReservationController {
     @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity create(@RequestBody CreateReservationDTO createReservationDTO) {
+    public synchronized ResponseEntity create(@RequestBody CreateReservationDTO createReservationDTO, HttpServletRequest request) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Guest reservationOwner = userDao.findByEmail(authentication.getName());
         final List<Guest> guests = new ArrayList<>();
         final Reservation reservation = createReservationDTO.getReservation();
-        createReservationDTO.getGuests().forEach(guest -> guests.add(userDao.findById(guest.getId())));
+        final List<Reservation> existingReservationsAtTime = reservationDao.findByArrivalDateLessThanEqualAndDepartureDateGreaterThanEqual(reservation.getDepartureDate(), reservation.getArrivalDate());
+        existingReservationsAtTime.forEach(existingReservationAtTime ->
+                existingReservationAtTime.getRestaurantTables().forEach(restaurantTable -> {
+                    if (reservation.getRestaurantTables().contains(restaurantTable)) {
+                        throw new ForbiddenException();
+                    }
+                }));
+        createReservationDTO.getGuests().forEach(guest -> {
+            guests.add(userDao.findById(guest.getId()));
+            mailService.sendReservationInvitationMail(request, guest.getEmail());
+        });
         reservationDao.save(reservation);
         final GuestReservation ownerReservation = new GuestReservation(reservation, reservationOwner);
         ownerReservation.setStatus(GuestReservation.Status.ACCEPTED);

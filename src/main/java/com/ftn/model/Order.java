@@ -8,11 +8,12 @@ import java.util.Set;
  * Created by Alex on 11/29/16.
  */
 @Entity
-@Table(name = "order_")
+@Table(name = "[order]")
 public class Order extends BaseModel {
 
-    @Column(name = "status")
     private String status;
+
+    private boolean readyAtReservationTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "reservation_id")
@@ -62,10 +63,19 @@ public class Order extends BaseModel {
         this.orderItems = orderItems;
     }
 
+    public boolean isReadyAtReservationTime() {
+        return readyAtReservationTime;
+    }
+
+    public void setReadyAtReservationTime(boolean readyAtReservationTime) {
+        this.readyAtReservationTime = readyAtReservationTime;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "status='" + status + '\'' +
+                ", readyAtReservationTime=" + readyAtReservationTime +
                 ", reservation=" + reservation +
                 ", restaurantTables=" + restaurantTables +
                 ", orderItems=" + orderItems +

@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface SupplyDao extends JpaRepository<Supply, Long> {
 
+    Supply findByName(String name);
+
     Supply findById(Long id);
 
     List<Supply> findByExpirationBefore(Date expiration);

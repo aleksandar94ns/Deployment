@@ -8,12 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 
 /**
  * Created by Alex on 2/27/17.
  */
 @Entity
 public class EmployeeShift extends BaseModel {
+
+    private Date date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shift")
@@ -22,6 +25,14 @@ public class EmployeeShift extends BaseModel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee")
     private Employee employee;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Shift getShift() {
         return shift;
@@ -42,7 +53,8 @@ public class EmployeeShift extends BaseModel {
     @Override
     public String toString() {
         return "EmployeeShift{" +
-                "shift=" + shift +
+                "date=" + date +
+                ", shift=" + shift +
                 ", employee=" + employee +
                 '}';
     }

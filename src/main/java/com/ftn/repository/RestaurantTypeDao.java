@@ -7,5 +7,7 @@ import java.util.Optional;
 
 public interface RestaurantTypeDao extends JpaRepository<RestaurantType, Long> {
 
+    RestaurantType findByName(String name);
+
     Optional<RestaurantType> findByIdAndNameAndDescription(Long id, String name, String description);
 }

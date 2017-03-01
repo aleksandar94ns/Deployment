@@ -14,6 +14,7 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
 
     var loadBids = function () {
         $scope.bids = [];
+        $scope.acceptedBids = [];
         if ($scope.authService.isManager()) {
             bidsService.list(function (response) {
                 response.data.forEach(function (bidz) {
@@ -93,10 +94,14 @@ app.controller('SuppliesController', function ($scope, $http, $state, $location,
 
     $scope.acceptBid = function(bid) {
         $scope.bid = bid;
-        bidsService.put($scope.bid, function () {
-            loadSupplies();
-            loadBids();
-        })
+        bidsService.put($scope.bid, function (response) {
+            if(response.date == true){
+                loadSupplies();
+                loadBids();
+            }
+        });
+        loadSupplies();
+        loadBids();
     };
 
     $scope.isManager = function () {

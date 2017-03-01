@@ -60,6 +60,14 @@ public class WaitersController {
     }
 
     @Transactional
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(method = RequestMethod.PATCH)
+    public ResponseEntity edit(@RequestBody Waiter waiter){
+        waiterDao.save(waiter);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Transactional
     @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Waiter waiter) {

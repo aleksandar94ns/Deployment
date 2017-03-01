@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,7 +66,7 @@ public class RestaurantController {
         if (user == null) {
             throw new NotFoundException();
         }
-        final List<GuestReservation> guestReservations = new ArrayList<>(guestReservationDao.findByGuestId(user.getId()));
+        final List<GuestReservation> guestReservations = new ArrayList<>(guestReservationDao.findByGuestIdAndReservationArrivalDateBefore(user.getId(), new Date()));
         return new ResponseEntity<>(guestReservations.stream().map(GuestReservation::getReservation).map(Reservation::getRestaurant).collect(Collectors.toList()), HttpStatus.OK);
     }
 

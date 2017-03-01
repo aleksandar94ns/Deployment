@@ -10,5 +10,7 @@ import java.util.List;
  */
 public interface MenuDao extends JpaRepository<Menu, Long> {
 
+    Menu findByName(String name);
+
     List<Menu> findByRestaurantId(Long id);
 }

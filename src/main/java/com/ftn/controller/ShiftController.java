@@ -42,7 +42,7 @@ public class ShiftController {
     }
 
     @Transactional
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

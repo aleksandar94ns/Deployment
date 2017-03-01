@@ -31,14 +31,21 @@
                     <md-button class="md-secondary" ng-if="user.id == friendship.originator.id" ng-click="cancel(friendship)">Cancel</md-button>
                 </md-list-item>
                 <md-subheader class="md-no-sticky">Accepted</md-subheader>
-                <md-list-item class="md-3-line" ng-repeat="reservation in acceptedReservations" ng-click="createOrder(reservation)">
+                <md-list-item class="md-3-line" ng-repeat="reservation in acceptedReservations" ng-click="reservation.canOrder ? createOrder(reservation) : null">
                     <div class="md-list-item-text" style="margin-left: 20px;">
                         <h3>{{ reservation.reservation.restaurant.name }}</h3>
                         <p>{{ reservation.reservation.arrivalDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</p>
                     </div>
-                    <div class="md-secondary" layout="column">
-                        <h6>{{ reservation.status }}</h6>
-                    </div>
+                    <md-menu class="md-secondary" ng-if="reservation.cancelable">
+                        <md-button ng-click="openMenu($mdOpenMenu, $event)">{{ reservation.status }}</md-button>
+                        <md-menu-content width="1">
+                            <md-menu-item>
+                                <md-button ng-click="cancel(reservation, $event)">
+                                    Cancel
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
                 </md-list-item>
             </md-list>
             </md-card-content>

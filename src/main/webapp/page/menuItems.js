@@ -1,6 +1,6 @@
 app.controller('MenuItemsController', function ($scope, $http, $state, $location, $log, $rootScope, $mdDialog, menuItemsService) {
 
-    $scope.page.current = 8;
+    $scope.page.current = 11;
 
     menuItemsService.list(function (response) {
         $scope.menuItems = response.data;
