@@ -36,6 +36,17 @@ app.controller('CreateReservationController', function ($rootScope, $scope, $sta
         return queryResults;
     };
 
+    var error = function () {
+        $mdDialog.hide();
+        $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.body))
+                .title('Sorry!')
+                .content('Somebody just reserved one of the tables.')
+                .ok('Ok')
+        );
+    };
+
     $scope.next = function() {
         switch ($scope.data.selectedIndex) {
             case 1:
@@ -46,13 +57,13 @@ app.controller('CreateReservationController', function ($rootScope, $scope, $sta
             case 2:
                 reservationsService.create({reservation: $scope.reservation, guests: $scope.guests}, function () {
                     $mdDialog.hide();
-                });
-                break;
+                }, error);
+                return;
             case 3:
                 reservationsService.create({reservation: $scope.reservation, guests: $scope.guests}, function () {
                     $mdDialog.hide();
-                });
-                break;
+                }, error);
+                return;
         }
         $scope.data.selectedIndex++;
     };

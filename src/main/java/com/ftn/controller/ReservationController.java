@@ -2,6 +2,7 @@ package com.ftn.controller;
 
 import com.ftn.dto.CreateReservationDTO;
 import com.ftn.exception.BadRequestException;
+import com.ftn.exception.ForbiddenException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.*;
 import com.ftn.repository.GuestReservationDao;
@@ -68,11 +69,18 @@ public class ReservationController {
     @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity create(@RequestBody CreateReservationDTO createReservationDTO) {
+    public synchronized ResponseEntity create(@RequestBody CreateReservationDTO createReservationDTO) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Guest reservationOwner = userDao.findByEmail(authentication.getName());
         final List<Guest> guests = new ArrayList<>();
         final Reservation reservation = createReservationDTO.getReservation();
+        final List<Reservation> existingReservationsAtTime = reservationDao.findByArrivalDateLessThanEqualAndDepartureDateGreaterThanEqual(reservation.getDepartureDate(), reservation.getArrivalDate());
+        existingReservationsAtTime.forEach(existingReservationAtTime ->
+                existingReservationAtTime.getRestaurantTables().forEach(restaurantTable -> {
+                    if (reservation.getRestaurantTables().contains(restaurantTable)) {
+                        throw new ForbiddenException();
+                    }
+                }));
         createReservationDTO.getGuests().forEach(guest -> guests.add(userDao.findById(guest.getId())));
         reservationDao.save(reservation);
         final GuestReservation ownerReservation = new GuestReservation(reservation, reservationOwner);
