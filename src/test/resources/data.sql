@@ -132,7 +132,7 @@ INSERT INTO reservation (active, created, updated, arrivaldate, departuredate, r
 INSERT INTO guestreservation (active, created, updated, status, guest, reservation) VALUES (true, '2017-03-01 03:25:11', null, 'ACCEPTED', 5, 1);
 INSERT INTO guestreservation (active, created, updated, status, guest, reservation) VALUES (true, '2017-03-01 03:25:11', null, 'PENDING', 6, 1);
 
-INSERT INTO `order` (active, created, updated, status, reservation_id) VALUES (true, '2017-03-01 03:25:39', null, 'ORDERED', 1);
+INSERT INTO `order` (active, created, updated, status, reservation_id, readyatreservationtime) VALUES (true, '2017-03-01 03:25:39', null, 'ORDERED', 1, true);
 
 INSERT INTO orderitem (active, created, updated, note, status, bartender_id, cook_id, drink_item_id, guest_reservation_id, menu_item_id, order_id) VALUES (true, '2017-03-01 03:25:39', null, '', 'ORDERED', null, null, null, 1, 2, null);
 INSERT INTO orderitem (active, created, updated, note, status, bartender_id, cook_id, drink_item_id, guest_reservation_id, menu_item_id, order_id) VALUES (true, '2017-03-01 03:25:39', null, '', 'ORDERED', null, null, null, 1, 4, null);
