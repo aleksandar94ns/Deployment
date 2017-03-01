@@ -41,6 +41,7 @@
         </md-tabs>
     </md-dialog-content>
     <md-dialog-actions layout="row" layout-align="end center">
+        <md-checkbox ng-model="order.readyAtReservationTime" aria-label="Ready">Ready at reservation time</md-checkbox>
         <md-button ng-click="close()">Close</md-button>
         <md-button type="submit" class="md-primary md-raised" ng-click="submit()">Save</md-button>
     </md-dialog-actions>
