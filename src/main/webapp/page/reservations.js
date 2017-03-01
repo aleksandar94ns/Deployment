@@ -8,6 +8,8 @@ app.controller('ReservationsController', function ($scope, $mdDialog, reservatio
                 return reservation.status === 'PENDING';
             });
             $scope.acceptedReservations = response.data.filter(function(reservation) {
+                reservation.cancelable = moment.duration(moment(Date.now()).diff(moment(reservation.reservation.arrivalDate))).asMinutes() < - 30;
+                reservation.canOrder = moment.duration(moment(Date.now()).diff(moment(reservation.reservation.arrivalDate))).asMinutes() < 0;
                 return reservation.status === 'ACCEPTED';
             });
         });
