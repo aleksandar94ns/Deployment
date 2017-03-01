@@ -3,6 +3,7 @@ package com.ftn.repository;
 import com.ftn.model.GuestReservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,8 @@ public interface GuestReservationDao extends JpaRepository<GuestReservation, Lon
     List<GuestReservation> findByReservationId(Long id);
 
     List<GuestReservation> findByGuestId(Long id);
+
+    List<GuestReservation> findByGuestIdAndReservationArrivalDateBefore(Long id, Date arrivalDate);
 
     Optional<GuestReservation> findByGuestIdAndReservationId(Long guestId, Long reservationId);
 }
