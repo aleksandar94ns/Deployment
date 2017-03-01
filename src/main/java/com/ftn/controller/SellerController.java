@@ -33,7 +33,7 @@ public class SellerController {
     }
 
     @Transactional
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
         return new ResponseEntity<>(userDao.findByRole(User.Role.SELLER), HttpStatus.OK);

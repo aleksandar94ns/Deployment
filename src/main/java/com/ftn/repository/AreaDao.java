@@ -11,6 +11,8 @@ import java.util.Optional;
  */
 public interface AreaDao extends JpaRepository<Area, Long> {
 
+    Area findByName(String name);
+
     Optional<Area> findById(Long id);
 
     List<Area> findByRestaurantId(Long id);
