@@ -89,6 +89,9 @@ public class UserController {
             throw new com.ftn.exception.AuthenticationException();
         }
         user.setPassword(encoder.encode(changePasswordDTO.getPassword()));
+        if (user.getRole() == User.Role.SELLER){
+            user.setActive(false);
+        }
         userDao.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
