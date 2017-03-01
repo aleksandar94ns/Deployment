@@ -41,10 +41,10 @@ public class MailService {
     public void sendReservationInvitationMail(HttpServletRequest request, String recipient) {
 
         final SimpleMailMessage message = new SimpleMailMessage();
-        message.setSubject("Invitation to dine");
+        message.setSubject("Invitation to dine!");
         message.setFrom("isatriofantastico@gmail.com");
         message.setTo(recipient);
-        message.setText(request.getRequestURL().toString()");
+        message.setText(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort());
 
         try {
             mailSender.send(message);

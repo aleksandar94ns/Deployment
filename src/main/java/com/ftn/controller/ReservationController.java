@@ -9,6 +9,8 @@ import com.ftn.repository.GuestReservationDao;
 import com.ftn.repository.ReservationDao;
 import com.ftn.repository.RestaurantDao;
 import com.ftn.repository.UserDao;
+import com.ftn.service.MailService;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,12 +41,15 @@ public class ReservationController {
 
     private final RestaurantDao restaurantDao;
 
+    private final MailService mailService;
+
     @Autowired
-    public ReservationController(ReservationDao reservationDao, UserDao userDao, GuestReservationDao guestReservationDao, RestaurantDao restaurantDao) {
+    public ReservationController(ReservationDao reservationDao, UserDao userDao, GuestReservationDao guestReservationDao, RestaurantDao restaurantDao, MailService mailService) {
         this.reservationDao = reservationDao;
         this.userDao = userDao;
         this.guestReservationDao = guestReservationDao;
         this.restaurantDao = restaurantDao;
+        this.mailService = mailService;
     }
 
     @Transactional
@@ -69,7 +74,7 @@ public class ReservationController {
     @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
-    public synchronized ResponseEntity create(@RequestBody CreateReservationDTO createReservationDTO) {
+    public synchronized ResponseEntity create(@RequestBody CreateReservationDTO createReservationDTO, HttpServletRequest request) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Guest reservationOwner = userDao.findByEmail(authentication.getName());
         final List<Guest> guests = new ArrayList<>();
@@ -81,7 +86,10 @@ public class ReservationController {
                         throw new ForbiddenException();
                     }
                 }));
-        createReservationDTO.getGuests().forEach(guest -> guests.add(userDao.findById(guest.getId())));
+        createReservationDTO.getGuests().forEach(guest -> {
+            guests.add(userDao.findById(guest.getId()));
+            mailService.sendReservationInvitationMail(request, guest.getEmail());
+        });
         reservationDao.save(reservation);
         final GuestReservation ownerReservation = new GuestReservation(reservation, reservationOwner);
         ownerReservation.setStatus(GuestReservation.Status.ACCEPTED);
