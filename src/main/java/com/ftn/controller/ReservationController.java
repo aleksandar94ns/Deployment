@@ -53,7 +53,7 @@ public class ReservationController {
     }
 
     @Transactional
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('MANAGER')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity readManager() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -63,7 +63,7 @@ public class ReservationController {
     }
 
     @Transactional
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(method = RequestMethod.GET, value = "/me")
     public ResponseEntity read() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
