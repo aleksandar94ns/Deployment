@@ -36,4 +36,20 @@ public class MailService {
             System.out.println(e.toString());
         }
     }
+
+    @Async
+    public void sendReservationInvitationMail(HttpServletRequest request, String recipient) {
+
+        final SimpleMailMessage message = new SimpleMailMessage();
+        message.setSubject("Invitation to dine");
+        message.setFrom("isatriofantastico@gmail.com");
+        message.setTo(recipient);
+        message.setText(request.getRequestURL().toString()");
+
+        try {
+            mailSender.send(message);
+        } catch (MailException e) {
+            System.out.println(e.toString());
+        }
+    }
 }
