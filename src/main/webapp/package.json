@@ -17,8 +17,9 @@
   },
   "homepage": "https://github.com/alexkahriman/ISATrioFantastico#readme",
   "dependencies": {
+    "angular-chart.js": "^1.1.1",
+    "angular-material-calendar": "^0.2.14",
     "mdPickers": "^0.7.5",
-    "ngmap": "^1.18.0",
-    "angular-material-calendar": "^0.2.14"
+    "ngmap": "^1.18.0"
   }
 }
