@@ -27,7 +27,7 @@
                     </div>
                 </md-list-item>
             </md-list>
-            <!--<calendar-md flex layout layout-fill-->
+            <!--<calendar-md flex-->
             <!--calendar-direction="direction"-->
             <!--on-prev-month="prevMonth"-->
             <!--on-next-month="nextMonth"-->
@@ -40,32 +40,29 @@
             <!--day-tooltip-format="'fullDate'"-->
             <!--week-starts-on="firstDayOfWeek"-->
             <!--day-content="setDayContent"></calendar-md>-->
-            <!--</md-card-content>-->
-            <!--<h3> {{msg}} </h3>-->
+            </md-card-content>
+            <h3> {{msg}} </h3>
             <md-toolbar class="md-theme-light">
                 <h2 class="md-toolbar-tools">
                     <span>Assigned shifts</span>
                 </h2>
             </md-toolbar>
-            <!--<md-toolbar class="md-theme-light">-->
-            <!--<h2 class="md-toolbar-tools">-->
-            <!--<span>{{dayAh}}</span>-->
-            <!--</h2>-->
-            <!--</md-toolbar>-->
             <div layout="row">
                 <md-button class="md-fab md-mini md-primary"
                            aria-label="Add Employee Shift" ng-click="addEmployeeShift()">
                     <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
                 </md-button>
-                <h3> See in weeks advance : </h3>
+                <h3> Search between dates : </h3>
                 <!--<md-input-container class="md-block">-->
                 <!--<label>Days ahead</label>-->
-                <!--<input id="dayAhead" name="dayAhead" type="number" data-ng-model="dayAh">-->
+                <!--<input id="dayAhead" name="dayAhead" type="number" data-ng-model="daySelection.dayAhead">-->
                 <!--</md-input-container>-->
                 <!--<md-input-container class="md-block">-->
                 <!--<label>Days behind</label>-->
                 <!--<input id="dayBehind" name="dayBehind" type="number" data-ng-model="dayBh">-->
                 <!--</md-input-container>-->
+                <mdp-date-picker mdp-placeholder="Select from" ng-model="dateDaySelection.dateDayBehind"></mdp-date-picker>
+                <mdp-date-picker mdp-placeholder="Select until" ng-model="dateDaySelection.dateDayAhead"></mdp-date-picker>
                 <md-button class="md-fab md-mini md-primary"
                            aria-label="Search Shifts" ng-click="searchShifts()">
                     <md-icon md-svg-src="img/ic_check_white_24px.svg"></md-icon>
@@ -74,7 +71,7 @@
             <md-list flex>
                 <md-list-item class="md-3-line" ng-repeat="employeeShift in employeeShifts" ng-click="null">
                     <div class="md-list-item-text" style="margin-left: 20px;">
-                        <h3>{{ employeeShift.date | date:'yyyy-MM-dd' }}</h3>
+                        <h2>{{ employeeShift.date | date:'yyyy-MM-dd' }}</h2>
                         <h3> Employee : {{ employeeShift.employee.firstName }} {{ employeeShift.employee.lastName }},
                             Shift : {{ employeeShift.shift.name}}</h3>
                         <p>{{ employeeShift.shift.restaurant.name }}</p>

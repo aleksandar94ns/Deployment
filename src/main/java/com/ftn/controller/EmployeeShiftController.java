@@ -32,16 +32,16 @@ public class EmployeeShiftController {
     EmployeeShiftDao employeeShiftDao;
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity read(){
         List<EmployeeShift> employeeShifts = employeeShiftDao.findAll();
         return new ResponseEntity<>(employeeShifts, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('MANAGER')")
-    @RequestMapping(method = RequestMethod.PUT, value = "/{date}")
-    public ResponseEntity search(@PathVariable Date date) {
-        List<EmployeeShift> employeeShifts = employeeShiftDao.findAll();
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity search(@RequestBody Date date) {
+        List<EmployeeShift> employeeShifts = employeeShiftDao.findByDate(date);
         //List<EmployeeShift> employeeShifts = employeeShiftDao.findByDateBetween(new Date(), date);
         return new ResponseEntity<>(employeeShifts, HttpStatus.CREATED);
     }
