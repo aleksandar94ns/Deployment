@@ -11,6 +11,8 @@ import java.util.Optional;
  */
 public interface RestaurantDao extends JpaRepository<Restaurant, Long> {
 
+    Restaurant findByName(String name);
+
     List<Restaurant> findAllByOrderByNameAsc();
 
     Optional<Restaurant> findById(Long id);

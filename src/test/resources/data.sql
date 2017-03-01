@@ -51,6 +51,10 @@ INSERT INTO seller (id) VALUES (14);
 INSERT INTO seller (id) VALUES (16);
 INSERT INTO seller (id) VALUES (17);
 
+INSERT INTO systemmanager (id) VALUES (2);
+INSERT INTO systemmanager (id) VALUES (9);
+INSERT INTO systemmanager (id) VALUES (10);
+
 INSERT INTO area (active, created, updated, name, restaurant) VALUES (true, '2017-03-01 02:49:25', null, 'Smoking', 1);
 INSERT INTO area (active, created, updated, name, restaurant) VALUES (true, '2017-03-01 02:49:29', null, 'Garden', 1);
 INSERT INTO area (active, created, updated, name, restaurant) VALUES (true, '2017-03-01 02:49:36', null, 'Non-Smoking', 1);
@@ -59,14 +63,6 @@ INSERT INTO manager (id, restaurant) VALUES (3, 1);
 INSERT INTO manager (id, restaurant) VALUES (11, 2);
 INSERT INTO manager (id, restaurant) VALUES (12, 3);
 INSERT INTO manager (id, restaurant) VALUES (13, 5);
-
-INSERT INTO restauranttable (active, created, updated, horizontalposition, verticalposition, area) VALUES (true, '2017-03-01 02:49:40', null, 1, 1, 1);
-INSERT INTO restauranttable (active, created, updated, horizontalposition, verticalposition, area) VALUES (true, '2017-03-01 02:49:40', null, 2, 1, 1);
-INSERT INTO restauranttable (active, created, updated, horizontalposition, verticalposition, area) VALUES (true, '2017-03-01 02:49:43', null, 2, 2, 2);
-INSERT INTO restauranttable (active, created, updated, horizontalposition, verticalposition, area) VALUES (true, '2017-03-01 02:49:43', null, 3, 2, 2);
-INSERT INTO restauranttable (active, created, updated, horizontalposition, verticalposition, area) VALUES (true, '2017-03-01 02:49:46', null, 3, 3, 3);
-INSERT INTO restauranttable (active, created, updated, horizontalposition, verticalposition, area) VALUES (true, '2017-03-01 02:49:46', null, 4, 3, 3);
-
 
 INSERT INTO shift (active, created, updated, day, endhour, name, starthour, restaurant) VALUES (true, '2017-03-01 02:56:47', null, '2017-03-01 02:56:47', '2017-03-01 15:00:00', 'First shift', '2017-03-01 07:00:00', 1);
 INSERT INTO shift (active, created, updated, day, endhour, name, starthour, restaurant) VALUES (true, '2017-03-01 02:57:16', null, '2017-03-01 02:57:16', '2017-03-01 18:00:00', 'Middle shift', '2017-03-01 10:00:00', 1);
@@ -78,17 +74,12 @@ INSERT INTO supply (active, created, updated, expiration, name, quantity, restau
 INSERT INTO supply (active, created, updated, expiration, name, quantity, restaurant) VALUES (true, '2017-03-01 02:52:32', null, '2017-03-03 01:00:00', 'White wine', 50, 3);
 INSERT INTO supply (active, created, updated, expiration, name, quantity, restaurant) VALUES (true, '2017-03-01 02:52:45', null, '2017-03-04 01:00:00', 'Salt', 50, 3);
 
-INSERT INTO waiter (birthdate, dresssize, footwearsize, id, area, restaurant) VALUES (null, 3, 8, 18, 2, 1);
-INSERT INTO waiter (birthdate, dresssize, footwearsize, id, area, restaurant) VALUES (null, 1, 1, 19, 1, 1);
-INSERT INTO waiter (birthdate, dresssize, footwearsize, id, area, restaurant) VALUES (null, 2, 2, 20, 1, 1);
-
-INSERT INTO bartender (birthdate, dresssize, footwearsize, id, restaurant) VALUES (null, 10, 10, 21, 1);
-INSERT INTO bartender (birthdate, dresssize, footwearsize, id, restaurant) VALUES (null, 1, 1, 22, 1);
-INSERT INTO bartender (birthdate, dresssize, footwearsize, id, restaurant) VALUES (null, 2, 2, 23, 1);
-
-INSERT INTO chef (birthdate, dresssize, footwearsize, profile, id, restaurant) VALUES (null, 10, 10, 'Soups', 24, 1);
-INSERT INTO chef (birthdate, dresssize, footwearsize, profile, id, restaurant) VALUES (null, 1, 1, 'Grilled meals', 25, 1);
-INSERT INTO chef (birthdate, dresssize, footwearsize, profile, id, restaurant) VALUES (null, 2, 2, 'Desserts', 26, 1);
+INSERT INTO restauranttable (active, created, updated, horizontalposition, verticalposition, area) VALUES (true, '2017-03-01 02:49:40', null, 1, 1, 1);
+INSERT INTO restauranttable (active, created, updated, horizontalposition, verticalposition, area) VALUES (true, '2017-03-01 02:49:40', null, 2, 1, 1);
+INSERT INTO restauranttable (active, created, updated, horizontalposition, verticalposition, area) VALUES (true, '2017-03-01 02:49:43', null, 2, 2, 2);
+INSERT INTO restauranttable (active, created, updated, horizontalposition, verticalposition, area) VALUES (true, '2017-03-01 02:49:43', null, 3, 2, 2);
+INSERT INTO restauranttable (active, created, updated, horizontalposition, verticalposition, area) VALUES (true, '2017-03-01 02:49:46', null, 3, 3, 3);
+INSERT INTO restauranttable (active, created, updated, horizontalposition, verticalposition, area) VALUES (true, '2017-03-01 02:49:46', null, 4, 3, 3);
 
 INSERT INTO employee (id) VALUES (18);
 INSERT INTO employee (id) VALUES (19);
@@ -96,32 +87,45 @@ INSERT INTO employee (id) VALUES (20);
 INSERT INTO employee (id) VALUES (21);
 INSERT INTO employee (id) VALUES (22);
 INSERT INTO employee (id) VALUES (23);
-INSERT INTO employee (id) VALUES (24);
-INSERT INTO employee (id) VALUES (25);
-INSERT INTO employee (id) VALUES (26);
+-- INSERT INTO employee (id) VALUES (24);
+-- INSERT INTO employee (id) VALUES (25);
+-- INSERT INTO employee (id) VALUES (26);
+
+INSERT INTO bartender (birthdate, dresssize, footwearsize, id, restaurant) VALUES (null, 10, 10, 21, 1);
+INSERT INTO bartender (birthdate, dresssize, footwearsize, id, restaurant) VALUES (null, 1, 1, 22, 1);
+INSERT INTO bartender (birthdate, dresssize, footwearsize, id, restaurant) VALUES (null, 2, 2, 23, 1);
+
+INSERT INTO waiter (birthdate, dresssize, footwearsize, id, area, restaurant) VALUES (null, 3, 8, 18, 3, 1);
+INSERT INTO waiter (birthdate, dresssize, footwearsize, id, area, restaurant) VALUES (null, 1, 1, 19, 1, 1);
+INSERT INTO waiter (birthdate, dresssize, footwearsize, id, area, restaurant) VALUES (null, 2, 2, 20, 1, 1);
+
+-- INSERT INTO chef (birthdate, dresssize, footwearsize, profile, id, restaurant) VALUES (null, 10, 10, 'Soups', 24, 1);
+-- INSERT INTO chef (birthdate, dresssize, footwearsize, profile, id, restaurant) VALUES (null, 1, 1, 'Grilled meals', 25, 1);
+-- INSERT INTO chef (birthdate, dresssize, footwearsize, profile, id, restaurant) VALUES (null, 2, 2, 'Desserts', 26, 1);
 
 INSERT INTO drinkcard (active, created, updated, name, restaurant_id) VALUES (true, '2017-03-01 03:02:00', null, 'Wines', 1);
 INSERT INTO drinkcard (active, created, updated, name, restaurant_id) VALUES (true, '2017-03-01 03:02:04', null, 'Bavarages', 1);
 INSERT INTO drinkcard (active, created, updated, name, restaurant_id) VALUES (true, '2017-03-01 03:02:11', null, 'Alcohol', 1);
 
-INSERT INTO drinkitem (active, created, updated, description, name, price, drinkcard_id) VALUES (true, '2017-03-01 03:02:25', null, 'white wine', 'White wine', 300, 1);
-INSERT INTO drinkitem (active, created, updated, description, name, price, drinkcard_id) VALUES (true, '2017-03-01 03:02:39', null, 'black wine', 'Black wine', 350, 1);
-INSERT INTO drinkitem (active, created, updated, description, name, price, drinkcard_id) VALUES (true, '2017-03-01 03:03:07', null, 'lav beer', 'Lav beer', 200, 2);
-INSERT INTO drinkitem (active, created, updated, description, name, price, drinkcard_id) VALUES (true, '2017-03-01 03:03:22', null, 'jelen beer', 'Jelen beer', 180, 2);
-INSERT INTO drinkitem (active, created, updated, description, name, price, drinkcard_id) VALUES (true, '2017-03-01 03:03:42', null, 'jack daniels', 'Jack Daniels', 400, 3);
-INSERT INTO drinkitem (active, created, updated, description, name, price, drinkcard_id) VALUES (true, '2017-03-01 03:03:56', null, 'tequila', 'Tequila', 300, 3);
+-- INSERT INTO drinkitem (active, created, updated, description, name, price, drinkcard_id) VALUES (true, '2017-03-01 03:02:25', null, 'white wine', 'White wine', 300, 1);
+-- INSERT INTO drinkitem (active, created, updated, description, name, price, drinkcard_id) VALUES (true, '2017-03-01 03:02:39', null, 'black wine', 'Black wine', 350, 1);
+-- INSERT INTO drinkitem (active, created, updated, description, name, price, drinkcard_id) VALUES (true, '2017-03-01 03:03:07', null, 'lav beer', 'Lav beer', 200, 2);
+-- INSERT INTO drinkitem (active, created, updated, description, name, price, drinkcard_id) VALUES (true, '2017-03-01 03:03:22', null, 'jelen beer', 'Jelen beer', 180, 2);
+-- INSERT INTO drinkitem (active, created, updated, description, name, price, drinkcard_id) VALUES (true, '2017-03-01 03:03:42', null, 'jack daniels', 'Jack Daniels', 400, 3);
+-- INSERT INTO drinkitem (active, created, updated, description, name, price, drinkcard_id) VALUES (true, '2017-03-01 03:03:56', null, 'tequila', 'Tequila', 300, 3);
 
 INSERT INTO menu (active, created, updated, name, restaurant_id) VALUES (true, '2017-03-01 02:58:15', null, 'Soups', 1);
 INSERT INTO menu (active, created, updated, name, restaurant_id) VALUES (true, '2017-03-01 02:58:20', null, 'Grilled meals', 1);
 INSERT INTO menu (active, created, updated, name, restaurant_id) VALUES (true, '2017-03-01 02:58:24', null, 'Cooked meals', 1);
 INSERT INTO menu (active, created, updated, name, restaurant_id) VALUES (true, '2017-03-01 02:58:31', null, 'Home specialities', 1);
-
+--
 INSERT INTO menuitem (active, created, updated, description, name, price, profile, menu_id) VALUES (true, '2017-03-01 02:58:52', null, 'chicken soup', 'Chicken', 500, 'Soups', 1);
 INSERT INTO menuitem (active, created, updated, description, name, price, profile, menu_id) VALUES (true, '2017-03-01 02:59:48', null, 'beef soup', 'Beef Soup', 550, 'Soups', 1);
 INSERT INTO menuitem (active, created, updated, description, name, price, profile, menu_id) VALUES (true, '2017-03-01 03:00:03', null, 'grilled beef', 'Grilled beef', 1000, 'Grilled meals', 2);
 INSERT INTO menuitem (active, created, updated, description, name, price, profile, menu_id) VALUES (true, '2017-03-01 03:00:22', null, 'roasted chicken', 'Roasted chicken', 700, 'Grilled meals', 2);
 INSERT INTO menuitem (active, created, updated, description, name, price, profile, menu_id) VALUES (true, '2017-03-01 03:01:21', null, 'homemade specialitie', 'Chicken noodle salad with shrimps', 600, 'Grilled meals', 4);
 INSERT INTO menuitem (active, created, updated, description, name, price, profile, menu_id) VALUES (true, '2017-03-01 03:01:52', null, 'strawberry cake', 'Strawberry cake', 300, 'Desserts', 4);
+
 
 INSERT INTO reservation (active, created, updated, arrivaldate, departuredate, restaurant_id) VALUES (true, '2017-03-01 03:25:10', null, '2017-03-03 10:15:00', '2017-03-03 00:00:00', 1);
 
@@ -130,16 +134,21 @@ INSERT INTO guestreservation (active, created, updated, status, guest, reservati
 
 INSERT INTO order_ (active, created, updated, status, reservation_id) VALUES (true, '2017-03-01 03:25:39', null, 'ORDERED', 1);
 
-INSERT INTO reservationtable (reservation_id, restauranttable_id) VALUES (1, 3);
-INSERT INTO reservationtable (reservation_id, restauranttable_id) VALUES (1, 4);
+-- INSERT INTO orderitem (active, created, updated, note, status, bartender_id, cook_id, drinkitem_id, guestreservation_id, menuitem_id, order_id) VALUES (true, '2017-03-01 03:25:39', null, '', 'ORDERED', null, null, null, 1, 2, null);
+-- INSERT INTO orderitem (active, created, updated, note, status, bartender_id, cook_id, drinkitem_id, guestreservation_id, menuitem_id, order_id) VALUES (true, '2017-03-01 03:25:39', null, '', 'ORDERED', null, null, null, 1, 4, null);
+-- INSERT INTO orderitem (active, created, updated, note, status, bartender_id, cook_id, drinkitem_id, guestreservation_id, menuitem_id, order_id) VALUES (true, '2017-03-01 03:25:39', null, '', 'ORDERED', null, null, null, 1, 1, null);
+-- INSERT INTO orderitem (active, created, updated, note, status, bartender_id, cook_id, drinkitem_id, guestreservation_id, menuitem_id, order_id) VALUES (true, '2017-03-01 03:25:39', null, '', 'ORDERED', null, null, null, 1, 3, null);
+--
+-- INSERT INTO orderorderitems (order_id, orderitems_id) VALUES (1, 1);
+-- INSERT INTO orderorderitems (order_id, orderitems_id) VALUES (1, 2);
+-- INSERT INTO orderorderitems (order_id, orderitems_id) VALUES (1, 3);
+-- INSERT INTO orderorderitems (order_id, orderitems_id) VALUES (1, 4);
 
-INSERT INTO orderitem (active, created, updated, note, status, bartender_id, cook_id, drinkitem_id, guestreservation_id, menuitem_id, order_id) VALUES (true, '2017-03-01 03:25:39', null, '', 'ORDERED', null, null, null, 1, 2, null);
-INSERT INTO orderitem (active, created, updated, note, status, bartender_id, cook_id, drinkitem_id, guestreservation_id, menuitem_id, order_id) VALUES (true, '2017-03-01 03:25:39', null, '', 'ORDERED', null, null, null, 1, 4, null);
-INSERT INTO orderitem (active, created, updated, note, status, bartender_id, cook_id, drinkitem_id, guestreservation_id, menuitem_id, order_id) VALUES (true, '2017-03-01 03:25:39', null, '', 'ORDERED', null, null, null, 1, 1, null);
-INSERT INTO orderitem (active, created, updated, note, status, bartender_id, cook_id, drinkitem_id, guestreservation_id, menuitem_id, order_id) VALUES (true, '2017-03-01 03:25:39', null, '', 'ORDERED', null, null, null, 1, 3, null);
+-- INSERT INTO reservationtable (reservation_id, restauranttable_id) VALUES (1, 3);
+-- INSERT INTO reservationtable (reservation_id, restauranttable_id) VALUES (1, 4);
 
-INSERT INTO order__order_items (order_id, orderitems_id) VALUES (1, 1);
-INSERT INTO order__order_items (order_id, orderitems_id) VALUES (1, 2);
-INSERT INTO order__order_items (order_id, orderitems_id) VALUES (1, 3);
-INSERT INTO order__order_items (order_id, orderitems_id) VALUES (1, 4);
+
+
+
+
 

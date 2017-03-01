@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface RestaurantTableDao extends JpaRepository<RestaurantTable, Long> {
 
+    RestaurantTable findById(Long id);
+
     List<RestaurantTable> findByAreaRestaurantId(Long id);
 
     List<RestaurantTable> findByAreaId(Long areaId);

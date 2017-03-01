@@ -10,5 +10,7 @@ import java.util.List;
  */
 public interface ShiftDao extends JpaRepository<Shift, Long> {
 
+    Shift findByName(String name);
+
     List<Shift> findByRestaurantId(Long id);
 }
