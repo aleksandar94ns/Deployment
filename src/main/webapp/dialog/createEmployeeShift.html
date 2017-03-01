@@ -1,0 +1,45 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="createEmployeeShiftForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <mdp-date-picker mdp-placeholder="Date" ng-model="employeeShift.date"></mdp-date-picker>
+                <md-autocomplete
+                        ng-disabled="ctrl.isDisabled"
+                        md-no-cache="ctrl.noCache"
+                        md-selected-item="employeeShift.employee"
+                        md-search-text="searchText"
+                        md-items="item in queryEmployees(searchText)"
+                        md-item-text="item.firstName"
+                        placeholder="Search employees...">
+                    <md-item-template>
+                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.firstName}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No drink cards matching "{{searchText}}" were found.
+                    </md-not-found>
+                </md-autocomplete>
+                <md-autocomplete
+                        ng-disabled="ctrl.isDisabled"
+                        md-no-cache="ctrl.noCache"
+                        md-selected-item="employeeShift.shift"
+                        md-search-text="searchText1"
+                        md-items="item in queryShifts(searchText1)"
+                        md-item-text="item.name"
+                        placeholder="Search shifts...">
+                    <md-item-template>
+                        <span md-highlight-text="searchText1" md-highlight-flags="^i">{{item.name}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No drink cards matching "{{searchText}}" were found.
+                    </md-not-found>
+                </md-autocomplete>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Close</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="createEmployeeShiftForm.$invalid">Create
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

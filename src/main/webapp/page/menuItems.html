@@ -17,9 +17,9 @@
                 <md-list-item class="md-3-line" ng-repeat="menuItem in menuItems" ng-click="null">
                     <div class="md-list-item-text" style="margin-left: 20px;">
                         <h3>{{ menuItem.name }}</h3>
-                        <h4> Menu : {{ menuItem.menu.name }}</h4>
+                        <h4> Description : {{ menuItem.description }}</h4>
+                        <p> Price : {{ menuItem.price }}</p>
                         <p> Profile : {{ menuItem.profile }}</p>
-                        <p> Restaurant : {{ menuItem.menu.restaurant.name }}</p>
                     </div>
                 </md-list-item>
             </md-list>
