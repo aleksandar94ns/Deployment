@@ -21,7 +21,6 @@ public class MailService {
         this.mailSender = mailSender;
     }
 
-    @Async
     public void sendVerificationMail(HttpServletRequest request, String recipient, String confirmationCode) {
 
         final SimpleMailMessage message = new SimpleMailMessage();

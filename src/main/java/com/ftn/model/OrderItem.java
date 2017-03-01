@@ -1,7 +1,6 @@
 package com.ftn.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sun.istack.internal.Nullable;
 
 import javax.persistence.*;
 
@@ -39,7 +38,6 @@ public class OrderItem extends BaseModel {
     private DrinkItem drinkItem;
 
     @JsonBackReference
-    @Nullable
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private Order order;
