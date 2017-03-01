@@ -36,9 +36,16 @@
                         <h3>{{ reservation.reservation.restaurant.name }}</h3>
                         <p>{{ reservation.reservation.arrivalDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</p>
                     </div>
-                    <div class="md-secondary" layout="column">
-                        <h6>{{ reservation.status }}</h6>
-                    </div>
+                    <md-menu class="md-secondary" ng-if="moment.duration(Date.now().diff(reservation.arrivalDate)).asMinutes() > 30">
+                        <md-button ng-click="openMenu($mdOpenMenu, $event)">{{ reservation.status }}</md-button>
+                        <md-menu-content width="1">
+                            <md-menu-item>
+                                <md-button ng-click="cancel(reservation, $event)">
+                                    Cancel
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
                 </md-list-item>
             </md-list>
             </md-card-content>

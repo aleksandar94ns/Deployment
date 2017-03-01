@@ -11,7 +11,8 @@ public class GuestReservation extends BaseModel {
     public enum Status {
         PENDING,
         ACCEPTED,
-        DECLINED
+        DECLINED,
+        CANCELED
     }
 
     @Enumerated(EnumType.STRING)

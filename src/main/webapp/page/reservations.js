@@ -1,4 +1,4 @@
-app.controller('ReservationsController', function ($scope, $mdDialog, reservationsService) {
+app.controller('ReservationsController', function ($scope, $mdDialog, reservationsService, guestReservationsService) {
 
     $scope.page.current = 15;
 
@@ -49,5 +49,19 @@ app.controller('ReservationsController', function ($scope, $mdDialog, reservatio
             loadData();
         });
         originatorEv = null;
+    };
+
+    $scope.cancel = function (reservation, ev) {
+        guestReservationsService.delete(reservation, function () {
+            loadData();
+        }, function () {
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .parent(angular.element(document.body))
+                    .title('Impossible!')
+                    .content('You can cancel up to half an hour before the arrival time.')
+                    .ok('Ok')
+            );
+        });
     };
 });
