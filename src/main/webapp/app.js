@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var app = angular.module('app', ['ui.router', 'ngMessages', 'ngMaterial', 'material.svgAssetsCache', 'mdPickers', 'materialCalendar']);
+var app = angular.module('app', ['ui.router', 'ngMessages', 'ngMaterial', 'material.svgAssetsCache', 'mdPickers', 'materialCalendar', 'ngMap']);
 
 app.factory('authInterceptor', ['$q', '$injector', function ($q, $injector) {
     var authInterceptor = {
@@ -162,6 +162,11 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $htt
             url: '/shifts',
             controller: 'ShiftsController',
             templateUrl: 'page/shifts.html'
+        })
+        .state('navigation.changePasswordSeller', {
+            url: '/changePasswordSeller',
+            controller: 'ChangePasswordSellerController',
+            templateUrl: 'page/changePasswordSeller.html'
         })
         .state('navigation.workingPlace.grillMeals', {
             url: '/grillMeals',

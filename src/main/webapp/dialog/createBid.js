@@ -4,8 +4,12 @@ app.controller('CreateBidController', function ($scope, $http, $state, $mdDialog
 
     $scope.submit = function () {
         if (bid != null) {
-            bidsService.patch($scope.bid, function () {
-                $mdDialog.hide();
+            bidsService.patch($scope.bid, function (request) {
+                if (request.data == true){
+                    $mdDialog.hide();
+                } else {
+                    $mdDialog.hide();
+                }
             });
         }
         else {

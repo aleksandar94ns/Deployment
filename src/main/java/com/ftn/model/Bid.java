@@ -9,6 +9,9 @@ import java.util.Date;
 @Entity
 public class Bid extends BaseModel {
 
+    @Version
+    private int version;
+
     @Column(name = "price")
     private double price;
 
@@ -30,6 +33,14 @@ public class Bid extends BaseModel {
     private String currency;
 
     public Bid() {
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public double getPrice() {

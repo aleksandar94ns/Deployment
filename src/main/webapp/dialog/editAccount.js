@@ -4,6 +4,7 @@
 app.controller('EditAccountController', function ($scope, $state, $http, $mdDialog, authenticationService, usersService) {
 
     $scope.user = authenticationService.getUser();
+    $scope.authenticationService = authenticationService;
 
     $scope.close = function () {
         $mdDialog.hide();

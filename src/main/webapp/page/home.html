@@ -8,9 +8,24 @@
                  ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
             <md-card-title>
                 <md-card-title-text>
+                    <span class="md-headline">Restaurants near you</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-divider></md-divider>
+            <ng-map zoom="14" center="current-location" default-style="true">
+
+                <marker ng-repeat="restaurant in allRestaurants"
+                        id="{{ restaurant.id }}"
+                        on-click="pinClicked(restaurant)"
+                        position="{{ restaurant.streetNumber }} {{ restaurant.street }}, {{ restaurant.city }}, {{ restaurant.country }}">
+                </marker>
+            </ng-map>
+            <md-card-title>
+                <md-card-title-text>
                     <span class="md-headline">Restaurants you visited</span>
                 </md-card-title-text>
             </md-card-title>
+            <md-divider></md-divider>
             <md-list flex>
                 <md-list-item class="md-3-line" ng-repeat="restaurant in restaurants">
                     <div class="md-list-item-text" style="margin-left: 20px;">

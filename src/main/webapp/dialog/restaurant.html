@@ -1,0 +1,13 @@
+<md-dialog class="md-padding card" style="width: 400px">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <h3>{{ restaurant.name }}</h3>
+                <md-divider></md-divider>
+                <p>{{ restaurant.description }}</p>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Close</md-button>
+            <!--<md-button type="submit" class="md-primary md-raised" ng-click="submit()">Make reservation</md-button>-->
+        </md-dialog-actions>
+</md-dialog>

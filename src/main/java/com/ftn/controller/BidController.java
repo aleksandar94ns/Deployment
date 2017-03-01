@@ -7,6 +7,7 @@ import com.ftn.repository.BidDao;
 import com.ftn.repository.RestaurantDao;
 import com.ftn.repository.SupplyDao;
 import com.ftn.repository.UserDao;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +46,7 @@ public class BidController {
     @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity read(){
+    public ResponseEntity read() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Manager manager = userDao.findByEmail(authentication.getName());
         final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
@@ -55,26 +56,32 @@ public class BidController {
     @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity read(@RequestBody Bid bid){
+    public ResponseEntity read(@RequestBody Bid bid) {
+        Boolean used = false;
         bid.setStatus("ACCEPTED");
-        bidDao.save(bid);
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        final Manager manager = userDao.findByEmail(authentication.getName());
-        final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
-        List<Bid> bids = bidDao.findBySupplyIdAndSupplyRestaurantId(supplyDao.findById(bid.getSupply().getId()).getId(), restaurant.getId());
-        for (Bid declinedBid : bids) {
-            if (declinedBid.getId() != bid.getId()) {
-                declinedBid.setStatus("DECLINED");
-                bidDao.save(declinedBid);
+        try {
+            bidDao.save(bid);
+            final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            final Manager manager = userDao.findByEmail(authentication.getName());
+            final Restaurant restaurant = restaurantDao.findById(manager.getRestaurant().getId()).orElseThrow(BadRequestException::new);
+            List<Bid> bids = bidDao.findBySupplyIdAndSupplyRestaurantId(supplyDao.findById(bid.getSupply().getId()).getId(), restaurant.getId());
+            for (Bid declinedBid : bids) {
+                if (declinedBid.getId() != bid.getId()) {
+                    declinedBid.setStatus("DECLINED");
+                    bidDao.save(declinedBid);
+                }
             }
+            return new ResponseEntity<>(used, HttpStatus.OK);
+        } catch (Exception e) {
+            used = true;
+            return new ResponseEntity<>(used, HttpStatus.IM_USED);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Transactional
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "/seller/{id}")
-    public ResponseEntity listBySeller(@PathVariable long id){
+    public ResponseEntity listBySeller(@PathVariable long id) {
         return new ResponseEntity<>(bidDao.findBySellerId(id), HttpStatus.OK);
     }
 
@@ -82,9 +89,15 @@ public class BidController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.PATCH)
     public ResponseEntity edit(@RequestBody Bid updatedBid) {
+        Boolean used = false;
         bidDao.findById(updatedBid.getId()).orElseThrow(NotFoundException::new);
-        bidDao.save(updatedBid);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            bidDao.save(updatedBid);
+            return new ResponseEntity<>(used, HttpStatus.OK);
+        } catch (Exception e) {
+            used = true;
+            return new ResponseEntity<>(used, HttpStatus.IM_USED);
+        }
     }
 
     @Transactional
