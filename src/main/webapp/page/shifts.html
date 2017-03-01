@@ -47,13 +47,25 @@
                     <span>Assigned shifts</span>
                 </h2>
             </md-toolbar>
-            <md-button class="md-fab md-mini md-primary"
-                       aria-label="Add Employee Shift" ng-click="addEmployeeShift()">
-                <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
-            </md-button>
+            <!--<md-toolbar class="md-theme-light">-->
+            <!--<h2 class="md-toolbar-tools">-->
+            <!--<span>{{dayAh}}</span>-->
+            <!--</h2>-->
+            <!--</md-toolbar>-->
             <div layout="row">
-                <mdp-date-picker mdp-placeholder="Search from" ng-model="selectFrom"></mdp-date-picker>
-                <mdp-date-picker mdp-placeholder="Search until" ng-model="selectUntil"></mdp-date-picker>
+                <md-button class="md-fab md-mini md-primary"
+                           aria-label="Add Employee Shift" ng-click="addEmployeeShift()">
+                    <md-icon md-svg-src="img/ic_add_white_24px.svg"></md-icon>
+                </md-button>
+                <h3> See in weeks advance : </h3>
+                <!--<md-input-container class="md-block">-->
+                <!--<label>Days ahead</label>-->
+                <!--<input id="dayAhead" name="dayAhead" type="number" data-ng-model="dayAh">-->
+                <!--</md-input-container>-->
+                <!--<md-input-container class="md-block">-->
+                <!--<label>Days behind</label>-->
+                <!--<input id="dayBehind" name="dayBehind" type="number" data-ng-model="dayBh">-->
+                <!--</md-input-container>-->
                 <md-button class="md-fab md-mini md-primary"
                            aria-label="Search Shifts" ng-click="searchShifts()">
                     <md-icon md-svg-src="img/ic_check_white_24px.svg"></md-icon>
