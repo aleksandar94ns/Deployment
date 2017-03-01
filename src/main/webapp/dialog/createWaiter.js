@@ -1,8 +1,10 @@
-app.controller('CreateWaiterController', function ($scope, $http, $state, $mdDialog, areasService, waitersService, authenticationService) {
+app.controller('CreateWaiterController', function ($scope, $http, $state, $mdDialog, areasService, waitersService, authenticationService, waiter) {
+
+    $scope.user = waiter;
 
     $scope.manager = authenticationService.getUser();
 
-    areasService.listByRestaurant($scope.manager.restaurant.id, function(response) {
+    areasService.listByRestaurant($scope.manager.restaurant.id, function (response) {
         $scope.areas = response.data;
     });
 
